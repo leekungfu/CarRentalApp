@@ -50,4 +50,14 @@ $(document).ready(function () {
             },
         },
     });
+
+    // $('.forgotPass-1').on('submit', e => {
+    //     e.preventDefault();
+        // do ajax for sending email.
+
+        // on success. => show alert popup $('#popup').show();
+        // user press ok button => redirect home, sign
+
+    // })
+
 });
