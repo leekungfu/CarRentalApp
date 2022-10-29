@@ -28,6 +28,7 @@ public class Member {
 	private Integer nationalID;
 	private String email;
 	private String password;
+	private String phone;
 	private Integer cityID;
 	private Integer districtID;
 	private Integer wardID;
@@ -35,8 +36,7 @@ public class Member {
 	private String drivingLicense;
 	private Double wallet;
 	private String role;
-	private boolean enabled = false;
-	
+
 	@OneToMany(mappedBy = "member")
 	private List<Booking> bookings;
 }
