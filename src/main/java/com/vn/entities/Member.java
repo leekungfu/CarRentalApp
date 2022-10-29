@@ -3,16 +3,13 @@ package com.vn.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
@@ -36,7 +33,8 @@ public class Member {
 	private String drivingLicense;
 	private Double wallet;
 	private String role;
-
+	@Column(length = 30)
+	private String resetPasswordToken;
 	@OneToMany(mappedBy = "member")
 	private List<Booking> bookings;
 }
