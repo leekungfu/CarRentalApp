@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Optional;
+
 @Controller
 public class GeneralController {
 
@@ -29,12 +31,11 @@ public class GeneralController {
     @PostMapping("/signup")
     public String signUpPage(@ModelAttribute("member")Member member, Model model) {
 
-        Member checkMem = memberService.findUserByEmail(member.getEmail());
+        Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
         if (checkMem != null) {
-            model.addAttribute("signUpMsg", "Email is taken!");
+            model.addAttribute("msg", "Email is taken!");
             return "signup";
         }
-
         memberService.save(member);
         return "redirect:/signing";
     }
@@ -59,9 +60,9 @@ public class GeneralController {
     @PostMapping("/forgot-pass-step1")
     public String forgotPass1Post(@ModelAttribute("member") Member member, Model model) {
 
-        Member checkMem = memberService.findUserByEmail(member.getEmail());
-        if (checkMem == null) {
-            model.addAttribute("message", "Email does not exist!");
+        Optional<Member> checkMem = memberService.findByEmail(member.getEmail());
+        if (checkMem.isEmpty()) {
+            model.addAttribute("message", "Either Email or Name does not exist!");
             return "forgot-pass-step1";
         }
 
