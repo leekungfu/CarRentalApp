@@ -74,11 +74,17 @@ public class GeneralController {
     public String forgotPassProcessing(@ModelAttribute("member") Member member,
                                        Model model,
                                        HttpServletRequest request) {
+        // Find existed email in database to confirm sending the reset password request
         String email = request.getParameter("email");
+        // Random token chain, which will be used to determine ex
         String token = RandomString.make(30);
 
+
         try {
+            // Set value for user found by the given email and persist change to the DB
             memberService.updateResetPasswordToken(token, email);
+
+            // Send the reset link with unique token which will expired immediately user reset password success
             String resetPassLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
             utility.sendEmail(email, resetPassLink);
 
@@ -93,9 +99,11 @@ public class GeneralController {
 
     @GetMapping("/reset_password")
     public String resetPassForm(@Param(value = "token") String token, Model model) {
+
+        // Check for the validity of the token in the URL, to make sure that only user who got the real email can change their password.
+        // The notification popup will be displayed as the message below if user had changed password successfully with the reset link in their mailbox.
         Member member = memberService.findByResetPasswordToken(token);
         model.addAttribute("token", token);
-
         if (member == null) {
             model.addAttribute("message", "The request is expired! Please send a new request to reset your password by entering your email again on previous step!");
             return "reset_password";
@@ -109,6 +117,7 @@ public class GeneralController {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
 
+        // The notification popup will be displayed as "Invalid token" if the token not be found in the DB.
         Member member = memberService.findByResetPasswordToken(token);
 
         if (member == null) {
