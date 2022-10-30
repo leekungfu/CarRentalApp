@@ -14,11 +14,24 @@ import java.io.UnsupportedEncodingException;
 public class Utility {
     @Autowired
     private JavaMailSender mailSender;
+
+    /**
+     * Create a link for user to click and reset their password.
+     * @param request
+     * @return
+     */
     public static String getSiteURL(HttpServletRequest request) {
         String siteURL = request.getRequestURL().toString();
         return siteURL.replace(request.getServletPath(), "");
     }
 
+    /**
+     * Set up for email properties include: the sender, the receiver, subject email, content of email.
+     * @param recipientEmail
+     * @param link
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
     public void sendEmail(String recipientEmail, String link)
             throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
@@ -41,9 +54,5 @@ public class Utility {
         helper.setText(content, true);
 
         mailSender.send(message);
-
-        // We have just received a password reset request for <user’s email address>.
-        //Please click here to reset your password.
-        //For your security, the link will expire in 24 hours or immediately after you reset your password
     }
 }

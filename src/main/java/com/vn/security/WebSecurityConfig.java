@@ -20,6 +20,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+
+    /**
+     * Processing log in, log out, authorize for user who has an account in the system what exactly URL they can access
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -59,6 +65,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
     }
 
+
+    /**
+     * Authenticate for user log in with their email and encrypt password, then check encrypt password at the form log in with encrypt password in the DB
+     * If password is match, redirect user to home page
+     * @param auth
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
