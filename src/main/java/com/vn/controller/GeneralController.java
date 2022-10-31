@@ -25,8 +25,8 @@ public class GeneralController {
     @Autowired
     private MemberService memberService;
 
-    @Autowired
-    private JavaMailSender mailSender;
+//    @Autowired
+//    private JavaMailSender mailSender;
 
     @Autowired
     private Utility utility;
