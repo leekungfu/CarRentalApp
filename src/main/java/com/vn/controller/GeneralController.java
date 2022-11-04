@@ -7,7 +7,6 @@ import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,14 +25,21 @@ public class GeneralController {
     private MemberService memberService;
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
     private Utility utility;
+
+    @GetMapping("/home_guest")
+    public String homeGuestPage() {
+        return "home_guest";
+    }
 
     @GetMapping("/home")
     public String homePage() {
         return "home_logout";
+    }
+
+    @GetMapping("/about")
+    public String aboutPage() {
+        return "about";
     }
 
     @GetMapping("/signup")
@@ -50,18 +56,18 @@ public class GeneralController {
             return "signup";
         }
         memberService.save(member);
-        return "redirect:/signin";
+        return "redirect:/home_guest";
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/login")
     public String signIn() {
-        return "signin";
+        return "login";
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public String signInPage(@ModelAttribute("member")Member member) {
 
-        return "redirect:/home";
+        return "redirect:/Home";
     }
 
     @GetMapping("/forgot_password")
@@ -133,7 +139,7 @@ public class GeneralController {
 
     @GetMapping("/logout")
     public String logOut() {
-        return "Home";
+        return "home_guest";
     }
 
 }
