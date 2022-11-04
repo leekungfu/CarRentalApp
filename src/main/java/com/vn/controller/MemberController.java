@@ -14,26 +14,26 @@ import java.util.Optional;
 public class MemberController {
     @Autowired
     MemberService memberService;
-    @GetMapping(value = {"/", ""})
-    public String home() {
+//    @GetMapping(value = {"/", ""})
+//    public String home() {
+//
+//        return "Home";
+//    }
 
-        return "Home";
-    }
-
-    @GetMapping("/editProfile")
-    public String editProfile() {
-//        Optional<Member> memberEdit = memberService.findUserById(id);
-//   memberEdit.isPresent(user-> model.addAttribute("user",user)) ;
-
-        return "editProfile";
-    }
-    @Controller
-    public class SecurityController {
-
-        @RequestMapping(value = "/username", method = RequestMethod.GET)
-        @ResponseBody
-        public String currentUserName(Principal principal) {
-            return principal.getName();
-        }
-    }
+//    @GetMapping("/editProfile")
+//    public String editProfile() {
+////        Optional<Member> memberEdit = memberService.findUserById(id);
+////   memberEdit.isPresent(user-> model.addAttribute("user",user)) ;
+//
+//        return "editProfile";
+//    }
+//    @Controller
+//    public class SecurityController {
+//
+//        @RequestMapping(value = "/username", method = RequestMethod.GET)
+//        @ResponseBody
+//        public String currentUserName(Principal principal) {
+//            return principal.getName();
+//        }
+//    }
 }
