@@ -1,5 +1,6 @@
 package com.vn.service.impl;
 
+
 import com.vn.entities.Car;
 import com.vn.repository.CarRepository;
 import com.vn.service.CarService;
@@ -18,15 +19,15 @@ public class CarServiceImpl implements CarService {
     public Car findCarByLicensePlate(String licensePlate) {
         return carRepository.findCarByLicensePlate(licensePlate);
     }
-
-    @Override
-    public Integer saveCar(Car car) {
-        return carRepository.save(car).getId();
-    }
-
+@Override
+	public Car saveCar(Car car) {
+		return carRepository.save(car);
+	}
+ 
     @Override
     public List<Car> findAll() {
         return carRepository.findAll();
     }
+
 
 }
