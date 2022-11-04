@@ -24,6 +24,7 @@ public class GeneralController {
     @Autowired
     private MemberService memberService;
 
+
     @Autowired
     private Utility utility;
 
