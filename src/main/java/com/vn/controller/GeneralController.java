@@ -60,7 +60,7 @@ public class GeneralController {
 
     @PostMapping("/signin")
     public String signInPage(@ModelAttribute("member")Member member) {
-
+        System.out.println(member);
         return "redirect:/home";
     }
 
