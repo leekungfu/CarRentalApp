@@ -1,5 +1,11 @@
 package com.vn.service;
 
-public interface CarService {
+import com.vn.entities.Car;
 
+public interface CarService {
+	
+	Car saveCar(Car car);
+	
+	Car updateCar(Car car);
+	
 }
