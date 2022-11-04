@@ -1,5 +1,6 @@
 package com.vn.security;
 
+import com.vn.utils.Para;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -53,14 +54,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/forgot_password", "/reset_password", "/signup", "/login", "/home_guest", "/about", "/assets/css/**", "/assets/js/**", "/assets/icon/**", "/assets/boostrap/css/**", "/assets/boostrap/js/**")
+                .antMatchers(Para.ignoreSecurityPages)
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/home/").hasRole("CUSTOMER")
-                .antMatchers("/home/").hasRole("OWNER")
-                .antMatchers("/forgot_password", "/reset_password","/customer_profile", "/customer_booking", "/customer_wallet", "/logout", "/about").hasRole("CUSTOMER")
-                .antMatchers("/forgot_password", "/reset_password", "/add_car", "/owner_profile", "/owner_cars", "/owner_wallet", "/owner_reports", "/logout", "/about").hasRole("OWNER")
+                .antMatchers(Para.customerPages).hasRole("CUSTOMER")
+                .antMatchers(Para.carOwnerPages).hasRole("OWNER")
                 .anyRequest()
                 .authenticated();
     }

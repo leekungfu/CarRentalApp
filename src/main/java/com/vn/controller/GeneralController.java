@@ -66,8 +66,8 @@ public class GeneralController {
 
     @PostMapping("/login")
     public String signInPage(@ModelAttribute("member")Member member) {
-
-        return "redirect:/Home";
+        System.out.println(member);
+        return "redirect:/home";
     }
 
     @GetMapping("/forgot_password")
