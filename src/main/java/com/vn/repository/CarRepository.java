@@ -7,5 +7,3 @@ import com.vn.entities.Car;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
-
-}
