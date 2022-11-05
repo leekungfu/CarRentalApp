@@ -16,6 +16,7 @@ public class Para {
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
+            "/images/**"
     };
 
     public static String[] customerPages ={
