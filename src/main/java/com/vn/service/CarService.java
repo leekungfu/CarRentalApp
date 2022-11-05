@@ -1,5 +1,16 @@
 package com.vn.service;
 
-public interface CarService {
+import com.vn.entities.Car;
 
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface CarService {
+    Car findCarByLicensePlate(String licensePlate);
+    
+    Car saveCar(Car car);
+
+    List<Car> findAll();
 }

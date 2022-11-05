@@ -49,4 +49,8 @@ public class Car {
 	
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
+
+	public String showName(){
+		return brandId.toString() + modelId.toString() + year.toString();
+	}
 }
