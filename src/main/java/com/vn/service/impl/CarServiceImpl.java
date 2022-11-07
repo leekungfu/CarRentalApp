@@ -1,29 +1,33 @@
 package com.vn.service.impl;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.vn.entities.Car;
 import com.vn.repository.CarRepository;
 import com.vn.service.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
-@Transactional
-public class CarServiceImpl implements CarService{
-	
-	@Autowired
-	CarRepository carRepository;
+public class CarServiceImpl implements CarService {
 
-	@Override
+    @Autowired
+    private CarRepository carRepository;
+
+    @Override
+    public Car findCarByLicensePlate(String licensePlate) {
+        return carRepository.findCarByLicensePlate(licensePlate);
+    }
+@Override
 	public Car saveCar(Car car) {
 		return carRepository.save(car);
 	}
+ 
+    @Override
+    public List<Car> findAll() {
+        return carRepository.findAll();
+    }
 
-	@Override
-	public Car updateCar(Car car) {
-		return carRepository.save(car);
-	}
 
 }
