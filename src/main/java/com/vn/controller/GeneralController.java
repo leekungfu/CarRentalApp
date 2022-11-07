@@ -30,22 +30,22 @@ public class GeneralController {
 
     @GetMapping("/home_guest")
     public String homeGuestPage() {
-        return "home_guest";
+        return "home/home_guest";
     }
 
     @GetMapping("/home")
     public String homePage() {
-        return "home_logout";
+        return "home/home_logout";
     }
 
     @GetMapping("/about")
     public String aboutPage() {
-        return "about";
+        return "home/about";
     }
 
     @GetMapping("/signup")
     public String signUp() {
-        return "signup";
+        return "account/signup";
     }
 
     @PostMapping("/signup")
@@ -54,27 +54,27 @@ public class GeneralController {
         Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
-            return "signup";
+            return "account/signup";
         }
         memberService.save(member);
-        return "redirect:/home_guest";
+        return "redirect:home/home_guest";
     }
 
     @GetMapping("/login")
     public String signIn() {
-        return "login";
+        return "account/login";
     }
 
     @PostMapping("/login")
     public String signInPage(@ModelAttribute("member")Member member) {
         System.out.println(member);
-        return "redirect:/home";
+        return "redirect:home/Home";
     }
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
 
-        return "forgot_password";
+        return "account/forgot_password";
     }
 
     @PostMapping("/forgot_password")
@@ -101,7 +101,7 @@ public class GeneralController {
             model.addAttribute("error", "Something wrong while sending email!");
         }
 
-        return "forgot_password";
+        return "account/forgot_password";
     }
 
     @GetMapping("/reset_password")
@@ -116,7 +116,7 @@ public class GeneralController {
             return "reset_password";
         }
 
-        return "reset_password";
+        return "account/reset_password";
     }
 
     @PostMapping("/reset_password")
@@ -135,12 +135,12 @@ public class GeneralController {
             model.addAttribute("message", "Reset password successfully!");
         }
 
-        return "reset_password_success";
+        return "account/reset_password_success";
     }
 
     @GetMapping("/logout")
     public String logOut() {
-        return "home_guest";
+        return "home/home_guest";
     }
 
 }
