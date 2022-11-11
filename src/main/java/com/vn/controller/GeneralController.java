@@ -60,12 +60,12 @@ public class GeneralController {
         return "redirect:home/home_guest";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/signin")
     public String signIn() {
         return "account/login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public String signInPage(@ModelAttribute("member")Member member) {
         System.out.println(member);
         return "redirect:home/Home";
