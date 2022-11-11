@@ -17,4 +17,5 @@ public class BookingController {
 		return "booking/booking_process";
 	}
 	
+	
 }
