@@ -113,7 +113,7 @@ public class GeneralController {
         model.addAttribute("token", token);
         if (member == null) {
             model.addAttribute("message", "The request is expired! Please send a new request to reset your password by entering your email again on previous step!");
-            return "reset_password";
+            return "account/reset_password";
         }
 
         return "account/reset_password";
@@ -129,7 +129,7 @@ public class GeneralController {
 
         if (member == null) {
             model.addAttribute("message", "Invalid token");
-            return "reset_password";
+            return "account/reset_password";
         } else {
             memberService.updatePassword(member, password);
             model.addAttribute("message", "Reset password successfully!");
