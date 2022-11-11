@@ -13,12 +13,9 @@ public class ParaSecurity {
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
-<<<<<<< HEAD:src/main/java/com/vn/utils/Para.java
-            "/booking_process"
-=======
+            "/booking_process",
             "/images/**",
             "/search/car"
->>>>>>> main:src/main/java/com/vn/utils/ParaSecurity.java
     };
 
     public static String[] customerPages ={

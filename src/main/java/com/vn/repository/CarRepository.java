@@ -13,9 +13,7 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car, Integer> {
 
     Car findCarByLicensePlate(String licensePlate);
-<<<<<<< HEAD
 
-=======
     Page<Car> findByCity(String city, Pageable pageable);
->>>>>>> main
+
 }

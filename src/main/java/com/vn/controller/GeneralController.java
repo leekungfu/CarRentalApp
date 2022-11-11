@@ -1,6 +1,5 @@
 package com.vn.controller;
 
-
 import com.sun.net.httpserver.HttpPrincipal;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
@@ -36,13 +35,10 @@ public class GeneralController {
         return "home/home_guest";
     }
 
-<<<<<<< HEAD
     @GetMapping("/home")
     public String homePage() {
         return "home/home_logout";
     }
-=======
->>>>>>> main
 
     @GetMapping("/about")
     public String aboutPage() {
@@ -71,13 +67,7 @@ public class GeneralController {
         return "account/login";
     }
 
-<<<<<<< HEAD
     @PostMapping("/signin")
-    public String signInPage(@ModelAttribute("member")Member member) {
-        System.out.println(member);
-        return "redirect:home/Home";
-=======
-    @PostMapping("/login")
     public String signInPage(Principal principal) {
 
         Member member = (Member) ((Authentication)principal).getPrincipal();
@@ -85,7 +75,6 @@ public class GeneralController {
         if("CUSTOMER".equals(member.getRole()))
             return "redirect:/home/customer";
         return "redirect:/home/carOwner";
->>>>>>> main
     }
 
     @GetMapping("/forgot_password")
@@ -156,13 +145,8 @@ public class GeneralController {
     }
 
     @GetMapping("/logout")
-<<<<<<< HEAD
-    public String logOut() {
-        return "home/home_guest";
-=======
     public String logOut(Principal principal) {
         return "home_guest";
->>>>>>> main
     }
 
     @GetMapping("/ediProfile")

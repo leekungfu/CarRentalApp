@@ -29,8 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+        http   	.csrf().disable()
                 .cors()
                 .and()
                 .formLogin()
@@ -58,15 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()
-<<<<<<< HEAD:src/main/java/com/vn/security/WebSecurityConfig.java
-                .antMatchers("/home/").hasRole("CUSTOMER")
-                .antMatchers("/home/").hasRole("OWNER")
-                .antMatchers("/forgot_password", "/reset_password","/customer_profile", "/customer_booking", "/customer_wallet", "/logout", "/about").hasRole("CUSTOMER")
-                .antMatchers("/forgot_password", "/reset_password", "/add_car", "/owner_profile", "/owner_cars", "/owner_wallet", "/owner_reports", "/logout", "/about").hasRole("OWNER")
-=======
                 .antMatchers(ParaSecurity.customerPages).hasRole("CUSTOMER")
                 .antMatchers(ParaSecurity.carOwnerPages).hasRole("OWNER")
->>>>>>> main:src/main/java/com/vn/config/WebSecurityConfig.java
                 .anyRequest()
                 .authenticated();
     }
