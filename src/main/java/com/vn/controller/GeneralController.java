@@ -36,10 +36,6 @@ public class GeneralController {
         return "home_guest";
     }
 
-    @GetMapping("/home")
-    public String homePage() {
-        return "home_logout";
-    }
 
     @GetMapping("/about")
     public String aboutPage() {
@@ -65,7 +61,7 @@ public class GeneralController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "login";
+        return "account/login";
     }
 
     @PostMapping("/login")
