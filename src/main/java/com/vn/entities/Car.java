@@ -18,30 +18,31 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer brandId;
-	private Integer modelId;
+	private String brand;
+	private String model;
 	private Integer year;
 	private String licensePlate;
-	private Integer colorID;
+	private String color;
 	private Integer seat;
-	private Integer transmission;
-	private Integer fule;
-	private String registrationPaperUrl;
-	private String cetifiticateInspectionUrl;
+	private String transmission;
+	private String fuel;
+	private String registration;
+	private String inspection;
 	private String insuranceUrl;
 	private Double mileage;
-	private Double fuleConsumption;
-	private Integer cityID;
-	private Integer districtID;
-	private Integer wardID;
+	private Double fuelConsumption;
+	private String city;
+	private String district;
+	private String ward;
 	private String street;
 	private String description;
 	private Integer addFunction;
-	private String imageUrl;
+	private String images;
 	private Double price;
-	private Integer deposit;
+	private Double deposit;
 	private Integer term;
 	private String termExtra;
+	private Double rating;
 	
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
@@ -49,14 +50,4 @@ public class Car {
 	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;
-
-	@Transient
-	public String getName() {
-		return this.brandId + " " + this.modelId + " " + this.year;
-	}
-
-	@Transient
-	public String getAddress() {
-		return this.districtID + " " + this.cityID;
-	}
 }
