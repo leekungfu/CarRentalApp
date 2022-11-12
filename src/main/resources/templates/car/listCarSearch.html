@@ -5,32 +5,21 @@
     <title>CarRental</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- CSS -->
-    <!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500" />-->
-    <!--    <link rel="stylesheet" href="/assets/boostrap/css/bootstrap.min.css" />-->
     <link rel="stylesheet" href="/assets/css/font-awesome-pro.css"/>
     <link rel="stylesheet" href="/assets/css/form-element.css"/>
     <link rel="stylesheet" href="/assets/css/style.css"/>
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
           rel="stylesheet">
-
     <link rel="stylesheet" href="/assets/boostrap/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/boostrap/css/animated.css">
-
     <link rel="stylesheet" href="/assets/boostrap/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/assets/boostrap/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="/assets/boostrap/css/magnific-popup.css">
-
     <link rel="stylesheet" href="/assets/boostrap/css/aos.css">
-
     <link rel="stylesheet" href="/assets/boostrap/css/ionicons.min.css">
-
     <link rel="stylesheet" href="/assets/boostrap/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="/assets/boostrap/css/jquery.timepicker.css">
-
-
     <link rel="stylesheet" href="/assets/boostrap/css/flaticon.css">
     <link rel="stylesheet" href="/assets/boostrap/css/icomoon.css">
     <link rel="stylesheet" href="/assets/boostrap/css/style.css">
@@ -41,11 +30,6 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="/assets/css/home/home_customer.css">
     <link rel="stylesheet" href="/assets/css/car/search_car.css">
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
 </head>
 
 <body>
@@ -143,6 +127,7 @@
 </div>
 <!--LIST CAR END-->
 
+
 <!--CONTENT BEGIN-->
 <div class="list_car_content" th:if="${totolCar>0}">
     <div class="car_item" th:each="carDTO :${carDTOs}">
@@ -180,7 +165,6 @@
             <div class="uc20_info_header">
                 <label th:text="${carDTO.getName()} +'   '"></label>
             </div>
-
             <div class="uc20_info_body">
                 <div class="uc20_info_label">
                     <p>The powerful, stylish 2022 Camry Hybrid gives up nothing with its optimized fuel economy, *
@@ -216,8 +200,8 @@
                 </div>
             </div>
             <div class="car_action">
-                <button type="submit" class="btn btn-success">RENT NOW</button>
-                <button type="submit" class="btn btn-success">VIEW DETAIL</button>
+                <a th:href="@{/rent_car(carID = ${carDTO.getId()})}"  class="btn btn-success">RENT NOW</a>
+                <a th:href="@{/detail_car(carID = ${carDTO.getId()})}"  class="btn btn-success">VIEW DETAIL</a>
             </div>
         </div>
     </div>
@@ -243,6 +227,7 @@
     </div>
 </div>
 <!--CONTENT END-->
+
 <!--FOOTER BEGIN-->
 <footer class="ftco-footer ftco-bg-dark ftco-section">
     <div class="container">
@@ -349,13 +334,10 @@
 <script src="/assets/boostrap/js/bootstrap-datepicker.js"></script>
 <script src="/assets/boostrap/js/jquery.timepicker.min.js"></script>
 <script src="/assets/boostrap/js/scrollax.min.js"></script>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="js/google-map.js"></script>
 <script src="/assets/boostrap/js/main.js"></script>
-
 <script src="/assets/js/jquery-1.11.1.min.js"></script>
-<!--<script src="/assets/boostrap/js/bootstrap.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
         integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

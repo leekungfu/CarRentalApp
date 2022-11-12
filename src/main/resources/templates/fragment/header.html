@@ -1,0 +1,45 @@
+<div th:fragment="menu">
+  <div class="home_customer_header_left">
+    <i class="fa-solid fa-car-side"></i>
+    <label>Rent a car today</label>
+  </div>
+  <nav class="home_customer_header_nav">
+    <li style="padding: 8px 32px">
+      <a href="#">About Us</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+         aria-expanded="false" style="padding: 8px 16px 8px 0px">
+        <img th:src="@{/images/person_1.jpg}"
+             style="width: 32px; height: 32px;border-radius: 50%">
+        <label>Wellcome sava</label>
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li>
+          <a class="dropdown-item" href="/myProfile">
+            <i class="fa-solid fa-address-card"></i>
+            <label>My profile</label>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="myBooking">
+            <i class="fa-solid fa-list"></i>
+            <label>My Booking</label>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="myWallet">
+            <i class="fa-solid fa-wallet"></i>
+            <label>My wallet</label>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="/logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <label>Logout</label>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </nav>
+</div>

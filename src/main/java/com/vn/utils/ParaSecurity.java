@@ -14,7 +14,9 @@ public class ParaSecurity {
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
             "/images/**",
-            "/search/car"
+            "/search/car",
+            "/detail_car",
+            "/rent_car"
     };
 
     public static String[] customerPages ={
