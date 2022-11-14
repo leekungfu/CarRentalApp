@@ -66,15 +66,15 @@ public class CarController {
             carDTOs.add(new CarDTO(car));
         }
         int totalPages = resultPage.getTotalPages();
+        model.addAttribute("resultPage", resultPage);
         model.addAttribute("carDTOs", carDTOs);
-        model.addAttribute("totolCar", resultPage.getTotalElements());
         model.addAttribute("totolPage", totalPages);
+        Car car  = new Car();
 
 
         if (totalPages > 0) {
             int start = Math.max(1, currentPage - 2);
             int end = Math.min(currentPage + 2, totalPages);
-
             if (totalPages > 5) {
                 if (end == totalPages) {
                     start = end - 4;
@@ -88,9 +88,6 @@ public class CarController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
-        }
-        for (CarDTO carDTO: carDTOs) {
-            System.out.println(carDTOs.indexOf(carDTO));
         }
         return "car/listCarSearch";
     }

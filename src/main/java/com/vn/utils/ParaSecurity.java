@@ -16,7 +16,8 @@ public class ParaSecurity {
             "/images/**",
             "/search/car",
             "/detail_car",
-            "/rent_car"
+            "/rent_car",
+            "/"
     };
 
     public static String[] customerPages ={

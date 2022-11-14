@@ -1,6 +1,7 @@
 package com.vn.entities;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,4 +51,13 @@ public class Car {
 	
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
+
+	public String[] genImage(){
+		String[] imagesArray = new String[3];
+		StringTokenizer stz = new StringTokenizer(images,",");
+		imagesArray[0] = stz.nextToken();
+		imagesArray[1] = stz.nextToken();
+		imagesArray[2] = stz.nextToken();
+		return imagesArray;
+	}
 }

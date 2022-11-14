@@ -22,6 +22,8 @@ public class CarDTO {
     private String price;
     private String[] images = new String[3];
 
+    private String city;
+
 
     public CarDTO() {
     }
@@ -33,6 +35,7 @@ public class CarDTO {
         this.location = car.getDistrict() + " - " + car.getCity();
         this.rides = car.getSeat();
         this.status = "Available";
+        this.city = car.getCity();
 
         Locale locale = new Locale("vi", "VN");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
