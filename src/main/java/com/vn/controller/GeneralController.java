@@ -75,14 +75,12 @@ public class GeneralController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "home/home_guest";
+        return "home/home";
     }
 
     @PostMapping("/login")
-    public String signInPage(@ModelAttribute("member")Member member, Model model) {
-
+    public String signInPage() {
             return "redirect:/home";
-
     }
 
     @GetMapping("/forgot_password")
