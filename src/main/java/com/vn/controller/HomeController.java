@@ -22,9 +22,9 @@ public class HomeController {
                 return x.getAuthority().contains("CUSTOMER");
             }).count();
 
-            if (countRoleCustomer > 0) return "redirect:/home_customer";
+            if (countRoleCustomer > 0) return "home/home_customer";
 
-            return "redirect:/home_car_owner";
+            return "home/home_car_owner";
 
         } catch (Exception e) {
             return "home/home_guest";
