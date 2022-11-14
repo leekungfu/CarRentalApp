@@ -73,32 +73,19 @@ $(document).ready(function () {
         },
     });
 
-    $(document).on("click", "#signUpSubmit", function () {
-        if ($("#signUpForm").valid()) {
-            $.ajax({
-                method: "GET",
-                // url: "./add_content",
-                success: function (res) {
-                    $("#loginPage").html(res);
-                },
-                error: function (err) {
-                    console.log(err);
-                },
-            });
-        }
-    });
-
-    // function checkSignUp(){
-    //     if(document.myForm.fullName.value == "")
-    //     {
-    //         alert("Yeu cau nhap du lieu:");
-    //         document.myForm.fullName.focus();
-    //         return false;
+    // $(document).on("click", "#signUpSubmit", function () {
+    //     if ($("#signUpForm").valid()) {
+    //         $.ajax({
+    //             method: "GET",
+    //             // url: "./add_content",
+    //             success: function (res) {
+    //                 $("#loginPage").html(res);
+    //             },
+    //             error: function (err) {
+    //                 console.log(err);
+    //             },
+    //         });
     //     }
-    // }
-
-    // $('.signUpp').on('submit', function(e){
-    //     $('#signupPage').modal('show');
-    //     e.preventDefault();
     // });
+
 });

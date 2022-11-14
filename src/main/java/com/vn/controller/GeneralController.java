@@ -1,6 +1,7 @@
 package com.vn.controller;
 
 
+import com.sun.istack.NotNull;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.utils.Utility;
@@ -29,22 +30,39 @@ public class GeneralController {
 
     @GetMapping("/home_guest")
     public String homeGuestPage() {
-        return "home_guest";
+        return "home/home_guest";
     }
 
     @GetMapping("/home")
-    public String homePage() {
-        return "home_logout";
+    public String homePageProcessing(@ModelAttribute("member")Member member) {
+//        if (member.getRole().equals("CUSTOMER")) {
+//            return "redirect:/home_customer";
+//        } else if (member.getRole().equals("OWNER")) {
+//            return "redirect:/homepagecarowner";
+//        } else {
+//            return "home/home_guest";
+//        }
+        return "Carowner/homepagecarowner";
+    }
+
+    @GetMapping("/home_owner")
+    public String homeOwnerPage() {
+        return "Carowner/homepagecarowner";
+    }
+
+    @GetMapping("/home_customer")
+    public String homeCustomerPage() {
+        return "home/home_customer";
     }
 
     @GetMapping("/about")
     public String aboutPage() {
-        return "about";
+        return "home/about";
     }
 
     @GetMapping("/signup")
     public String signUp() {
-        return "signup";
+        return "home/home_guest";
     }
 
     @PostMapping("/signup")
@@ -53,7 +71,7 @@ public class GeneralController {
         Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
-            return "signup";
+            return "home/home_guest";
         }
         memberService.save(member);
         return "redirect:/home_guest";
@@ -61,19 +79,20 @@ public class GeneralController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "login";
+        return "home/home_guest";
     }
 
     @PostMapping("/login")
-    public String signInPage(@ModelAttribute("member")Member member) {
+    public String signInPage(@ModelAttribute("member")Member member, Model model) {
 
-        return "redirect:/Home";
+            return "redirect:/home";
+
     }
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
 
-        return "forgot_password";
+        return "account/forgot_password";
     }
 
     @PostMapping("/forgot_password")
@@ -100,7 +119,7 @@ public class GeneralController {
             model.addAttribute("error", "Something wrong while sending email!");
         }
 
-        return "forgot_password";
+        return "account/forgot_password";
     }
 
     @GetMapping("/reset_password")
@@ -112,10 +131,10 @@ public class GeneralController {
         model.addAttribute("token", token);
         if (member == null) {
             model.addAttribute("message", "The request is expired! Please send a new request to reset your password by entering your email again on previous step!");
-            return "reset_password";
+            return "account/reset_password";
         }
 
-        return "reset_password";
+        return "account/reset_password";
     }
 
     @PostMapping("/reset_password")
@@ -128,18 +147,18 @@ public class GeneralController {
 
         if (member == null) {
             model.addAttribute("message", "Invalid token");
-            return "reset_password";
+            return "account/reset_password";
         } else {
             memberService.updatePassword(member, password);
             model.addAttribute("message", "Reset password successfully!");
         }
 
-        return "reset_password_success";
+        return "account/reset_password_success";
     }
 
     @GetMapping("/logout")
     public String logOut() {
-        return "home_guest";
+        return "home/home_guest";
     }
 
 }
