@@ -15,6 +15,20 @@ public class ParaSecurity {
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
+            "/images/**",
+            "/search/car",
+            "/detail_car",
+            "/rent_car",
+            "/",
+            "/assets/fonts/flaticon/font/**",
+            "/assets/fonts/icomoon/**",
+            "/assets/fonts/ionicons/css/**",
+            "/assets/fonts/ionicons/fonts/**",
+            "/assets/fonts/open-iconic/**",
+            "/assets/scss/bootstrap/**",
+            "/assets/scss/bootstrap/mixins/**",
+            "/assets/scss/bootstrap/utilities/**",
+            "/assets/scss/bootstrap/vendor/**",
     };
 
     public static String[] customerPages ={

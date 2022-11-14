@@ -41,43 +41,6 @@ public class GeneralController {
     @Autowired
     private Utility utility;
 
-
-    @GetMapping("/home_guest")
-    public String homeGuestPage() {
-        return "home/home_guest";
-    }
-
-    @GetMapping("/home")
-    public String homePageProcessing() {
-
-        UserDetails detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(detail != null) {
-            long countRole = detail.getAuthorities().stream().filter(x -> {
-                return x.getAuthority().contains("CUSTOMER");
-            }).count();
-
-            long countRoleOWNER = detail.getAuthorities().stream().filter(x -> {
-                return x.getAuthority().contains("OWNER");
-            }).count();
-            if (countRole > 0) {
-                return "redirect:/home_customer";
-            } else if (countRoleOWNER > 0) {
-                return "redirect:/homepagecarowner";
-            }
-        }
-        return "home/home_guest";
-    }
-
-    @GetMapping("/home_owner")
-    public String homeOwnerPage() {
-        return "home/home_car_owner";
-    }
-
-    @GetMapping("/home_customer")
-    public String homeCustomerPage() {
-        return "home/home_customer";
-    }
-
     @GetMapping("/about")
     public String aboutPage() {
         return "home/about";

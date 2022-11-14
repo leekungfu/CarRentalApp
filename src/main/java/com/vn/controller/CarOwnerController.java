@@ -17,11 +17,6 @@ public class CarOwnerController {
     @Autowired
     private CarService carService;
 
-    @GetMapping("/homepagecarowner")
-    public String homePageCarOwner() {
-        return "Carowner/homepagecarowner";
-    }
-
     @GetMapping("/Add-Car")
     public String getFormAddCar() {
         return "Carowner/addCar";
