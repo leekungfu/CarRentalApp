@@ -9151,7 +9151,7 @@ textarea.form-control {
 
 .ftco-footer {
     font-size: 16px;
-    background: #000;
+    background-color: #ffc107;
     padding: 7em 0; }
 .ftco-footer .logo {
     text-transform: uppercase;
@@ -9195,7 +9195,7 @@ textarea.form-control {
     width: 50px;
     display: block;
     float: left;
-    background: rgba(255, 255, 255, 0.05);
+    background: #000000;
     border-radius: 50%;
     position: relative; }
 .ftco-footer-social li a span {
@@ -9243,7 +9243,9 @@ textarea.form-control {
 .ftco-media .icon {
     font-size: 50px;
     display: block;
-    color: #1089ff; }
+    color: #1089ff;
+    background: #fff;
+}
 .ftco-media.text-center .ftco-icon {
     margin: 0 auto; }
 
