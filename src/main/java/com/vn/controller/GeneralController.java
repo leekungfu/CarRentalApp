@@ -1,14 +1,10 @@
 package com.vn.controller;
-
-
-import com.sun.net.httpserver.HttpPrincipal;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 
 @Controller
 public class GeneralController {
@@ -27,19 +22,17 @@ public class GeneralController {
     @Autowired
     private MemberService memberService;
 
-
     @Autowired
     private Utility utility;
 
-
     @GetMapping("/about")
     public String aboutPage() {
-        return "about";
+        return "home/about";
     }
 
     @GetMapping("/signup")
     public String signUp() {
-        return "signup";
+        return "home/home_guest";
     }
 
     @PostMapping("/signup")
@@ -48,7 +41,7 @@ public class GeneralController {
         Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
-            return "signup";
+            return "home/home_guest";
         }
         memberService.save(member);
         return "redirect:/home_guest";
@@ -56,23 +49,20 @@ public class GeneralController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "account/login";
+        return "home/home_guest";
     }
 
     @PostMapping("/login")
-    public String signInPage(Principal principal) {
+    public String signInPage(@ModelAttribute("member")Member member, Model model) {
 
-        Member member = (Member) ((Authentication)principal).getPrincipal();
+            return "redirect:/home";
 
-        if("CUSTOMER".equals(member.getRole()))
-            return "redirect:/home/customer";
-        return "redirect:/home/carOwner";
     }
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
 
-        return "forgot_password";
+        return "account/forgot_password";
     }
 
     @PostMapping("/forgot_password")
@@ -99,7 +89,7 @@ public class GeneralController {
             model.addAttribute("error", "Something wrong while sending email!");
         }
 
-        return "forgot_password";
+        return "account/forgot_password";
     }
 
     @GetMapping("/reset_password")
@@ -111,10 +101,10 @@ public class GeneralController {
         model.addAttribute("token", token);
         if (member == null) {
             model.addAttribute("message", "The request is expired! Please send a new request to reset your password by entering your email again on previous step!");
-            return "reset_password";
+            return "account/reset_password";
         }
 
-        return "reset_password";
+        return "account/reset_password";
     }
 
     @PostMapping("/reset_password")
@@ -127,25 +117,18 @@ public class GeneralController {
 
         if (member == null) {
             model.addAttribute("message", "Invalid token");
-            return "reset_password";
+            return "account/reset_password";
         } else {
             memberService.updatePassword(member, password);
             model.addAttribute("message", "Reset password successfully!");
         }
 
-        return "reset_password_success";
+        return "account/reset_password_success";
     }
 
     @GetMapping("/logout")
-    public String logOut(Principal principal) {
-        return "home_guest";
-    }
-
-    @GetMapping("/ediProfile")
-    public String profilePage(Model model, Principal principal){
-        Member member = (Member) ((Authentication)principal).getPrincipal();
-        model.addAttribute("member", member);
-        return "/member/edit";
+    public String logOut() {
+        return "home/home_guest";
     }
 
 }
