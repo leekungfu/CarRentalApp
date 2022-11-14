@@ -48,7 +48,7 @@ public class GeneralController {
 
     @GetMapping("/signup")
     public String signUp() {
-        return "home/home_guest";
+        return "signup";
     }
 
     @PostMapping("/signup")
@@ -75,7 +75,7 @@ public class GeneralController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "home/home";
+        return "home/home_guest";
     }
 
     @PostMapping("/login")
