@@ -75,7 +75,7 @@ public class GeneralController {
 
     @GetMapping("/login")
     public String signIn() {
-        return "home/home";
+        return "home/home_guest";
     }
 
     @PostMapping("/login")
