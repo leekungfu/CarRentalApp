@@ -48,7 +48,7 @@ public class GeneralController {
 
     @GetMapping("/signup")
     public String signUp() {
-        return "home/home_guest";
+        return "signup";
     }
 
     @PostMapping("/signup")
