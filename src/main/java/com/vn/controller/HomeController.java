@@ -22,9 +22,6 @@ public class HomeController {
                 return x.getAuthority().contains("CUSTOMER");
             }).count();
 
-            long countRoleOWNER = detail.getAuthorities().stream().filter(x -> {
-                return x.getAuthority().contains("OWNER");
-            }).count();
             if (countRoleCustomer > 0) return "home/home_customer";
 
             return "home/home_car_owner";
@@ -32,6 +29,10 @@ public class HomeController {
         } catch (Exception e) {
             return "home/home_guest";
         }
-
     }
+    @GetMapping("/home_guest")
+    public String homeGuestPage() {
+        return "home/home_guest";
+    }
+
 }
