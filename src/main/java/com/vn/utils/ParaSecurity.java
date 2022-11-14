@@ -6,19 +6,29 @@ public class ParaSecurity {
             "/forgot_password",
             "/reset_password",
             "/signup",
-            "/signin",
-            "/home",
+            "/login",
+            "/home_guest",
+            "/about",
+            "/images/**",
             "/assets/css/**",
             "/assets/js/**",
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
-            "/images/**",
-            "/search/car"
+            "/assets/fonts/flaticon/font/**",
+            "/assets/fonts/icomoon/**",
+            "/assets/fonts/ionicons/css/**",
+            "/assets/fonts/ionicons/fonts/**",
+            "/assets/fonts/open-iconic/**",
+            "/assets/scss/bootstrap/**",
+            "/assets/scss/bootstrap/mixins/**",
+            "/assets/scss/bootstrap/utilities/**",
+            "/assets/scss/bootstrap/vendor/**",
     };
 
     public static String[] customerPages ={
             "/home/",
+            "/home_customer/",
             "/forgot_password",
             "/reset_password",
             "/customer_profile",
@@ -29,6 +39,7 @@ public class ParaSecurity {
     };
     public static String[] carOwnerPages ={
             "/home/",
+            "/home_owner/",
             "/forgot_password",
             "/reset_password",
             "/add_car",
