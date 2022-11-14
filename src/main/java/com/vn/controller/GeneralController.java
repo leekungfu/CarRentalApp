@@ -31,10 +31,7 @@ public class GeneralController {
     @Autowired
     private Utility utility;
 
-    @GetMapping("/home_guest")
-    public String homeGuestPage() {
-        return "home_guest";
-    }
+
 
 
     @GetMapping("/about")

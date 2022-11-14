@@ -9,4 +9,6 @@ public class HomeController {
     public String getHomeCustomer(){
         return "/home/home_customer";
     }
+
+
 }
