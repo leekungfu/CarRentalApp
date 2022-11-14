@@ -7,7 +7,17 @@ import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +27,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class GeneralController {
@@ -27,21 +41,31 @@ public class GeneralController {
     @Autowired
     private Utility utility;
 
+
     @GetMapping("/home_guest")
     public String homeGuestPage() {
         return "home/home_guest";
     }
 
     @GetMapping("/home")
-    public String homePageProcessing(@ModelAttribute("member")Member member) {
-//        if (member.getRole().equals("CUSTOMER")) {
-//            return "redirect:/home_customer";
-//        } else if (member.getRole().equals("OWNER")) {
-//            return "redirect:/homepagecarowner";
-//        } else {
-//            return "home/home_guest";
-//        }
-        return "home/home_car_owner";
+    public String homePageProcessing() {
+
+        UserDetails detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(detail != null) {
+            long countRole = detail.getAuthorities().stream().filter(x -> {
+                return x.getAuthority().contains("CUSTOMER");
+            }).count();
+
+            long countRoleOWNER = detail.getAuthorities().stream().filter(x -> {
+                return x.getAuthority().contains("OWNER");
+            }).count();
+            if (countRole > 0) {
+                return "redirect:/home_customer";
+            } else if (countRoleOWNER > 0) {
+                return "redirect:/homepagecarowner";
+            }
+        }
+        return "home/home_guest";
     }
 
     @GetMapping("/home_owner")
@@ -65,7 +89,7 @@ public class GeneralController {
     }
 
     @PostMapping("/signup")
-    public String signUpPage(@ModelAttribute("member")Member member, Model model) {
+    public String signUpPage(@ModelAttribute("member")Member member, Model model, HttpServletRequest request) {
 
         Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
         if (checkMem != null) {
@@ -73,7 +97,17 @@ public class GeneralController {
             return "home/home_guest";
         }
         memberService.save(member);
-        return "redirect:/home_guest";
+
+        // Auto login
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
+        authorities.add(authority);
+        User u = new User(member.getEmail(), member.getPassword(), authorities);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(u, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
