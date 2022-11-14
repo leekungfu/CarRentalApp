@@ -1,6 +1,4 @@
 package com.vn.controller;
-
-
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.utils.Utility;
@@ -26,33 +24,6 @@ public class GeneralController {
 
     @Autowired
     private Utility utility;
-
-    @GetMapping("/home_guest")
-    public String homeGuestPage() {
-        return "home/home_guest";
-    }
-
-    @GetMapping("/home")
-    public String homePageProcessing(@ModelAttribute("member")Member member) {
-//        if (member.getRole().equals("CUSTOMER")) {
-//            return "redirect:/home_customer";
-//        } else if (member.getRole().equals("OWNER")) {
-//            return "redirect:/homepagecarowner";
-//        } else {
-//            return "home/home_guest";
-//        }
-        return "home/home_car_owner";
-    }
-
-    @GetMapping("/home_owner")
-    public String homeOwnerPage() {
-        return "home/home_car_owner";
-    }
-
-    @GetMapping("/home_customer")
-    public String homeCustomerPage() {
-        return "home/home_customer";
-    }
 
     @GetMapping("/about")
     public String aboutPage() {

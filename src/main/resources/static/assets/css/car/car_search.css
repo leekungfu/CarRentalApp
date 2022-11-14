@@ -32,53 +32,24 @@ i {
     flex-direction: column;
 }
 
-.car_item {
-    display: flex;
-    padding: 32px;
-    align-items: stretch;
-}
-
-.car_image {
-    display: flex;
-    flex: 1;
-    justify-content: end;
-    padding-right: 32px;
-    align-items: center;
-}
-.carousel-inner{
-    width: 580px;
-    height: 320px;
-    border-radius: 16px;
-}
-.carousel-item img{
-    width: 580px;
-    height: 320px;
-    border-radius: 16px;
-}
-.car_info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-left: 32px;
-    padding-right: 84px;
-}
-
-.car_action button {
-    width: 150px;
-    margin-right: 24px;
-    background-color:#CC0041 ;
-}
 
 .car_paging {
     display: flex;
     padding: 16px 32px;
     justify-content: end;
+    color: black;
+    align-items: center;
+}
+.car_paging select{
+    width: 100px;
+    margin-right: 32px;
+    margin-left: 16px;
 }
 .uc20_info_header{
-    color: black;
-    font-weight: 450;
-    font-size: 1.8rem;
-}
+     color: black;
+     font-weight: 450;
+     font-size: 1.8rem;
+ }
 .uc20_info_body{
     text-align: justify;
     margin-bottom: 16px;
