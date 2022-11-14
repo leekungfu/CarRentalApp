@@ -23,6 +23,8 @@ public class Member {
 	private String fullName;
 	private LocalDate birthDay;
 	private Integer nationalID;
+
+	@Column(unique = true)
 	private String email;
 	private String password;
 	private String phone;
