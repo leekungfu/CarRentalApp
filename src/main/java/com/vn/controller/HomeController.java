@@ -22,9 +22,9 @@ public class HomeController {
                 return x.getAuthority().contains("CUSTOMER");
             }).count();
 
-            if (countRoleCustomer > 0) return "home/home_customer";
+            if (countRoleCustomer > 0) return "redirect:/home_customer";
 
-            return "home/home_car_owner";
+            return "redirect:/home_car_owner";
 
         } catch (Exception e) {
             return "home/home_guest";
@@ -33,6 +33,11 @@ public class HomeController {
     @GetMapping("/home_guest")
     public String homeGuestPage() {
         return "home/home_guest";
+    }
+
+    @GetMapping("/home_car_owner")
+    public String homeCarOwnerPage() {
+        return "home/home_car_owner";
     }
 
 }
