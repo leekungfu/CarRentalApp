@@ -1,7 +1,9 @@
 package com.vn.utils;
 
 
-public class ParaSecurity {
+import java.util.ArrayList;
+
+public class Para {
     public static String[] ignoreSecurityPages = {
             "/forgot_password",
             "/reset_password",
@@ -15,11 +17,6 @@ public class ParaSecurity {
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
-            "/images/**",
-            "/search/car",
-            "/detail_car",
-            "/rent_car",
-            "/",
             "/assets/fonts/flaticon/font/**",
             "/assets/fonts/icomoon/**",
             "/assets/fonts/ionicons/css/**",
@@ -29,7 +26,6 @@ public class ParaSecurity {
             "/assets/scss/bootstrap/mixins/**",
             "/assets/scss/bootstrap/utilities/**",
             "/assets/scss/bootstrap/vendor/**",
-
     };
 
     public static String[] customerPages ={
@@ -41,8 +37,7 @@ public class ParaSecurity {
             "/customer_booking",
             "/customer_wallet",
             "/logout",
-            "/about",
-            "/editProfile"
+            "/about"
     };
     public static String[] carOwnerPages ={
             "/home/",
@@ -55,7 +50,6 @@ public class ParaSecurity {
             "/owner_wallet",
             "/owner_reports",
             "/logout",
-            "/about",
-            "/editProfile"
+            "/about"
     };
 }

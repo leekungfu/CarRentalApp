@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class MemberController {
+
         @GetMapping("/editProfile")
         public  String updateProfile(){
 
             return "/editProfile";
         }
+
 
 }

@@ -173,6 +173,11 @@ img { max-width: 100%; }
     padding-left: 15px;
     padding-right: 15px;
 }
+.services i{
+    font-size: 1.8rem;
+    color: white;
+    margin: 0px;
+}
 
 
 /***** Footer *****/
@@ -180,6 +185,8 @@ img { max-width: 100%; }
 footer {
     padding-bottom: 70px;
 }
+
+
 
 footer .footer-border {
     width: 200px;
