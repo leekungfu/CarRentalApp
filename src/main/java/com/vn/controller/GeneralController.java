@@ -48,20 +48,20 @@ public class GeneralController {
 
     @GetMapping("/signup")
     public String signUp() {
-        return "signup";
+        return "home/home_guest";
     }
 
     @PostMapping("/signup")
-    public String signUpPage(@ModelAttribute("member")Member member, Model model, HttpServletRequest request) {
+    public String signUpPage(@ModelAttribute("member")Member member, Model model) {
 
-        Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
+        Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
             return "home/home_guest";
         }
         memberService.save(member);
 
-        // Auto login
+        // Auto login after user signed up successfully
         List<GrantedAuthority> authorities = new ArrayList<>();
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
         authorities.add(authority);
