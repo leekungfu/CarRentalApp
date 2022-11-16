@@ -14,18 +14,14 @@ public class HomeController {
         UserDetails detail;
         try {
             detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
             Member member = new Member();
             member.setFullName(detail.getUsername());
             model.addAttribute("user", member);
             long countRoleCustomer = detail.getAuthorities().stream().filter(x -> {
                 return x.getAuthority().contains("CUSTOMER");
             }).count();
-
-            if (countRoleCustomer > 0) return "redirect:/home_customer";
-
+            if (countRoleCustomer > 0) return "home/home_customer";
             return "redirect:/home_car_owner";
-
         } catch (Exception e) {
             return "home/home_guest";
         }
@@ -34,7 +30,6 @@ public class HomeController {
     public String homeGuestPage() {
         return "home/home_guest";
     }
-
     @GetMapping("/home_car_owner")
     public String homeCarOwnerPage() {
         return "home/home_car_owner";

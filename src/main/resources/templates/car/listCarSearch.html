@@ -36,27 +36,19 @@
     <span> > Search result</span>
 </div>
 
-<form action="">
-    <div class="search_car_form_content">
-        <div class="form-group" style="flex: 2; margin-right: 16px; margin-bottom: 0px">
-            <label for="location">Location</label>
-            <input type="text" class="form-control" id="location" name="city" th:value="${city}">
-        </div>
-        <div class="form-group" style="flex: 1;margin: 0px 16px">
-            <label for="from_time">From</label>
-            <input type="datetime-local" class="form-control" id="from_time">
-        </div>
-        <div class="form-group" style="flex: 1; margin: 0px 16px">
-            <label for="to_time">To</label>
-            <input type="datetime-local" class="form-control" id="to_time">
-        </div>
-        <button type="submit" class="btn btn-primary" style="flex: 1; margin-left: 16px">Search</button>
-    </div>
-</form>
+<div
+     style="background-image: url('/images/car_main.png');
+     height: 450px;
+      background-repeat: no-repeat;
+      background-position: center;
+background-size: cover;
+margin: 0px 120px">
+</div>
 
 <div class="list_car_header">
     <div>
-        <p style="color: black">There are <span th:text="${resultPage.getTotalElements()}"></span> cars that available for you!</p>
+        <p style="color: black">There are <span th:text="${resultPage.getTotalElements()}"></span> cars that available
+            for you!</p>
     </div>
     <div style="display: flex; align-items: center">
         <a href="#" class="icon_border show_list" style="background-color: #ffc107;">
