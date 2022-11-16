@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.vn.utils.CarStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,12 @@ public class Car {
 	private Integer term;
 	private String termExtra;
 	private Double rating;
+
+	@Transient
+	private Integer bookingId;
+
+	@Enumerated(EnumType.STRING)
+	private CarStatusEnum status;
 	
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
