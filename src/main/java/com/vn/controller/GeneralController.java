@@ -3,6 +3,7 @@ package com.vn.controller;
 
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
+import com.vn.utils.Const;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.sql.Array;
 import java.util.ArrayList;
@@ -73,7 +75,7 @@ public class GeneralController {
         return "redirect:/home";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/signin")
     public String signIn() {
         return "home/home_guest";
     }
@@ -154,5 +156,4 @@ public class GeneralController {
     public String logOut() {
         return "home/home_guest";
     }
-
 }

@@ -53,6 +53,10 @@ public class ParaSecurity {
             "/owner_wallet",
             "/owner_reports",
             "/logout",
-            "/about"
+            "/about",
+            "/booking/*",
+            "/car/*",
+            "/listCar",
+            "/home_car_owner"
     };
 }

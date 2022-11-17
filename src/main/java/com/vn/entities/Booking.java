@@ -24,7 +24,7 @@ public class Booking {
 	private Integer paymentMethod;
 
 	@Enumerated(EnumType.STRING)
-	private BookingStatusEnum status;
+	private BookingStatusEnum bookingStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "driver_id")

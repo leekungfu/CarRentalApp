@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 import javax.persistence.*;
 
+import com.vn.utils.CarStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,9 @@ public class Car {
 	private Integer term;
 	private String termExtra;
 	private Double rating;
+
+    @Enumerated(EnumType.STRING)
+    private CarStatusEnum status;
 	
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
@@ -60,5 +64,14 @@ public class Car {
 		imagesArray[2] = stz.nextToken();
 		return imagesArray;
 	}
+    @Transient
+    public String getName() {
+        return this.brand + " " + this.model + " " + this.year;
+    }
+
+    @Transient
+    public String getAddress() {
+        return this.district + ", " + this.city;
+    }
 
 }
