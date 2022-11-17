@@ -73,11 +73,6 @@ public class CarController {
                 pageable = PageRequest.of(currentPage - 1, pageSize);
         }
 
-                                @RequestParam("size") Optional<Integer> size) {
-        model.addAttribute("city", city);
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
         Page<Car> resultPage = carService.findByCity(city, pageable);
         List<CarDTO> carDTOs = new ArrayList<>();
         for (Car car : resultPage.getContent()) {
@@ -106,116 +101,7 @@ public class CarController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
-            model.addAttribute("currentPage", currentPage);
-            model.addAttribute("pageSize", pageSize);
-            model.addAttribute("totolPage", totalPages);
         }
-
         return "car/listCarSearch";
-
-    }
-
-    // List Car
-    @GetMapping("/listCar")
-    public String listCar(Model model) {
-        return listByPage(model, 1, "price", "asc");
-    }
-
-    // Pagin car and sorting price car
-    @GetMapping("/page/{pageNumber}")
-    public String listByPage(Model model,
-                             @PathVariable("pageNumber") int currentPage,
-                             @Param("sortField") String sortField,
-                             @Param("sortDir") String sortDir) {
-        Page<Car> page = carService.listAll(currentPage, sortField, sortDir);
-        long totalItems = page.getTotalElements();
-        int totalPages = page.getTotalPages();
-
-        List<Car> carList = page.getContent();
-
-        model.addAttribute("carList", carList);
-        model.addAttribute("totalItems", totalItems);
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-
-        String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-        model.addAttribute("reverseSortDir", reverseSortDir);
-
-        return "car/listCar";
-    }
-
-    // Add Car
-    @GetMapping("/testAddCar")
-    public String addContentUi(Model model, HttpSession session) {
-//        Member m = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
-//        if (m != null) {
-            model.addAttribute("testAddCar", new Car());
-            model.addAttribute("carStatus", CarStatusEnum.values());
-            return "/car/testAddCar";
-//        } else {
-//            return "/car/listCar";
-//        }
-    }
-
-    @PostMapping("/testAddCar")
-    public String checkAddCar(@ModelAttribute("testAddCar") Car car,
-                              HttpSession session, Model model, Principal principal) {
-
-//        Member member = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
-        Member member = (Member) ((Authentication)principal).getPrincipal();
-
-        member = memberService.findById(member.getId());
-        car.setMember(member);
-
-        carService.saveCar(car);
-        model.addAttribute("carStatus", CarStatusEnum.values());
-        model.addAttribute("messAddCar", "AddCar is susscessfull");
-        return "/car/testAddCar";
-    }
-
-    // Edit Car
-    @GetMapping(value = { "/editCar/{id}" })
-    public String editContent(Model model, @PathVariable("id") Integer idCar, HttpSession session) {
-        Car car = carService.findByIdCar(idCar);
-
-        model.addAttribute("carStatus", CarStatusEnum.values());
-        model.addAttribute("editCar", car);
-        return "/car/editCar";
-    }
-
-    @PostMapping("/editCar")
-    public String editContentById(@ModelAttribute("editCar") Car car,
-                                  HttpSession session, Model model, RedirectAttributes redirectAttributes) {
-
-//        Member member = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
-
-        Car editContent = carService.findByIdCar(car.getId());
-        editContent.setPrice(car.getPrice());
-        editContent.setDeposit(car.getDeposit());
-        editContent.setStatus(car.getStatus());
-
-        carService.update(editContent);
-
-//        List<Car> list = carService.findByIdMember(member.getId());
-//        model.addAttribute("list", list);
-
-        redirectAttributes.addFlashAttribute("messEditCar", "Edit car sucessfull");
-
-        return listCar(model);
-    }
-
-    // Delete Car
-    @GetMapping("/deleteCar/{id}")
-    public String deleteCarById(Model model, @PathVariable("id") Integer idCar, HttpSession session) {
-        Member member = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
-
-        carService.delete(idCar);
-//        List<Car> list = carService.findByIdMember(member.getId());
-//
-//        model.addAttribute("list", list);
-//        model.addAttribute("messEditContent", "Delete content sucessfull");
-        return listByPage(model, 1, "price", "asc");
     }
 }

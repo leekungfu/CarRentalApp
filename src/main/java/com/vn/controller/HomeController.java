@@ -1,16 +1,19 @@
 package com.vn.controller;
 
 import com.vn.entities.Member;
+import com.vn.utils.Const;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
     @GetMapping( "/home")
-    public String getHomePage(Model model) {
+    public String getHomePage(Model model, HttpSession session) {
         UserDetails detail;
         try {
             detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -22,8 +25,11 @@ public class HomeController {
                 return x.getAuthority().contains("CUSTOMER");
             }).count();
 
-            if (countRoleCustomer > 0) return "home/home_customer";
-
+            if (countRoleCustomer > 0) {
+                session.setAttribute(Const.SESSION_ROLE_CUSTOMER, member);
+                return "home/home_customer";
+            }
+            session.setAttribute(Const.SESSION_ROLE_CAR_OWNER, member);
             return "home/home_car_owner";
 
         } catch (Exception e) {
