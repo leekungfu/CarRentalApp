@@ -23,7 +23,6 @@ public class HomeController {
             }).count();
 
             if (countRoleCustomer > 0) return "home/home_customer";
-
             return "home/home_car_owner";
 
         } catch (Exception e) {
