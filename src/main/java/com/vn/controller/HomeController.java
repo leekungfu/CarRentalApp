@@ -9,4 +9,9 @@ public class HomeController {
     public String getHomeCustomer(){
         return "/home/home_customer";
     }
+
+    @GetMapping("home_car_owner")
+    public String getHomeCarOwner(){
+        return "/home/home_car_owner";
+    }
 }

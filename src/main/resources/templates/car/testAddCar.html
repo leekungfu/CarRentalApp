@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Car</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500"/>
+    <link rel="stylesheet" href="/assets/boostrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/assets/css/form-element.css"/>
+    <link rel="stylesheet" href="/assets/css/addCar.css">
+</head>
+<body>
+<div class="container">
+    <form action="/testAddCar" th:object="${testAddCar}" method="post" class="add-car-form-1" id="regForm">
+        <div>
+            Brand:
+            <input type="text" th:field="*{brand}" name="brand" oninput="this.className = ''"/>
+        </div>
+        <div>
+            Model:
+            <input type="text" th:field="*{model}" name="model" oninput="this.className = ''"/>
+        </div>
+        <div>
+            Year:
+            <input type="number" th:field="*{year}" name="year" oninput="this.className = ''"/>
+        </div>
+        <div>
+            District:
+            <input type="text" th:field="*{district}" name="district" oninput="this.className = ''"/>
+        </div>
+        <div>
+            City:
+            <input type="text" th:field="*{city}" name="city" oninput="this.className = ''"/>
+        </div>
+        <div>
+            Base price:
+            <input type="number" th:field="*{price}" name="price" oninput="this.className = ''"/> VND/Day
+        </div>
+        <div>
+            Required deposit:
+            <input type="number" th:field="*{deposit}" name="deposit" oninput="this.className = ''"/>
+        </div>
+        <div>
+            <label>Status:</label><select name="status" th:field="*{status}" class="form-select"
+                                          aria-label="Default select example">
+            <th:block th:each="status: ${carStatus}" th:switch="${status.name()}">
+                <option th:case="'Available'" th:value="'Available'">Available</option>
+                <option th:case="'Stopped'" th:value="'Stopped'">Stopped</option>
+            </th:block>
+        </select>
+        </div>
+        <div>
+        <button type="submit" class="btn btn-light" id="btnSubmit">Save</button>
+        <button type="reset" class="btn btn-light">Reset</button></div>
+    </form>
+</div>
+<script src="/assets/js/addCar.js"></script>
+<!-- Javascript -->
+<script src="/assets/js/jquery-1.11.1.min.js"></script>
+<script src="/assets/boostrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+        integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+</html>

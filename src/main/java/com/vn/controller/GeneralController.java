@@ -4,6 +4,7 @@ package com.vn.controller;
 import com.sun.net.httpserver.HttpPrincipal;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
+import com.vn.utils.Const;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
@@ -33,7 +35,7 @@ public class GeneralController {
 
     @GetMapping("/home_guest")
     public String homeGuestPage() {
-        return "home_guest";
+        return "/home/home_guest";
     }
 
 
@@ -44,7 +46,7 @@ public class GeneralController {
 
     @GetMapping("/signup")
     public String signUp() {
-        return "signup";
+        return "/account/signup";
     }
 
     @PostMapping("/signup")
@@ -53,25 +55,27 @@ public class GeneralController {
         Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
-            return "signup";
+            return "/account/signup";
         }
         memberService.save(member);
         return "redirect:/home_guest";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/signin")
     public String signIn() {
-        return "account/login";
+        return "/account/login";
     }
 
-    @PostMapping("/login")
-    public String signInPage(Principal principal) {
+    @PostMapping("/signin")
+    public String signInPage(Principal principal, HttpSession session) {
 
         Member member = (Member) ((Authentication)principal).getPrincipal();
 
-        if("CUSTOMER".equals(member.getRole()))
-            return "redirect:/home/customer";
-        return "redirect:/home/carOwner";
+        if("CUSTOMER".equals(member.getRole())){
+            session.setAttribute(Const.SESSION_ROLE_CUSTOMER, member);
+            return "redirect:/home/customer";}
+        session.setAttribute(Const.SESSION_ROLE_CAR_OWNER, member);
+        return "redirect:/home_car_owner";
     }
 
     @GetMapping("/forgot_password")
@@ -143,7 +147,7 @@ public class GeneralController {
 
     @GetMapping("/logout")
     public String logOut(Principal principal) {
-        return "home_guest";
+        return "/home/home_guest";
     }
 
     @GetMapping("/ediProfile")

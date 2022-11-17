@@ -45,11 +45,8 @@ public class Car {
 	private String termExtra;
 	private Double rating;
 
-	@Transient
-	private Integer bookingId;
-
-	@Enumerated(EnumType.STRING)
-	private CarStatusEnum status;
+    @Enumerated(EnumType.STRING)
+    private CarStatusEnum status;
 	
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
@@ -57,4 +54,16 @@ public class Car {
 	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;
+
+    @Transient
+    public String getName() {
+        return this.brand + " " + this.model + " " + this.year;
+    }
+
+    @Transient
+    public String getAddress() {
+        return this.district + ", " + this.city;
+    }
+
+
 }

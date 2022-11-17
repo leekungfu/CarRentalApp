@@ -1,9 +1,7 @@
 package com.vn.controller;
 
-import com.vn.entities.Booking;
 import com.vn.entities.Car;
 import com.vn.repository.CarRepository;
-import com.vn.utils.BookingStatusEnum;
 import com.vn.utils.CarStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,35 +11,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Comparator;
-
 @Controller
 public class BookingController {
-
     @Autowired
     private CarRepository carRepository;
-
-//    @GetMapping("/booking/status/{id}")
-//    public String addStatus(Model model,@PathVariable("id") Integer id) {
-//        Car car = carRepository.getOne(id);
-//        model.addAttribute("bookingStatus", BookingStatusEnum.values());
-//        model.addAttribute("car", car);
-//
-//        return "booking_status";
-//    }
 
     @GetMapping("/booking/status")
     public String addStatus2(Model model) {
         model.addAttribute("carStatus", CarStatusEnum.values());
         model.addAttribute("car", new Car());
 
-        return "booking_status";
+        return "car/booking_status";
     }
 
     // Confirm deposit
     @PostMapping("/booking/status")
-    public String checkAddStatus(@ModelAttribute("car") Car car,
-                                 Model model,RedirectAttributes redirectAttributes) {
+    public String checkAddStatus(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
 
 //        Integer bookingId = car.getBookingId();
 //        List<Booking> booking = (List<Booking>) bookingRepository.getOne(bookingId);
@@ -62,22 +47,21 @@ public class BookingController {
         model.addAttribute("carStatus", CarStatusEnum.Booked);
         model.addAttribute("car", new Car());
 
-        return "confirm_payment";
+        return "car/confirm_payment";
     }
 
     @PostMapping("/car/payment")
-    public String checkConfirmPayment(@ModelAttribute("car") Car car,
-                                 Model model,RedirectAttributes redirectAttributes) {
+    public String checkConfirmPayment(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
 
         car.setStatus(CarStatusEnum.Available);
-        car.getBookings().sort(new Comparator<Booking>() {
-            @Override
-            public int compare(Booking o1, Booking o2) {
-                return o2.getId() - o1.getId();
-            }
-        });
-        Booking booking = car.getBookings().get(0);
-        booking.setBookingStatus(BookingStatusEnum.Completed);
+//        car.getBookings().sort(new Comparator<Booking>() {
+//            @Override
+//            public int compare(Booking o1, Booking o2) {
+//                return o2.getId() - o1.getId();
+//            }
+//        });
+//        Booking booking = car.getBookings().get(0);
+//        booking.setBookingStatus(BookingStatusEnum.Completed);
 
         carRepository.save(car);
         redirectAttributes.addFlashAttribute("messPayment", "Confirm Payment successful");
@@ -85,5 +69,6 @@ public class BookingController {
 
         return "redirect:/booking/status";
     }
+
 
 }

@@ -16,4 +16,13 @@ public interface CarService {
     List<Car> findAll();
     Page<Car> findByCity(String city, Pageable pageable);
 
+    Page<Car> listAll(int pageNumber, String sortField, String sortDir);
+
+    Car findById(Integer id);
+
+    Car update(Car content);
+
+    boolean delete(Integer id);
+
+    List<Car> findByIdMember(Integer id);
 }

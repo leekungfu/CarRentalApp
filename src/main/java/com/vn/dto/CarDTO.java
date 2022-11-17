@@ -37,4 +37,6 @@ public class CarDTO {
         images[1] = stz.nextToken();
         images[2] = stz.nextToken();
     }
+
+
 }
