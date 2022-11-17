@@ -36,4 +36,9 @@ public class CarServiceImpl implements CarService {
         return carRepository.findByCity(city, pageable);
     }
 
+    @Override
+    public Car findById(Integer id) {
+        return carRepository.findById(id).orElse(null);
+    }
+
 }

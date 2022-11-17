@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="menu" th:fragment="menu(user)">
+      <div class="left">
+        <i class="fa-solid fa-car-side"></i>
+        <label>Rent a car today</label>
+      </div>
+      <nav class="nav">
+        <li style="padding: 8px 32px">
+          <a href="#">About Us</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+             aria-expanded="false" style="padding: 8px 16px 8px 0px">
+            <img th:src="@{/images/person_1.jpg}"
+                 style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">
+            <label><span th:text="${user.getFullName()}"></span></label>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" th:href="@{/my_profile(userID = ${user.getId()})}">
+                <i class="fa-solid fa-address-card"></i>
+                <label>My profile</label>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" th:href="@{/my_booking(userID = ${user.getId()})}">
+                <i class="fa-solid fa-list"></i>
+                <label>My Booking</label>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" th:href="@{/my_wallet(userID = ${user.getId()})}">
+                <i class="fa-solid fa-wallet"></i>
+                <label>My wallet</label>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" th:href="@{/logout}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <label>Logout</label>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </nav>
+    </div>
+</body>
+</html>

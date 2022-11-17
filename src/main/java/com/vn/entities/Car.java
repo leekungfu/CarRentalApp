@@ -1,6 +1,7 @@
 package com.vn.entities;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.persistence.*;
 
@@ -50,4 +51,14 @@ public class Car {
 	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;
+
+	public String[] genImage(){
+		String[] imagesArray = new String[3];
+		StringTokenizer stz = new StringTokenizer(images,",");
+		imagesArray[0] = stz.nextToken();
+		imagesArray[1] = stz.nextToken();
+		imagesArray[2] = stz.nextToken();
+		return imagesArray;
+	}
+
 }
