@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,8 +20,19 @@ public class MemberServiceImpl implements MemberService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public Member updateMember(Member member) {
-        return null;
+    public Member updateMember( Member member) {
+        Member user = memberRepository.findByEmail(member.getEmail());
+        if (user == null) {
+            return null;
+        }
+        user.setFullName(member.getFullName());
+        user.setPhone(member.getPhone());
+        user.setNationalID(member.getNationalID());
+        user.setCityID(member.getCityID());
+        user.setDistrictID(member.getDistrictID());
+        user.setWardID(member.getWardID());
+        user.setStreet(member.getStreet());
+        return memberRepository.save( member );
     }
 
     @Override
@@ -64,6 +76,11 @@ public class MemberServiceImpl implements MemberService {
     public Member findByEmail(String email) {
 
         return memberRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 
     @Override

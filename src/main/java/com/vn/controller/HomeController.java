@@ -17,6 +17,7 @@ public class HomeController {
 
             Member member = new Member();
             member.setFullName(detail.getUsername());
+
             model.addAttribute("user", member);
             long countRoleCustomer = detail.getAuthorities().stream().filter(x -> {
                 return x.getAuthority().contains("CUSTOMER");
