@@ -35,11 +35,6 @@ public class GeneralController {
         return "home/home_guest";
     }
 
-    @GetMapping("/home")
-    public String homePage() {
-        return "home/home_logout";
-    }
-
     @GetMapping("/about")
     public String aboutPage() {
         return "home/about";

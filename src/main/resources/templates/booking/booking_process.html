@@ -1,25 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" 
-				xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Booking</title>
 
 <!--CSS-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500" />
-<link rel="stylesheet" href="../../static/assets/boostrap/css/bootstrap.min.css" />
-<link rel="stylesheet" href="../../static/assets/font-awesome/css/font-awesome.min.css" />
-<link rel="stylesheet" href="../../static/assets/css/form-element.css" />
-
-<!--JS-->
-<script src="/assets/js/jquery-3.2.1.min.js"></script>
-<script src="/assets/boostrap/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
-        integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-<script type="text/javascript" src="../../static/assets/js/booking-process.js"></script>
+<link rel="stylesheet" href="assets/boostrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="assets/css/font-awesome-pro.css" />
+<link rel="stylesheet" href="assets/css/form-element.css" />
 
 </head>
 <body>
@@ -33,30 +22,30 @@
 		</ul>
 	</div>
 	<div class="steps">
-		<button class="btn btn-primary" id="bookingStep1">Step 1: Booking Information</button>
-		<button class="btn btn-primary" id="bookingStep2">Step 2: Payment</button>
-		<button class="btn btn-primary" id="bookingStep3">Step 3: Finish</button>
+		<button class="btn btn-primary progress-step1" id="bookingStep1">Step 1: Booking Information</button>
+		<button class="btn btn-primary progress-step2" id="bookingStep2">Step 2: Payment</button>
+		<button class="btn btn-primary progress-step3" id="bookingStep3">Step 3: Finish</button>
 	</div>
 	<div class="bookingSummary">
 		<div>
-			Ratings: 
-			No. of rides: 
-			Price: 
-			Location: 
-			Status: 
+			<p>Ratings: </p>
+			<p>No. of rides: </p>
+			<p>Price: </p>
+			<p>Location: </p>
+			<p>Status: </p>
 		</div>
 		<div>
-			Booking summary
-			Number of days: 
-			Price per day: 
-			Total: 
-			Deposit: 
+			<h3>Booking summary</h3>
+			<p>Number of days: </p>
+			<p>Price per day: </p>
+			<p>Total: </p>
+			<p>Deposit: </p>
 		</div>
 	</div>
 	<div class="step1">
-		<div class="renterInfo">
+		<form action="#" method="POST">
+			<div id="renter">
 			Renter's Information
-			<form>
 				<div>
 					<div class="mb-3">
 						<label for="fullName" class="form-label">Full name: </label>
@@ -96,59 +85,59 @@
 						</select>
 						<input type="text" class="form-control" id="renterAddress" name="renterAddress">
 				</div>
-			</form>
-		</div>
-		<div class="driverInfo">
-			Driver's Information
-			<div class="form-check">
-				<input type="checkbox" class="form-check-input" id="notRenter" name="notRenter">
-				<label class="form-check-label" for="notRenter">Different than Renter's information</label>
-			</div> 
-			<form>
-				<div>
-					<div class="mb-3">
-						<label for="fullName" class="form-label">Full name: </label>
-						<input type="text" class="form-control" id="driverFullName" name="driverFullName" required>
+			</div>
+			<div id="notRenterCheck">
+				Driver's Information
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" id="notRenter" name="notRenter">
+					<label class="form-check-label" for="notRenter">Different than Renter's information</label>
+				</div>
+				<div id="driver">
+					<div>
+						<div class="mb-3">
+							<label for="fullName" class="form-label">Full name: </label>
+							<input type="text" class="form-control" id="driverFullName" name="driverFullName" required>
+						</div>
+						<div class="mb-3">
+							<label for="phone" class="form-label">Phone Number: </label>
+							<input type="text" class="form-control" id="driverPhone" name="driverPhone" required>
+						</div>
+						<div class="mb-3">
+							<label for="nationalId" class="form-label">National ID No.: </label>
+							<input type="number" class="form-control" id="driverNationalId" name="driverNationalId" required>
+						</div>
+						<div class="mb-3">
+							<label for="dob" class="form-label">Date of Birth: </label>
+							<input type="date" class="form-control" id="driverDob" name="driverDob" required>
+						</div>
+						<div class="mb-3">
+							<label for="email" class="form-label">Email Address: </label>
+							<input type="email" class="form-control" id="driverEmail" name="driverEmail">
+						</div>
+						<div class="mb-3">
+							<label for="drivingLicense" class="form-label">Driving license: </label>
+							<input type="file" class="form-control" id="driverDrivingLicense" name="driverDrivingLicense">
+						</div>
 					</div>
 					<div class="mb-3">
-						<label for="phone" class="form-label">Phone Number: </label>
-						<input type="text" class="form-control" id="driverPhone" name="driverPhone" required>
-					</div>
-					<div class="mb-3">
-						<label for="nationalId" class="form-label">National ID No.: </label>
-						<input type="number" class="form-control" id="driverNationalId" name="driverNationalId" required>
-					</div>
-					<div class="mb-3">
-						<label for="dob" class="form-label">Date of Birth: </label>
-						<input type="date" class="form-control" id="driverDob" name="driverDob" required>
-					</div>
-					<div class="mb-3">
-						<label for="email" class="form-label">Email Address: </label>
-						<input type="email" class="form-control" id="driverEmail" name="driverEmail">
-					</div>
-					<div class="mb-3">
-						<label for="drivingLicense" class="form-label">Driving license: </label>
-						<input type="file" class="form-control" id="driverDrivingLicense" name="driverDrivingLicense">
+							<label for="address" class="form-label">Address: </label>
+							<select class="form-control" id="driverCity" name="driverCity">
+								<option>
+							</select>
+							<select class="form-control" id="driverDistrict" name="driverDistrict">
+								<option>
+							</select>
+							<select class="form-control" id="driverWard" name="driverWard">
+								<option>
+							</select>
+							<input type="text" class="form-control" id="driverAddress" name="driverAddress">
 					</div>
 				</div>
-				<div class="mb-3">
-						<label for="address" class="form-label">Address: </label>
-						<select class="form-control" id="driverCity" name="driverCity">
-							<option>
-						</select>
-						<select class="form-control" id="driverDistrict" name="driverDistrict">
-							<option>
-						</select>
-						<select class="form-control" id="driverWard" name="driverWard">
-							<option>
-						</select>
-						<input type="text" class="form-control" id="driverAddress" name="driverAddress">
-				</div>
-			</form>
-		</div>
+			</div>
+		</form>
 		<div>
-			<input type="button" class="btn btn-secondary" value="Cancel">
-			<input type="button" class="btn btn-link" value="Next"> 
+			<a role="button" class="btn btn-secondary" href="redirect:/search/car">Back</a>
+			<input type="button" class="btn btn-link to-step-2" value="Next"> 
 		</div>
 	</div>
 	<div class="step2">
@@ -170,7 +159,7 @@
 				Our operator will contact you for further instruction 
 		</div>
 		<div>
-			<input type="button" class="btn btn-link" value="Cancel">
+			<input type="button" class="btn btn-link to-step-1" value="Back">
 			<input type="submit" class="btn btn-primary" value="Confirm Payment">
 			<span>The deposit amount will be deducted from your wallet</span>
 		</div>
@@ -187,5 +176,15 @@
 			<button class="btn btn-primary">View Booking</button>
 		</div>
 	</div>
+
+<!--JS-->
+<script src="assets/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="assets/boostrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+        integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+
+<script src="assets/js/booking-process.js" type="text/javascript"></script>
 </body>
 </html>
