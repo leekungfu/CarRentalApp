@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/home")
-                .failureUrl("/signin?action=false")
+                .failureUrl("/home_guest?action=false")
                 .and()
                 .rememberMe()
                 .userDetailsService(userDetailsService)
