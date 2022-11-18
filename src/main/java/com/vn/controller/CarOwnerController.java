@@ -4,12 +4,14 @@ import com.vn.entities.Car;
 import com.vn.entities.Member;
 import com.vn.service.CarService;
 import com.vn.service.MemberService;
+import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.CarStatusEnum;
 import com.vn.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +36,12 @@ public class CarOwnerController {
     // List Car
     @GetMapping("/listCar")
     public String listCar(Model model, HttpSession session) {
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member m = new Member();
+        m.setFullName(detail.getUsername());
+        model.addAttribute("user", m);
+
         return listByPage(model, 1, "price", "asc", session);
     }
 
@@ -45,8 +53,14 @@ public class CarOwnerController {
                              @Param("sortDir") String sortDir, HttpSession session) {
 
         // List Car by Email Member(role: Car owner)
-        Member member = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
-        Page<Car> page = carService.listAll(currentPage, sortField, sortDir, member.getEmail());
+
+
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member m = new Member();
+        m.setFullName(detail.getUsername());
+        model.addAttribute("user", m);
+
+        Page<Car> page = carService.listAll(currentPage, sortField, sortDir, detail.getId());
         long totalItems = page.getTotalElements();
         int totalPages = page.getTotalPages();
 
@@ -61,7 +75,6 @@ public class CarOwnerController {
 
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
         model.addAttribute("reverseSortDir", reverseSortDir);
-        model.addAttribute("user", member);
         return "car/listCar";
     }
 
@@ -69,16 +82,17 @@ public class CarOwnerController {
     @GetMapping("/testAddCar")
     public String addContentUi(Model model, HttpSession session) {
         // Check role Car Owner
-        Member m = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
-        if (m != null) {
-            model.addAttribute("testAddCar", new Car());
-            model.addAttribute("carStatus", CarStatusEnum.values());
-            model.addAttribute("user", m);
-            return "/car/testAddCar";
-        } else {
-            return "/car/listCar";
-        }
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member m = new Member();
+        m.setFullName(detail.getUsername());
+        model.addAttribute("user", m);
+
+        model.addAttribute("testAddCar", new Car());
+        model.addAttribute("carStatus", CarStatusEnum.values());
+        return "/car/testAddCar";
     }
+
 
     @PostMapping("/testAddCar")
     public String checkAddCar(@Valid @ModelAttribute("testAddCar") Car car, BindingResult result,
@@ -87,11 +101,13 @@ public class CarOwnerController {
         if (result.hasErrors()) {
             return "/car/testAddCar";
         }
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        // Save Car by email Member (role: Car owner)
-        Member member = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
-        model.addAttribute("user", member);
-        member = memberService.findByEmail(member.getEmail());
+        Member m = new Member();
+        m.setFullName(detail.getUsername());
+        model.addAttribute("user", m);
+
+        Member member = memberService.findById(detail.getId());
         car.setMember(member);
 
         carService.saveCar(car);
@@ -103,6 +119,12 @@ public class CarOwnerController {
     // Edit Car
     @GetMapping("/editCar/{id}")
     public String editCar(Model model, @PathVariable("id") Integer idCar, HttpSession session) {
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member m = new Member();
+        m.setFullName(detail.getUsername());
+        model.addAttribute("user", m);
+
         Car car = carService.findByIdCar(idCar);
 
         model.addAttribute("carStatus", CarStatusEnum.values());
@@ -115,7 +137,11 @@ public class CarOwnerController {
                                   HttpSession session, Model model, RedirectAttributes redirectAttributes) {
 
         // Edit Car by email Member (role: Car owner)
-        Member member = (Member) session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member m = new Member();
+        m.setFullName(detail.getUsername());
+        model.addAttribute("user", m);
 
         Car editCar = carService.findByIdCar(car.getId());
         editCar.setPrice(car.getPrice());

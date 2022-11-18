@@ -163,7 +163,6 @@ public class GeneralController {
 
     @GetMapping("/logoutCarOwner")
     public String logout(HttpSession session){
-//        session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
         session.invalidate();
         return "redirect:/login";
     }
