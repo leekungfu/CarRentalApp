@@ -3,17 +3,12 @@ package com.vn.service.impl;
 import com.vn.entities.Member;
 import com.vn.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,10 +32,10 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Email invalid!");
         } else {
             Member member = memberOptional.get();
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
-            authorities.add(authority);
-            return new User(member.getEmail(), member.getPassword(), authorities);
+//            List<GrantedAuthority> authorities = new ArrayList<>();
+//            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
+//            authorities.add(authority);
+            return new CustomUserDetails(member);
         }
     }
 }
