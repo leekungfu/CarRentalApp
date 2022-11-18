@@ -81,7 +81,7 @@ public class GeneralController {
         return "redirect:/home";
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/login")
     public String signIn() {
         return "home/home_guest";
     }

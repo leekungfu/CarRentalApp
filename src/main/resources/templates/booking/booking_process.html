@@ -21,11 +21,6 @@
 			<li>Return date and time: </li>
 		</ul>
 	</div>
-	<div class="steps">
-		<button class="btn btn-primary progress-step1" id="bookingStep1">Step 1: Booking Information</button>
-		<button class="btn btn-primary progress-step2" id="bookingStep2">Step 2: Payment</button>
-		<button class="btn btn-primary progress-step3" id="bookingStep3">Step 3: Finish</button>
-	</div>
 	<div class="bookingSummary">
 		<div>
 			<p>Ratings: </p>
@@ -42,140 +37,132 @@
 			<p>Deposit: </p>
 		</div>
 	</div>
-	<div class="step1">
-		<form action="#" method="POST">
-			<div id="renter">
-			Renter's Information
-				<div>
-					<div class="mb-3">
-						<label for="fullName" class="form-label">Full name: </label>
-						<input type="text" class="form-control" id="renterFullName" name="renterFullName" required>
-					</div>
-					<div class="mb-3">
-						<label for="phone" class="form-label">Phone Number: </label>
-						<input type="text" class="form-control" id="renterPhone" name="renterPhone" required>
-					</div>
-					<div class="mb-3">
-						<label for="nationalId" class="form-label">National ID No.: </label>
-						<input type="number" class="form-control" id="renterNationalId" name="renterNationalId" required>
-					</div>
-					<div class="mb-3">
-						<label for="dob" class="form-label">Date of Birth: </label>
-						<input type="date" class="form-control" id="renterDob" name="renterDob" required>
-					</div>
-					<div class="mb-3">
-						<label for="email" class="form-label">Email Address: </label>
-						<input type="email" class="form-control" id="renterEmail" name="renterEmail">
-					</div>
-					<div class="mb-3">
-						<label for="drivingLicense" class="form-label">Driving license: </label>
-						<input type="file" class="form-control" id="renterDrivingLicense" name="renterDrivingLicense">
-					</div>
-				</div>
-				<div class="mb-3">
-						<label for="address" class="form-label">Address: </label>
-						<select class="form-control" id="renterCity" name="renterCity">
-							<option>
-						</select>
-						<select class="form-control" id="renterDistrict" name="renterDistrict">
-							<option>
-						</select>
-						<select class="form-control" id="renterWard" name="renterWard">
-							<option>
-						</select>
-						<input type="text" class="form-control" id="renterAddress" name="renterAddress">
-				</div>
-			</div>
-			<div id="notRenterCheck">
-				Driver's Information
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input" id="notRenter" name="notRenter">
-					<label class="form-check-label" for="notRenter">Different than Renter's information</label>
-				</div>
-				<div id="driver">
+	<form action="@{/booking_result}">
+		<div class="step1">
+			<h1>Step 1: Booking Information</h1>
+				<div id="renter">
+				Renter's Information
 					<div>
 						<div class="mb-3">
 							<label for="fullName" class="form-label">Full name: </label>
-							<input type="text" class="form-control" id="driverFullName" name="driverFullName" required>
+							<input type="text" class="form-control" id="renterFullName" name="renterFullName" required>
 						</div>
 						<div class="mb-3">
 							<label for="phone" class="form-label">Phone Number: </label>
-							<input type="text" class="form-control" id="driverPhone" name="driverPhone" required>
+							<input type="text" class="form-control" id="renterPhone" name="renterPhone" required>
 						</div>
 						<div class="mb-3">
 							<label for="nationalId" class="form-label">National ID No.: </label>
-							<input type="number" class="form-control" id="driverNationalId" name="driverNationalId" required>
+							<input type="number" class="form-control" id="renterNationalId" name="renterNationalId" required>
 						</div>
 						<div class="mb-3">
 							<label for="dob" class="form-label">Date of Birth: </label>
-							<input type="date" class="form-control" id="driverDob" name="driverDob" required>
+							<input type="date" class="form-control" id="renterDob" name="renterDob" required>
 						</div>
 						<div class="mb-3">
 							<label for="email" class="form-label">Email Address: </label>
-							<input type="email" class="form-control" id="driverEmail" name="driverEmail">
+							<input type="email" class="form-control" id="renterEmail" name="renterEmail">
 						</div>
 						<div class="mb-3">
 							<label for="drivingLicense" class="form-label">Driving license: </label>
-							<input type="file" class="form-control" id="driverDrivingLicense" name="driverDrivingLicense">
+							<input type="file" class="form-control" id="renterDrivingLicense" name="renterDrivingLicense">
 						</div>
 					</div>
 					<div class="mb-3">
 							<label for="address" class="form-label">Address: </label>
-							<select class="form-control" id="driverCity" name="driverCity">
+							<select class="form-control" id="renterCity" name="renterCity">
 								<option>
 							</select>
-							<select class="form-control" id="driverDistrict" name="driverDistrict">
+							<select class="form-control" id="renterDistrict" name="renterDistrict">
 								<option>
 							</select>
-							<select class="form-control" id="driverWard" name="driverWard">
+							<select class="form-control" id="renterWard" name="renterWard">
 								<option>
 							</select>
-							<input type="text" class="form-control" id="driverAddress" name="driverAddress">
+							<input type="text" class="form-control" id="renterAddress" name="renterAddress">
 					</div>
 				</div>
+				<div id="notRenterCheck">
+					Driver's Information
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="notRenter" name="notRenter">
+						<label class="form-check-label" for="notRenter">Different than Renter's information</label>
+					</div>
+					<div id="driver">
+						<div>
+							<div class="mb-3">
+								<label for="fullName" class="form-label">Full name: </label>
+								<input type="text" class="form-control" id="driverFullName" name="driverFullName" required>
+							</div>
+							<div class="mb-3">
+								<label for="phone" class="form-label">Phone Number: </label>
+								<input type="text" class="form-control" id="driverPhone" name="driverPhone" required>
+							</div>
+							<div class="mb-3">
+								<label for="nationalId" class="form-label">National ID No.: </label>
+								<input type="number" class="form-control" id="driverNationalId" name="driverNationalId" required>
+							</div>
+							<div class="mb-3">
+								<label for="dob" class="form-label">Date of Birth: </label>
+								<input type="date" class="form-control" id="driverDob" name="driverDob" required>
+							</div>
+							<div class="mb-3">
+								<label for="email" class="form-label">Email Address: </label>
+								<input type="email" class="form-control" id="driverEmail" name="driverEmail">
+							</div>
+							<div class="mb-3">
+								<label for="drivingLicense" class="form-label">Driving license: </label>
+								<input type="file" class="form-control" id="driverDrivingLicense" name="driverDrivingLicense">
+							</div>
+						</div>
+						<div class="mb-3">
+								<label for="address" class="form-label">Address: </label>
+								<select class="form-control" id="driverCity" name="driverCity">
+									<option>
+								</select>
+								<select class="form-control" id="driverDistrict" name="driverDistrict">
+									<option>
+								</select>
+								<select class="form-control" id="driverWard" name="driverWard">
+									<option>
+								</select>
+								<input type="text" class="form-control" id="driverAddress" name="driverAddress">
+						</div>
+					</div>
+				</div>
+			<div>
+				<a role="button" class="btn btn-secondary" href="redirect:/search/car">Back</a>
+				<input type="button" class="btn btn-link" id="to-tep-2" value="Next" th:onclick="step2Display()"> 
 			</div>
-		</form>
-		<div>
-			<a role="button" class="btn btn-secondary" href="redirect:/search/car">Back</a>
-			<input type="button" class="btn btn-link to-step-2" value="Next"> 
 		</div>
-	</div>
-	<div class="step2">
-		Please select your payment method:
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="wallet" id="wallet">
-			<label class="form-check-label" for="wallet">My wallet</label>
-			Current balance: <span></span> <span class="text-danger">(Insufficient)</span>
-			Please go to My wallet to top-up and try again
+		<div class="step2">
+			<h1>Step 2: Payment Processing</h1>
+			<div>
+				<h3>Please select your payment method:</h3>
+				<div class="form-check">
+					<label class="form-check-label" for="wallet">My wallet</label>
+					<input class="form-check-input" type="radio" name="wallet" id="wallet">
+					<p>Current balance: <span></span> <span class="text-danger">(Insufficient)</span></p>
+					<p>Please go to My wallet to top-up and try again</p>
+				</div>
+				<div class="form-check">
+					<label class="form-check-label" for="wallet">Cash</label>
+					<input class="form-check-input" type="radio" name="cash" id="cash">
+					<p>Our operator will contact you for further instruction</p>
+				</div>
+				<div class="form-check">
+					<label class="form-check-label" for="bankTransfer">Bank Transfer</label>
+					<input class="form-check-input" type="radio" name="bankTransfer" id="bankTransfer">
+					<p>Our operator will contact you for further instruction</p>
+				</div>
+			</div>
+			<div>
+				<input type="button" class="btn btn-link" id="to-step-1" value="Back" th:onclick="initialDisplay()">
+				<input type="submit" class="btn btn-primary" value="Confirm Payment">
+				<span>The deposit amount will be deducted from your wallet</span>
+			</div>
 		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="cash" id="cash">
-			<label class="form-check-label" for="wallet">Cash</label>
-				Our operator will contact you for further instruction 
-		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="bankTransfer" id="bankTransfer">
-			<label class="form-check-label" for="bankTransfer">Bank Transfer</label>
-				Our operator will contact you for further instruction 
-		</div>
-		<div>
-			<input type="button" class="btn btn-link to-step-1" value="Back">
-			<input type="submit" class="btn btn-primary" value="Confirm Payment">
-			<span>The deposit amount will be deducted from your wallet</span>
-		</div>
-	</div>
-	<div class="step3">
-		<div>
-			<p>You've successfully booked  from  to </p>
-			<p>Your booking number is: </p>
-			<p>Our operator will contact you with further guidance about pickup.</p>
-		</div>
-		<div>
-			<a class="btn btn-link" href="../home/home_guest.html" role="button">Go to homepage</a>
-			<button class="btn btn-secondary">Book another car</button>
-			<button class="btn btn-primary">View Booking</button>
-		</div>
-	</div>
+	</form>
 
 <!--JS-->
 <script src="assets/js/jquery-1.11.1.min.js" type="text/javascript"></script>
