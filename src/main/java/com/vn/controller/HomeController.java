@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping( "/home")
+
+    @GetMapping("/home")
     public String getHomePage(Model model) {
         CustomUserDetails detail;
         try {
@@ -33,6 +34,7 @@ public class HomeController {
             return "home/home_guest";
         }
     }
+    
     @GetMapping("/home_guest")
     public String homeGuestPage() {
         return "home/home_guest";

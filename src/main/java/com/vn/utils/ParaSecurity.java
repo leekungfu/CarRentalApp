@@ -16,6 +16,7 @@ public class ParaSecurity {
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
+            "/booking_process",
             "/images/**",
             "/search/car",
             "/detail_car",
