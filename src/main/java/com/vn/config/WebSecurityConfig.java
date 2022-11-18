@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/home_logout")
                 .deleteCookies("remember-me", "JSESSIONID")
                 .clearAuthentication(true)
+                .logoutSuccessUrl("/login")
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers(ParaSecurity.ignoreSecurityPages)

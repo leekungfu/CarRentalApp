@@ -23,4 +23,6 @@ public interface MemberService {
     Member findByEmail(String email);
 
     Optional<Member> findUserById(Integer id);
+
+    Member findById(Integer id);
 }

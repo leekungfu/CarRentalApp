@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home Page Car Owner</title>
+    <title>Edit Car</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
           rel="stylesheet">
 
@@ -35,26 +36,35 @@
     <link rel="stylesheet" href="/assets/boostrap/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="/assets/boostrap/css/jquery.timepicker.css">
     <link rel="stylesheet" href="/assets/boostrap/css/style.css">
-
 </head>
-
 <body>
+
 <div th:insert="~{/fragment/header::menu(${user})}">
 </div>
+<div class="container">
+    <form action="/editCar" th:object="${editCar}" method="post" class="add-car-form-1" id="regForm">
+        <div>
+            <label>Status:</label><select name="status" th:field="*{status}" class="form-select"
+                                          aria-label="Default select example">
+            <th:block th:each="status: ${carStatus}" th:switch="${status.name()}">
+                <option th:case="'Available'" th:value="'Available'">Available</option>
+                <option th:case="'Stopped'" th:value="'Stopped'">Stopped</option>
+            </th:block>
+        </select>
+        </div>
+        <div>
+            Base price:
+            <input type="number" th:field="*{price}" name="price" oninput="this.className = ''"/> VND/Day
+        </div>
+        <div>
+            Required deposit:
+            <input type="number" th:field="*{deposit}" name="deposit" oninput="this.className = ''"/>
+        </div>
 
-<div class="list_car_header">
-    <div style="display: flex; align-items: center">
-        <h5>Make money on your car right away</h5>
-        <!--        <a href="/testAddCar" class="btn btn-outline-primary">Add Car</a>-->
-        <!--        <a href="/listCar" class="btn btn-outline-primary">List Your Car Today</a>-->
-        <!--        <a href="/logoutCarOwner" class="btn btn-outline-primary">Log out</a>-->
-    </div>
+        <button type="submit" class="btn btn-light" id="btnSubmit">Save</button>
+        <button type="reset" class="btn btn-light">Reset</button>
+    </form>
 </div>
-<div><a href="/testAddCar" class="btn btn-outline-primary">Add Car</a>
-    <a href="/listCar" class="btn btn-outline-primary">List Your Car Today</a>
-    <a href="/logout" class="btn btn-outline-primary">Log Out</a>
-</div>
-
 <!--FOOTER BEGIN-->
 <footer class="ftco-footer ftco-bg-dark ftco-section">
     <div class="container">

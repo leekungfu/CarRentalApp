@@ -70,4 +70,9 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findById(id);
 
     }
+
+    @Override
+    public Member findById(Integer id) {
+        return memberRepository.getOne(id);
+    }
 }

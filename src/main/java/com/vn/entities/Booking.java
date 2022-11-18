@@ -2,14 +2,9 @@ package com.vn.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+import com.vn.utils.BookingStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +22,9 @@ public class Booking {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private Integer paymentMethod;
-	private Integer status;
+
+	@Enumerated(EnumType.STRING)
+	private BookingStatusEnum bookingStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "driver_id")
