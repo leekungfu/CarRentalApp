@@ -1,6 +1,5 @@
 package com.vn.controller;
 
-
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.utils.Utility;
@@ -41,6 +40,7 @@ public class GeneralController {
     @Autowired
     private Utility utility;
 
+
     @GetMapping("/about")
     public String aboutPage() {
         return "home/about";
@@ -49,11 +49,13 @@ public class GeneralController {
     @GetMapping("/home_logout")
     public String testLogout() {
         return "home/home_logout";
+
     }
 
     @GetMapping("/signup")
     public String signUp() {
         return "home/home_guest";
+
     }
 
     @PostMapping("/signup")
@@ -62,6 +64,7 @@ public class GeneralController {
         Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
+
             return "home/home_guest";
         }
         memberService.save(member);
@@ -82,6 +85,7 @@ public class GeneralController {
     public String signIn() {
         return "home/home_guest";
     }
+
 
     @PostMapping("/login")
     public String signInPage() {

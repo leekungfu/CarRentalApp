@@ -29,8 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+        http   	.csrf().disable()
                 .cors()
                 .and()
                 .formLogin()
@@ -39,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/home")
-                .failureUrl("/home_guest?action=false")
+                .failureUrl("/login?action=false")
                 .and()
                 .rememberMe()
                 .userDetailsService(userDetailsService)
@@ -49,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMeCookieName("remember-me")
                 .and()
                 .logout()
-                .logoutUrl("/logout")
+                .logoutUrl("/home_logout")
                 .deleteCookies("remember-me", "JSESSIONID")
                 .clearAuthentication(true)
                 .and()
