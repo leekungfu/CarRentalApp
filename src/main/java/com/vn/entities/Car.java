@@ -6,7 +6,9 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
+import com.vn.utils.CarStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
