@@ -17,9 +17,7 @@ public interface CarService {
     Page<Car> findByCity(String city, Pageable pageable);
 
     Car findById(Integer id);
-    Page<Car> listAll(int pageNumber, String sortField, String sortDir,Integer id);
-
-//    Page<Car> findByMemberEmail(String email, Pageable pageable);
+    Page<Car> listCarByMemberId(Integer id,Pageable pageable);
 
     Car findByIdCar(Integer id);
 
@@ -27,5 +25,4 @@ public interface CarService {
 
     boolean delete(Integer id);
 
-//    List<Car> findByIdMember(Integer id);
 }

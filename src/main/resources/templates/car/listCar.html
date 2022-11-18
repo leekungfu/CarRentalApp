@@ -52,132 +52,23 @@
     <span> > My Cars</span>
 </div>
 
-<!--<div class="container py-5">-->
-<!--    <div class="row text-center text-white mb-5">-->
-<!--        <div class="col-lg-7 mx-auto">-->
-<!--            <h1 class="display-4">List of Car</h1>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="row">-->
-<!--        <div class="col-lg-8 mx-auto">-->
-<!--            &lt;!&ndash; List group&ndash;&gt;-->
-<!--            <ul class="list-group shadow">-->
-<!--                &lt;!&ndash; list group item&ndash;&gt;-->
-<!--                <li class="list-group-item">-->
-<!--                    &lt;!&ndash; Custom content&ndash;&gt;-->
-<!--                    <a th:href="@{'/page/' +${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">Sort-->
-<!--                        Price</a>-->
-<!--                    <th:block th:each="list : ${carList}">-->
-<!--                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">-->
-<!--                            <div class="media-body order-2 order-lg-1">-->
-<!--                                <h5 th:utext="${list.name}" class="mt-0 font-weight-bold mb-2"></h5>-->
-<!--                                <p th:utext="${list.price}" class="font-italic text-muted mb-0 small"></p>-->
-<!--                                <div class="d-flex align-items-center justify-content-between mt-1">-->
-<!--                                    <p th:utext="${list.address}" class="font-italic text-muted mb-0 small"></p>-->
-<!--                                    <ul class="list-inline small">-->
-<!--                                        <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-<!--                                        </li>-->
-<!--                                        <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-<!--                                        </li>-->
-<!--                                        <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-<!--                                        </li>-->
-<!--                                        <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-<!--                                        </li>-->
-<!--                                        <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                                <p th:utext="${list.licensePlate}" class="font-italic text-muted mb-0 small"></p>-->
-<!--                            </div>-->
-<!--                            <img src="https://i.imgur.com/KFojDGa.jpg" alt="Generic placeholder image" width="200"-->
-<!--                                 class="ml-lg-5 order-1 order-lg-2">-->
-<!--                        </div> &lt;!&ndash; End &ndash;&gt;-->
-<!--                    </th:block>-->
-<!--                    <div class="text-center">Total Items: [[${totalItems}]] - Page [[${currentPage}]] of-->
-<!--                        [[${totalPages}]]-->
-<!--                        &nbsp; - &nbsp;-->
-
-<!--                        <a th:if="${currentPage > 1}"-->
-<!--                           th:href="@{'/page/1' + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">First</a>-->
-<!--                        <a th:unless="${currentPage > 1}">First</a>-->
-<!--                        &nbsp;-->
-
-<!--                        <a th:if="${currentPage > 1}"-->
-<!--                           th:href="@{'/page/' + ${currentPage - 1}  + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">Previous</a>-->
-<!--                        <a th:unless="${currentPage > 1}">Previous</a>-->
-<!--                        &nbsp;-->
-
-<!--                        <span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
-<!--                            <a th:if="${i != currentPage}"-->
-<!--                               th:href="@{'/page/' + ${i} + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
-<!--                            <span th:unless="${i != currentPage}">[[${i}]]</span>-->
-<!--                            &nbsp;&nbsp;-->
-<!--                        </span>-->
-
-<!--                        <a th:if="${currentPage < totalPages}"-->
-<!--                           th:href="@{'/page/' + ${currentPage + 1}  + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">Next</a>-->
-<!--                        <a th:unless="${currentPage < totalPages}">Next</a>-->
-<!--                        &nbsp;-->
-
-<!--                        <a th:if="${currentPage < totalPages}"-->
-<!--                           th:href="@{'/page/' + ${totalPages}  + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">Last</a>-->
-<!--                        <a th:unless="${currentPage < totalPages}">Last</a>-->
-<!--                        &nbsp;-->
-<!--                    </div>-->
-
-
-<!--                </li> &lt;!&ndash; End &ndash;&gt;-->
-<!--            </ul> &lt;!&ndash; End &ndash;&gt;-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--LIST CAR BEGIN-->
 <div class="list_car_header">
     <div style="display: flex; align-items: center">
-        <a th:href="@{'/page/' +${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}" class="icon_border show_list" style="background-color: #ffc107;">
+        <a th:href="@{'/page/' +${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}"
+           class="icon_border show_list" style="background-color: #ffc107;">
             Sort Price
         </a>
         <a href="/testAddCar" class="icon_border show_table">
             Add car</i>
         </a>
-
+        <div class="text-success" th:utext="${message}"></div>
     </div>
 </div>
 <!--LIST CAR END-->
 
 <!--CONTENT BEGIN-->
 <div class="list_car_content" th:if="${totalItems>0}">
-    <div th:utext="${messEditCar}"></div>
     <div class="car_item" th:each="list :${carList}">
-<!--        <div class="car_image">-->
-<!--            <div th:id="'carDTO' + ${carDTO.getId()}" class="carousel slide" data-ride="carousel">-->
-<!--                <ol class="carousel-indicators">-->
-<!--                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>-->
-<!--                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>-->
-<!--                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>-->
-<!--                </ol>-->
-<!--                <div class="carousel-inner">-->
-<!--                    <div class="carousel-item active">-->
-<!--                        <img class="d-block w-100" th:src="@{${carDTO.getImages()[0]}}" alt="First slide">-->
-<!--                    </div>-->
-<!--                    <div class="carousel-item">-->
-<!--                        <img class="d-block w-100" th:src="@{${carDTO.getImages()[1]}}" alt="Second slide">-->
-<!--                    </div>-->
-<!--                    <div class="carousel-item">-->
-<!--                        <img class="d-block w-100" th:src="@{${carDTO.getImages()[2]}}" alt="Third slide">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <a class="carousel-control-prev" th:href="'#'+ 'carDTO' + ${carDTO.getId()}" role="button"-->
-<!--                   data-slide="prev">-->
-<!--                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
-<!--                    <span class="sr-only">Previous</span>-->
-<!--                </a>-->
-<!--                <a class="carousel-control-next" th:href="'#' + 'carDTO' + ${carDTO.getId()}" role="button"-->
-<!--                   data-slide="next">-->
-<!--                    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
-<!--                    <span class="sr-only">Next</span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="car_info">
             <div class="uc20_info_header">
                 <label th:utext="${list.name}"></label>
@@ -201,7 +92,35 @@
             </div>
             <div class="car_action">
                 <a class="btn btn-primary" th:href="@{/editCar/{id}(id=${list.id})}">View details</a>
-                <a class="btn btn-primary" th:href="@{/deleteCar/{id}(id=${list.id})}">Delete</a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#confirmDedete">
+                    Delete
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="confirmDedete" tabindex="-1" role="dialog"
+                     aria-labelledby="confirmDedeteLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content p-4">
+                            <div class="modal-header pt-1 pl-2">
+                                <h5 class="modal-title" id="confirmDedeteLabel">Confirm delete</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-check pt-4">
+                                    <p class="justify">Do you really want to delete the car?</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer pt-4">
+                                <button type="button" class="btn btn-light mx-auto" style="width:45%"
+                                        data-dismiss="modal">No
+                                </button>
+                                <a th:href="@{/deleteCar/{id}(id=${list.id})}" class="btn btn-light mx-auto" style="width:45%">Yes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

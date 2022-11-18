@@ -9,6 +9,9 @@ import com.vn.utils.CarStatusEnum;
 import com.vn.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,20 +55,25 @@ public class CarOwnerController {
                              @Param("sortField") String sortField,
                              @Param("sortDir") String sortDir, HttpSession session) {
 
-        // List Car by Email Member(role: Car owner)
-
-
+        //Header: Show login email
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member m = new Member();
         m.setFullName(detail.getUsername());
         model.addAttribute("user", m);
 
-        Page<Car> page = carService.listAll(currentPage, sortField, sortDir, detail.getId());
+        // List Car by Email Member(role: Car owner)
+        Sort sort = Sort.by("price");
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+        Pageable pageable = PageRequest.of(currentPage - 1, 4, sort);
+
+        Page<Car> page = carService.listCarByMemberId(detail.getId(), pageable);
         long totalItems = page.getTotalElements();
         int totalPages = page.getTotalPages();
 
         List<Car> carList = page.getContent();
 
+        String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("carList", carList);
         model.addAttribute("totalItems", totalItems);
         model.addAttribute("currentPage", currentPage);
@@ -73,8 +81,6 @@ public class CarOwnerController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
 
-        String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-        model.addAttribute("reverseSortDir", reverseSortDir);
         return "car/listCar";
     }
 
@@ -96,13 +102,12 @@ public class CarOwnerController {
 
     @PostMapping("/testAddCar")
     public String checkAddCar(@Valid @ModelAttribute("testAddCar") Car car, BindingResult result,
-                              HttpSession session, Model model) {
+                              HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         // Validate Add Car
         if (result.hasErrors()) {
             return "/car/testAddCar";
         }
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         Member m = new Member();
         m.setFullName(detail.getUsername());
         model.addAttribute("user", m);
@@ -112,8 +117,8 @@ public class CarOwnerController {
 
         carService.saveCar(car);
         model.addAttribute("carStatus", CarStatusEnum.values());
-        model.addAttribute("messAddCar", "AddCar is susscessfull");
-        return "/car/testAddCar";
+        redirectAttributes.addFlashAttribute("message", "AddCar is susscessfull");
+        return "redirect:/listCar";
     }
 
     // Edit Car
@@ -132,9 +137,9 @@ public class CarOwnerController {
         return "/car/editCar";
     }
 
-    @PostMapping("/editCar/{id}")
-    public String editContentById(@PathVariable("id") Integer idCar, @ModelAttribute("editCar") Car car,
-                                  HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+    @PostMapping("/editCar")
+    public String editContentById(@ModelAttribute("editCar") Car car,
+                                  Model model, RedirectAttributes redirectAttributes) {
 
         // Edit Car by email Member (role: Car owner)
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -149,16 +154,16 @@ public class CarOwnerController {
         editCar.setStatus(car.getStatus());
 
         carService.update(editCar);
-
-        redirectAttributes.addFlashAttribute("messEditCar", "Edit car sucessfull");
-
-        return listByPage(model, 1, "price", "asc", session);
+        redirectAttributes.addFlashAttribute("message", "Edit car sucessfull");
+        return "redirect:/listCar";
     }
 
     // Delete Car
     @GetMapping("/deleteCar/{id}")
-    public String deleteCarById(Model model, @PathVariable("id") Integer idCar, HttpSession session) {
+    public String deleteCarById(Model model, @PathVariable("id") Integer idCar,
+                                RedirectAttributes redirectAttributes) {
         carService.delete(idCar);
-        return listByPage(model, 1, "price", "asc", session);
+        redirectAttributes.addFlashAttribute("message", "Delete car sucessfull");
+        return "redirect:/listCar";
     }
 }

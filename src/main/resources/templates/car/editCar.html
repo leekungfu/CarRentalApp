@@ -41,8 +41,16 @@
 
 <div th:insert="~{/fragment/header::menu(${user})}">
 </div>
+<div style="margin:32px">
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/listCar}"> > My Cars</a>
+    <span> > Edit details</span>
+</div>
+
 <div class="container">
     <form action="/editCar" th:object="${editCar}" method="post" class="add-car-form-1" id="regForm">
+        <h3 class="form-add-header">Edit car details</h3>
+        <input path="id" type="hidden" id="id" name="id" th:field="*{id}"/>
         <div>
             <label>Status:</label><select name="status" th:field="*{status}" class="form-select"
                                           aria-label="Default select example">
@@ -61,8 +69,8 @@
             <input type="number" th:field="*{deposit}" name="deposit" oninput="this.className = ''"/>
         </div>
 
-        <button type="submit" class="btn btn-light" id="btnSubmit">Save</button>
-        <button type="reset" class="btn btn-light">Reset</button>
+        <input type="submit" class="btn btn-success" value="Save">
+        <input type="reset" class="btn btn-success" value="Reset">
     </form>
 </div>
 <!--FOOTER BEGIN-->
