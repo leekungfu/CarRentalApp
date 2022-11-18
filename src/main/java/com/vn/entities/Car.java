@@ -5,11 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,14 +41,23 @@ public class Car {
 	private String description;
 	private String addFunction;
 	private String images;
+    @NotEmpty
 	private Double price;
+    @NotEmpty
 	private Double deposit;
 	private String term;
 	private String termExtra;
 	private Double rating;
-	
+
+    @Enumerated(EnumType.STRING)
+    private CarStatusEnum status;
+
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
+
+	@ManyToOne
+	@JoinColumn(name = "member_id")
+	private Member member;
 
 	public String[] genImage(){
 		String[] imagesArray = new String[3];
@@ -85,5 +90,14 @@ public class Car {
 		if(delta >0 && delta<=0.5)
 			result =1;
 		return  result;
+	}
+	@Transient
+	public String getName() {
+		return this.brand + " " + this.model + " " + this.year;
+	}
+
+	@Transient
+	public String getAddress() {
+		return this.district + ", " + this.city;
 	}
 }

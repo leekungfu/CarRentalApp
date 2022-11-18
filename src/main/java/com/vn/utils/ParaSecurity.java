@@ -7,6 +7,7 @@ public class ParaSecurity {
             "/reset_password",
             "/signup",
             "/login",
+            "/home_logout",
             "/home_guest",
             "/about",
             "/images/**",
@@ -15,6 +16,7 @@ public class ParaSecurity {
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
+            "/booking_process",
             "/images/**",
             "/search/car",
             "/detail_car",
@@ -43,6 +45,10 @@ public class ParaSecurity {
             "/owner_wallet",
             "/owner_reports",
             "/logout",
-            "/about"
+            "/about",
+            "/booking/*",
+            "/car/*",
+            "/listCar",
+            "/home_car_owner"
     };
 }

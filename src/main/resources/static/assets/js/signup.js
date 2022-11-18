@@ -72,20 +72,4 @@ $(document).ready(function () {
 
         },
     });
-
-    // $(document).on("click", "#signUpSubmit", function () {
-    //     if ($("#signUpForm").valid()) {
-    //         $.ajax({
-    //             method: "GET",
-    //             // url: "./add_content",
-    //             success: function (res) {
-    //                 $("#loginPage").html(res);
-    //             },
-    //             error: function (err) {
-    //                 console.log(err);
-    //             },
-    //         });
-    //     }
-    // });
-
 });
