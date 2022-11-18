@@ -11,9 +11,19 @@ import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
     private final Member member;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public CustomUserDetails(Member member) {
         this.member = member;
+        this.id = member.getId();
     }
 
     @Override
