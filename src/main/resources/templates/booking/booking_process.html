@@ -37,7 +37,7 @@
 			<p>Deposit: </p>
 		</div>
 	</div>
-	<form action="@{/booking_result}">
+	<form th:action="@{/booking_result}" method="POST">
 		<div class="step1">
 			<h1>Step 1: Booking Information</h1>
 				<div id="renter">
@@ -92,19 +92,19 @@
 						<div>
 							<div class="mb-3">
 								<label for="fullName" class="form-label">Full name: </label>
-								<input type="text" class="form-control" id="driverFullName" name="driverFullName" required>
+								<input type="text" class="form-control" id="driverFullName" name="driverFullName">
 							</div>
 							<div class="mb-3">
 								<label for="phone" class="form-label">Phone Number: </label>
-								<input type="text" class="form-control" id="driverPhone" name="driverPhone" required>
+								<input type="text" class="form-control" id="driverPhone" name="driverPhone">
 							</div>
 							<div class="mb-3">
 								<label for="nationalId" class="form-label">National ID No.: </label>
-								<input type="number" class="form-control" id="driverNationalId" name="driverNationalId" required>
+								<input type="number" class="form-control" id="driverNationalId" name="driverNationalId">
 							</div>
 							<div class="mb-3">
 								<label for="dob" class="form-label">Date of Birth: </label>
-								<input type="date" class="form-control" id="driverDob" name="driverDob" required>
+								<input type="date" class="form-control" id="driverDob" name="driverDob">
 							</div>
 							<div class="mb-3">
 								<label for="email" class="form-label">Email Address: </label>
@@ -140,26 +140,28 @@
 			<div>
 				<h3>Please select your payment method:</h3>
 				<div class="form-check">
-					<label class="form-check-label" for="wallet">My wallet</label>
-					<input class="form-check-input" type="radio" name="wallet" id="wallet">
-					<p>Current balance: <span></span> <span class="text-danger">(Insufficient)</span></p>
-					<p>Please go to My wallet to top-up and try again</p>
-				</div>
-				<div class="form-check">
-					<label class="form-check-label" for="wallet">Cash</label>
-					<input class="form-check-input" type="radio" name="cash" id="cash">
-					<p>Our operator will contact you for further instruction</p>
-				</div>
-				<div class="form-check">
-					<label class="form-check-label" for="bankTransfer">Bank Transfer</label>
-					<input class="form-check-input" type="radio" name="bankTransfer" id="bankTransfer">
-					<p>Our operator will contact you for further instruction</p>
+					<div>
+						<input class="form-check-input" type="radio" name="payment" id="wallet" value=1>
+						<label class="form-check-label" for="wallet">My wallet</label>
+						<p>Current balance: <span></span> <span class="text-danger">(Insufficient)</span></p>
+						<p>The deposit amount will be deducted from your wallet</p>
+						<p>Please go to My wallet to top-up and try again</p>
+					</div>
+					<div>
+						<input class="form-check-input" type="radio" name="payment" id="cash" value=2>
+						<label class="form-check-label" for="cash">Cash</label>
+						<p>Our operator will contact you for further instruction</p>
+					</div>
+					<div>
+						<input class="form-check-input" type="radio" name="payment" id="bankTransfer" value=3>
+						<label class="form-check-label" for="bankTransfer">Bank Transfer</label>
+						<p>Our operator will contact you for further instruction</p>
+					</div>
 				</div>
 			</div>
 			<div>
 				<input type="button" class="btn btn-link" id="to-step-1" value="Back" th:onclick="initialDisplay()">
 				<input type="submit" class="btn btn-primary" value="Confirm Payment">
-				<span>The deposit amount will be deducted from your wallet</span>
 			</div>
 		</div>
 	</form>

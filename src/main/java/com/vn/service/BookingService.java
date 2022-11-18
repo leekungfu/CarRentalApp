@@ -8,7 +8,7 @@ import com.vn.entities.Booking;
 
 @Service
 public interface BookingService {
-	List<Booking> findAllBookingsByMember(Integer userId);
+	List<Booking> findAllByMember(Integer userId);
 	
 	Booking findBookingById(Integer bookingId);
 	

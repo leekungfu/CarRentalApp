@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Booking Detail</title>
@@ -7,4 +7,22 @@
 <body>
 	Booking Details
 </body>
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Car id</th>
+					<th>Member id</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${booking.id}"></td>
+					<td th:text="${booking.car_id}"></td>
+					<td th:text="${booking.driver_id}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </html>

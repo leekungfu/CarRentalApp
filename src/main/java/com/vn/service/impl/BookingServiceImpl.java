@@ -15,8 +15,8 @@ public class BookingServiceImpl implements BookingService{
 	BookingRepository bookingRepository;
 	
 	@Override
-	public List<Booking> findAllBookingsByMember(Integer memberId) {
-		return bookingRepository.findAllBookingsByMember(memberId);
+	public List<Booking> findAllByMember(Integer memberId) {
+		return bookingRepository.findAllByMember(memberId);
 	}
 
 	@Override
@@ -26,8 +26,7 @@ public class BookingServiceImpl implements BookingService{
 
 	@Override
 	public Booking addBooking(Booking booking) {
-		// TODO Auto-generated method stub
-		return null;
+		return bookingRepository.save(booking);
 	}
 
 	@Override
@@ -38,8 +37,7 @@ public class BookingServiceImpl implements BookingService{
 
 	@Override
 	public Booking updateBooking(Booking booking) {
-		// TODO Auto-generated method stub
-		return null;
+		return bookingRepository.save(booking);
 	}
 
 }

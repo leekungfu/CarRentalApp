@@ -9,5 +9,5 @@ import com.vn.entities.Booking;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-	List<Booking> findAllBookingsByMember(Integer memberId);
+	List<Booking> findAllByMember(Integer memberId);
 }
