@@ -13,13 +13,11 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getHomePage(Model model) {
-        CustomUserDetails detail;
+        // Use UserDetails to authorize and redirect new User to exactly home page with their role
+        // Do not use CustomUserDetails!!!
+        UserDetails detail;
         try {
-            detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-            int a = detail.getId();
-            System.out.println(a);
-
+            detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Member member = new Member();
             member.setFullName(detail.getUsername());
             model.addAttribute("user", member);
