@@ -26,7 +26,6 @@ public class HomeController {
             }).count();
 
             if (countRoleCustomer > 0) {
-                session.setAttribute(Const.SESSION_ROLE_CUSTOMER, member);
                 return "home/home_customer";
             }
             session.setAttribute(Const.SESSION_ROLE_CAR_OWNER, member);

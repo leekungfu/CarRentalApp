@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.vn.utils.CarStatusEnum;
 import lombok.AllArgsConstructor;
@@ -20,8 +23,11 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+    @NotEmpty
 	private String brand;
+    @NotEmpty
 	private String model;
+    @NotEmpty
 	private Integer year;
 	private String licensePlate;
 	private String color;
@@ -33,14 +39,18 @@ public class Car {
 	private String insuranceUrl;
 	private Double mileage;
 	private Double fuelConsumption;
+    @NotEmpty
 	private String city;
+    @NotEmpty
 	private String district;
 	private String ward;
 	private String street;
 	private String description;
 	private Integer addFunction;
 	private String images;
+    @NotEmpty
 	private Double price;
+    @NotEmpty
 	private Double deposit;
 	private Integer term;
 	private String termExtra;

@@ -8,6 +8,7 @@ import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -81,9 +82,7 @@ public class GeneralController {
     }
 
     @PostMapping("/login")
-    public String signInPage() {
-            return "redirect:/home";
-    }
+    public String signInPage(){return "redirect:/home";}
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
@@ -155,5 +154,12 @@ public class GeneralController {
     @GetMapping("/logout")
     public String logOut() {
         return "home/home_guest";
+    }
+
+    @GetMapping("/logoutCarOwner")
+    public String logout(HttpSession session){
+//        session.getAttribute(Const.SESSION_ROLE_CAR_OWNER);
+        session.invalidate();
+        return "redirect:/login";
     }
 }

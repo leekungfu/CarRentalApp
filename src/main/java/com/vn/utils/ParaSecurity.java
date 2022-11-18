@@ -29,6 +29,7 @@ public class ParaSecurity {
             "/assets/scss/bootstrap/mixins/**",
             "/assets/scss/bootstrap/utilities/**",
             "/assets/scss/bootstrap/vendor/**",
+            "/listCar"
     };
 
     public static String[] customerPages ={

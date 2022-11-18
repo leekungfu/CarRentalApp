@@ -79,10 +79,8 @@
     </div>
 </div>
 
-<<<<<<< HEAD
 <div class="list_car_content" th:if="${resultPage.getTotalElements()>0}">
     <div th:insert="~{/fragment/carInfo::car_item(${resultPage.getContent()})}"></div>
-=======
 <!--CONTENT BEGIN-->
 <div class="list_car_content" th:if="${totolCar>0}">
     <div class="car_item" th:each="carDTO :${carDTOs}">
@@ -152,8 +150,8 @@
             </div>
         </div>
     </div>
->>>>>>> car_owner_uc11_uc13_bk
     <div class="car_paging">
+
         <form th:action="@{/search/car}">
             <label for="page_size">Page size </label>
             <select id="page_size" class="custom-select" name="size" onchange="this.form.submit()">

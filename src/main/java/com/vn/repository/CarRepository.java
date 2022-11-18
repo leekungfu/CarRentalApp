@@ -16,4 +16,6 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     void deleteById(Integer id);
 
     List<Car> findByMemberId(Integer idMember);
+
+    Page<Car> findByMemberEmail(String email, Pageable pageable);
 }

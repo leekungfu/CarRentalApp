@@ -17,7 +17,9 @@ public interface CarService {
     Page<Car> findByCity(String city, Pageable pageable);
 
     Car findById(Integer id);
-    Page<Car> listAll(int pageNumber, String sortField, String sortDir);
+    Page<Car> listAll(int pageNumber, String sortField, String sortDir,String email);
+
+    Page<Car> findByMemberEmail(String email, Pageable pageable);
 
     Car findByIdCar(Integer id);
 
