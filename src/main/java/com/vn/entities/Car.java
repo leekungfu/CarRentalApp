@@ -1,6 +1,8 @@
 package com.vn.entities;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import javax.persistence.Entity;
@@ -41,11 +43,11 @@ public class Car {
 	private String ward;
 	private String street;
 	private String description;
-	private Integer addFunction;
+	private String addFunction;
 	private String images;
 	private Double price;
 	private Double deposit;
-	private Integer term;
+	private String term;
 	private String termExtra;
 	private Double rating;
 	
@@ -59,5 +61,29 @@ public class Car {
 		imagesArray[1] = stz.nextToken();
 		imagesArray[2] = stz.nextToken();
 		return imagesArray;
+	}
+	public String genDeposit(){
+		Locale locale = new Locale("vi", "VN");
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+		return  numberFormat.format(this.price);
+	}
+	public String genPrice(){
+		Locale locale = new Locale("vi", "VN");
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+		return  numberFormat.format(this.deposit);
+	}
+	public int genRating1(){
+		int a  = rating.intValue();
+		if ((rating-a)>0.5)
+			return a+1;
+		return a;
+	}
+	public int genRating2(){
+		int a = rating.intValue();
+		double delta = rating -a;
+		int result = 0;
+		if(delta >0 && delta<=0.5)
+			result =1;
+		return  result;
 	}
 }

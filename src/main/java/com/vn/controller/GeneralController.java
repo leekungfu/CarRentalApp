@@ -80,6 +80,7 @@ public class GeneralController {
 
     @PostMapping("/login")
     public String signInPage() {
+        System.out.println("I am here");
             return "redirect:/home";
     }
 

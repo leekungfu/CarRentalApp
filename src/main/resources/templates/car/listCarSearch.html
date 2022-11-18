@@ -28,23 +28,69 @@
 
 <body>
 
-<div th:insert="~{/fragment/header::menu(${user})}">
+
+<div class="uc16_header" style="background-image: url('/images/car_background.jpg');">
+    <div class="uc16_header_background">
+        <div class="uc16_header_menu">
+            <div class="uc16_header_menu_info">
+                <span style="color:white;">EMAIL: SUPPORT@RENTALCARSERVICES.COM</span>
+                <span style="color: white">MON - SUN: 24/7</span>
+            </div>
+            <div class="uc16_header_menu_logo" style="background-image: url('/images/car_logo.jpg')"></div>
+            <div class="uc16_header_nav">
+                <nav class="navbar navbar-expand-sm">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">ABOUT US</a>
+                        </li>
+                        <!-- Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                <img th:src="@{/images/person_1.jpg}"
+                                     style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">Sava Le
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">My profile</a>
+                                <a class="dropdown-item" href="#">My booking</a>
+                                <a class="dropdown-item" href="#">My wallet</a>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+        <div class="uc16_header_title">
+            <h1>RENT A CAR</h1>
+            <h3>Start the great journey</h3>
+        </div>
+    </div>
 </div>
 
-<div style="margin:32px">
-    <a th:href="@{/home}">Home</a>
-    <span> > Search result</span>
-</div>
+<div class="uc16_search">
+    <div class="uc16_search_body">
+        <h3>ENTER LOCATION AND TIME</h3>
+        <div class="uc16_search_input">
+            <input  class="form-control form-control-lg" type="text" placeholder="Please enter location">
+            <input class="input_date" type="date" name="" id="">
+            <input class="input_time" type="time">
+            <input class="input_date" type="date" name="" id="">
+            <input class="input_time" type="time">
+        </div>
 
-<div
-     style="background-image: url('/images/car_main.png');
-     height: 450px;
-      background-repeat: no-repeat;
-      background-position: center;
-background-size: cover;
-margin: 0px 120px">
-</div>
+    </div>
+    <div class="uc16_search_bottom">
+        <button class="bg-gold">SEARCH</button>
+    </div>
 
+</div>
+<div class="uc16_search_result">
+
+</div>
 <div class="list_car_header">
     <div>
         <p style="color: black">There are <span th:text="${resultPage.getTotalElements()}"></span> cars that available
@@ -104,17 +150,17 @@ margin: 0px 120px">
     </div>
 </div>
 
-<div class="modal fade" id="modalID" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-body" th:insert="~{/fragment/detailCar::car_detail}">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="modal fade" id="modalID" tabindex="-1" role="dialog">-->
+<!--    <div class="modal-dialog modal-xl" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-body" th:insert="~{/fragment/detailCar::car_detail}">-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!-- JQUERY -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

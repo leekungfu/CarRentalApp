@@ -40,7 +40,8 @@
     <div th:class="${cars.indexOf(car) %2 ==0}? 'car_item_info order2' : 'car_item_info order1'">
         <p class="text_header" th:text="${car.getBrand() + ' ' + car.getModel() + ' ' + car.getYear()}"></p>
 
-        <p class="text_description">The powerful, stylish 2022 Camry Hybrid gives up nothing with its optimized fuel economy, *
+        <p class="text_description">The powerful, stylish 2022 Camry Hybrid gives up nothing with its optimized fuel
+            economy, *
             advanced
             tech and stirring drive. We have expanded our hybrid battery warranty to reflect our confidence
             in
@@ -63,7 +64,163 @@
 
         <div class="car_action">
             <a th:href="@{/rent_car(carID = ${car.getId()})}" class="btn btn-success">RENT NOW</a>
-            <button type="button" class="btn btn-success js-btn-view-detail">VIEW DETAIL</button>
+            <button type="button" class="btn btn-success js-btn-view-detail" th:value="${car.getId() + 'modal'}">VIEW
+                DETAIL
+            </button>
+        </div>
+    </div>
+    <div class="modal fade" th:id="${car.getId() + 'modal'}" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="car_detail_content">
+                        <div class="car_detail_header">
+                            <p th:text="${car.getYear()} + '  ' + ${car.getModel().toUpperCase()}"></p>
+                            <p style="font-weight: bold; font-size: xx-large">Information</p>
+                        </div>
+                        <div class="car_detail_images">
+                            <div th:id="'carx' + ${car.getId()}" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner uc21_images">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" th:src="@{${car.genImage()[0]}}" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" th:src="@{${car.genImage()[1]}}" alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" th:src="@{${car.genImage()[2]}}" alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" th:href="'#'+ 'carx' + ${car.getId()}" role="button"
+                                   data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" th:href="'#'+ 'carx' + ${car.getId()}" role="button"
+                                   data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="car_detail_overview">
+                            <div class="uc21_left">
+                                <div class="overview_item">
+                                    <p class="number" th:text="${car.genDeposit()}"></p>
+                                    <span>For a day</span>
+                                </div>
+                                <div class="overview_item">
+                                    <p class="number" th:text="${car.getFuelConsumption()} + '  L'"></p>
+                                    <span>For 100km</span>
+                                </div>
+                                <div class="overview_item">
+                                    <p class="number" th:text="${car.getSeat()}"></p>
+                                    <span>Seats</span>
+                                </div>
+                            </div>
+                            <div class="uc21_right">
+                                <button>RENT NOW</button>
+                            </div>
+                        </div>
+                        <div class="car_detail_info">
+                            <div class="info_item">
+                                <p class="info_item_title">Basic information</p>
+                                <p>License plate : <span th:text="${car.getLicensePlate()}"
+                                                         style="background-color: #FAB005; color: black; border-radius: 4px; padding: 0 6px">29 C1 - 56789</span>
+                                </p>
+                                <p>Ratings :
+                                    <i class="fa-solid fa-star" th:each="i: ${#numbers.sequence(1, car.genRating1())}"></i>
+                                    <i class="fa-regular fa-star-half-stroke" th:if="${car.genRating2()==1}"></i>
+                                </p>
+                                <p>Transmission:
+                                <p th:text="${car.getTransmission()}"></p></p>
+                                <p>Fuel : <span th:text="${car.getFuel()}"></span></p>
+                                <p>Registration :
+                                    <i class="fa-solid fa-circle-check" th:if="${car.getRegistration()=='YES'}"></i>
+                                    <i class="fa-solid fa-circle-xmark" th:if="${car.getRegistration()=='NO'}"></i>
+                                </p>
+                                <p>Certificate of Inspection :
+                                    <i class="fa-solid fa-circle-check" th:if="${car.getInspection()=='YES'}"></i>
+                                    <i class="fa-solid fa-circle-xmark" th:if="${car.getInspection()=='NO'}"></i>
+                                </p>
+                                <p>Insurance :
+                                    <i class="fa-solid fa-circle-check" th:if="${car.getInsuranceUrl()=='YES'}"></i>
+                                    <i class="fa-solid fa-circle-xmark" th:if="${car.getInsuranceUrl()=='NO'}"></i>
+                                </p>
+                            </div>
+                            <div class="info_item">
+                                <p class="info_item_title">Detail</p>
+                                <p>
+                                    <i class="fa-solid fa-location-arrow"></i>
+                                    <span th:text="${car.getDistrict() + ' - ' +car.getCity()}"></span>
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-place-of-worship"></i>
+                                    <span th:text="${car.getBrand()}"></span>
+                                </p>
+                                <p>
+                                    <i class="fa-brands fa-bluetooth" th:if='${car.getAddFunction().contains("BLUETOOTH")==true}'></i>
+                                    <span>Bluetooth</span>
+                                </p>
+                                <p><i class="fa-solid fa-location-dot" th:if='${car.getAddFunction().contains("GPS")==true}'></i>
+                                    <span>GPS</span>
+                                <p>
+                                    <i class="fa-brands fa-usb" th:if='${car.getAddFunction().contains("USB")==true}'></i>
+                                    <span>USB</span>
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-compact-disc" th:if='${car.getAddFunction().contains("DVD")==true}'></i>
+                                    <span>DVD</span>
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-camera" th:if='${car.getAddFunction().contains("CAMERA")==true}'></i>
+                                    <span>CAMERA</span>
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-sun" th:if='${car.getAddFunction().contains("SUNROOF")==true}'></i>
+                                    <span>Sun roof</span>
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-lock" th:if='${car.getAddFunction().contains("CHILDLOCK")==true}'></i>
+                                    <span>Child lock</span>
+                                </p>
+                                <p>
+                                    <i class="fa-solid fa-baby-carriage" th:if='${car.getAddFunction().contains("CHILDSEAT")==true}'></i>
+                                    <span>Child seat</span>
+                                </p>
+                            </div>
+                            <div class="info_item">
+                                <p class="info_item_title">Terms of user</p>
+                                <p>Required of deposit :
+                                    <span th:text="${car.genPrice()}"></span>
+                                </p>
+                                <p>No smoking :
+                                    <i class="fa-solid fa-circle-check" th:if='${car.getTerm().contains("NOSMOKING")==true}'></i>
+                                    <i class="fa-solid fa-circle-xmark" th:if='${car.getTerm().contains("NOSMOKING")==false}'></i>
+                                </p>
+                                <p>No pet :
+                                    <i class="fa-solid fa-circle-check" th:if='${car.getTerm().contains("NOPET")==true}'></i>
+                                    <i class="fa-solid fa-circle-xmark" th:if='${car.getTerm().contains("NOPET")==false}'></i>
+                                </p>
+                                <p>No food in car :
+                                    <i class="fa-solid fa-circle-check" th:if='${car.getTerm().contains("NOFOOD")==true}'></i>
+                                    <i class="fa-solid fa-circle-xmark" th:if='${car.getTerm().contains("NOFOOD")==false}'></i>
+                                </p>
+                                <p>Other : NA</p>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
