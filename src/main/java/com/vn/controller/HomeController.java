@@ -1,22 +1,23 @@
 package com.vn.controller;
 
 import com.vn.entities.Member;
-import com.vn.utils.Const;
+import com.vn.service.impl.CustomUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 public class HomeController {
     @GetMapping( "/home")
-    public String getHomePage(Model model, HttpSession session) {
-        UserDetails detail;
+    public String getHomePage(Model model) {
+        CustomUserDetails detail;
         try {
-            detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            int a = detail.getId();
+            System.out.println(a);
 
             Member member = new Member();
             member.setFullName(detail.getUsername());
@@ -25,10 +26,7 @@ public class HomeController {
                 return x.getAuthority().contains("CUSTOMER");
             }).count();
 
-            if (countRoleCustomer > 0) {
-                return "home/home_customer";
-            }
-            session.setAttribute(Const.SESSION_ROLE_CAR_OWNER, member);
+            if (countRoleCustomer > 0) return "home/home_customer";
             return "home/home_car_owner";
 
         } catch (Exception e) {
