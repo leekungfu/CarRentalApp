@@ -1,12 +1,13 @@
 package com.vn.controller;
 
-
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
+import com.vn.utils.Const;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.sql.Array;
 import java.util.ArrayList;
@@ -41,27 +43,36 @@ public class GeneralController {
     @Autowired
     private Utility utility;
 
+
     @GetMapping("/about")
     public String aboutPage() {
         return "home/about";
     }
 
+    @GetMapping("/home_logout")
+    public String testLogout() {
+        return "home/home_logout";
+
+    }
+
     @GetMapping("/signup")
     public String signUp() {
-        return "signup";
+        return "home/home_guest";
+
     }
 
     @PostMapping("/signup")
-    public String signUpPage(@ModelAttribute("member")Member member, Model model, HttpServletRequest request) {
+    public String signUpPage(@ModelAttribute("member")Member member, Model model) {
 
-        Member checkMem = memberService.findUserByEmailAndFullName(member.getEmail(), member.getFullName());
+        Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
+
             return "home/home_guest";
         }
         memberService.save(member);
 
-        // Auto login
+        // Auto login after user signed up successfully
         List<GrantedAuthority> authorities = new ArrayList<>();
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
         authorities.add(authority);
@@ -78,10 +89,9 @@ public class GeneralController {
         return "home/home_guest";
     }
 
+
     @PostMapping("/login")
-    public String signInPage() {
-            return "redirect:/home";
-    }
+    public String signInPage(){return "redirect:/home";}
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
@@ -155,4 +165,9 @@ public class GeneralController {
         return "home/home_guest";
     }
 
+    @GetMapping("/logoutCarOwner")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/login";
+    }
 }

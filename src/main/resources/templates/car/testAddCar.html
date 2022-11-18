@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home Page Car Owner</title>
+    <title>Edit Car</title>
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
           rel="stylesheet">
 
@@ -35,26 +36,89 @@
     <link rel="stylesheet" href="/assets/boostrap/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="/assets/boostrap/css/jquery.timepicker.css">
     <link rel="stylesheet" href="/assets/boostrap/css/style.css">
-
 </head>
-
+<body>
 <body>
 <div th:insert="~{/fragment/header::menu(${user})}">
 </div>
 
-<div class="list_car_header">
-    <div style="display: flex; align-items: center">
-        <h5>Make money on your car right away</h5>
-        <!--        <a href="/testAddCar" class="btn btn-outline-primary">Add Car</a>-->
-        <!--        <a href="/listCar" class="btn btn-outline-primary">List Your Car Today</a>-->
-        <!--        <a href="/logoutCarOwner" class="btn btn-outline-primary">Log out</a>-->
-    </div>
+<div style="margin:32px">
+    <a th:href="@{/home}">Home</a>
+    <span> > Add Cars</span>
 </div>
-<div><a href="/testAddCar" class="btn btn-outline-primary">Add Car</a>
-    <a href="/listCar" class="btn btn-outline-primary">List Your Car Today</a>
-    <a href="/logout" class="btn btn-outline-primary">Log Out</a>
+<div class="container">
+    <a href="/listCar" class="btn btn-outline-primary">List Car</a>
+    <form action="/testAddCar" th:object="${testAddCar}" method="post" class="form-add" id="formAdd">
+        <h3 class="form-add-header">Add a Car</h3>
+        <div class="form-add-container">
+            <div class="text-success" th:utext="${messAddCar}"></div>
+            <div class="form-add-container-item">
+                <label for="brand"><strong>Brand:</strong></label>
+                <div>
+                    <input type="text" th:field="*{brand}" id="brand" name="brand"/>
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('brand')}" th:errorclass="error" th:errors="*{brand}"></div>
+                </div>
+            </div>
+            <div class="form-add-container-item">
+                <label for="model"><strong>Model:</strong></label>
+                <div>
+                    <input type="text" th:field="*{model}" id="model" name="model" oninput="this.className = ''"/>
+                    <p th:if="${#fields.hasErrors('model')}" th:errorclass="error" th:errors="*{model}"></p></div>
+            </div>
+            <div class="form-add-container-item">
+                <label for="year"><strong>Year:</strong></label>
+                <div>
+                    <input type="number" th:field="*{year}" id="year" name="year" oninput="this.className = ''"/>
+                    <p th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></p></div>
+            </div>
+            <div class="form-add-container-item">
+                <label for="district"><strong>District:</strong></label>
+                <div>
+                    <input type="text" th:field="*{district}" id="district" name="district"
+                           oninput="this.className = ''"/>
+                    <p th:if="${#fields.hasErrors('district')}" th:errors="*{district}"></p></div>
+            </div>
+            <div class="form-add-container-item">
+                <label for="city"><strong>City:</strong></label>
+                <div>
+                    <input type="text" th:field="*{city}" id="city" name="city" oninput="this.className = ''"/>
+                    <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p></div>
+            </div>
+            <div class="form-add-container-item">
+                <label for="price"><strong>Base price:</strong></label>
+                <div>
+                    <input type="number" th:field="*{price}" id="price" name="price" oninput="this.className = ''"/>
+                    VND/Day
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p></div>
+            </div>
+            <div class="form-add-container-item">
+                <label for="deposit"><strong>Required deposit:</strong></label>
+                <div>
+                    <input type="number" th:field="*{deposit}" id="deposit" name="deposit"
+                           oninput="this.className = ''"/>
+                    <p th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></p>
+                </div>
+            </div>
+            <div class="form-add-container-item">
+                <label><strong>Status:</strong></label>
+                <div>
+                    <select name="status" th:field="*{status}" class="form-select"
+                            aria-label="Default select example">
+                        <th:block th:each="status: ${carStatus}" th:switch="${status.name()}">
+                            <option th:case="'Available'" th:value="'Available'">Available</option>
+                            <option th:case="'Stopped'" th:value="'Stopped'">Stopped</option>
+                            <option th:case="'Booked'" th:value="'Booked'">Booked</option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="form-add-container-item">
+                <input type="submit" class="btn btn-success" value="Save">
+                <input type="reset" class="btn btn-success" value="Reset">
+            </div>
+        </div>
+    </form>
 </div>
-
 <!--FOOTER BEGIN-->
 <footer class="ftco-footer ftco-bg-dark ftco-section">
     <div class="container">

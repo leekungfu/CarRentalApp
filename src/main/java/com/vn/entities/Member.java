@@ -39,4 +39,7 @@ public class Member {
 	private String resetPasswordToken;
 	@OneToMany(mappedBy = "member")
 	private List<Booking> bookings;
+
+	@OneToMany(mappedBy = "member")
+	private List<Car> cars;
 }
