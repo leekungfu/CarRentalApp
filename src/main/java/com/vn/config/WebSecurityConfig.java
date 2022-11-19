@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("remember-me", "JSESSIONID")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/home_guest")
+                .logoutSuccessUrl("/home_guest?logoutSuccess")
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers(ParaSecurity.ignoreSecurityPages)
