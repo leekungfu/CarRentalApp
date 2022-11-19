@@ -1,7 +1,8 @@
 package com.vn.controller;
 
 import com.vn.entities.Member;
-import com.vn.service.impl.CustomUserDetails;
+import com.vn.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
+    @Autowired
+    private MemberService memberService;
 
     @GetMapping("/home")
     public String getHomePage(Model model) {
@@ -18,8 +21,7 @@ public class HomeController {
         UserDetails detail;
         try {
             detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Member member = new Member();
-            member.setFullName(detail.getUsername());
+            Member member = memberService.findByEmail(detail.getUsername());
             model.addAttribute("user", member);
             long countRoleCustomer = detail.getAuthorities().stream().filter(x -> {
                 return x.getAuthority().contains("CUSTOMER");
@@ -36,6 +38,11 @@ public class HomeController {
     @GetMapping("/home_guest")
     public String homeGuestPage() {
         return "home/home_guest";
+    }
+
+    @GetMapping("/home_customer")
+    public String homeCustomerPage() {
+        return "home/home_customer";
     }
 
     @GetMapping("/home_car_owner")

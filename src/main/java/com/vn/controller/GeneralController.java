@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,7 +54,7 @@ public class GeneralController {
     }
 
     @PostMapping("/signup")
-    public String signUpPage(@ModelAttribute("member")Member member, Model model) {
+    public String signUpPage(@ModelAttribute("member") Member member, Model model) {
 
         Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
@@ -157,7 +158,7 @@ public class GeneralController {
     }
 
     @GetMapping("/logoutCarOwner")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
     }
