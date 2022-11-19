@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping("/home")
+    @GetMapping(value = {"/home", "/"})
     public String getHomePage(Model model) {
         CustomUserDetails detail;
         try {

@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +64,6 @@ public class GeneralController {
 
     @PostMapping("/signup")
     public String signUpPage(@ModelAttribute("member")Member member, Model model) {
-
         Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
@@ -91,7 +91,9 @@ public class GeneralController {
 
 
     @PostMapping("/login")
-    public String signInPage(){return "redirect:/home";}
+    public String signInPage(){
+        return "redirect:/home";
+    }
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
