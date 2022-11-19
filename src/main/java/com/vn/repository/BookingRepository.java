@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.vn.entities.Booking;
 
+import java.util.List;
+
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
