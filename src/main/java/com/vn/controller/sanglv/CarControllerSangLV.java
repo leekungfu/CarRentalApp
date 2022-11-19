@@ -5,6 +5,7 @@ import com.vn.entities.Member;
 import com.vn.service.CarService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.GenDateTime;
+import com.vn.utils.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,19 +40,9 @@ public class CarControllerSangLV {
                                 @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("sort") Optional<Integer> sort) {
-        Member member = new Member();
-        member.setFullName("Sava Le");
-        member.setEmail("levansang.gthn@gmail.com");
-        member.setId(1);
-        model.addAttribute("user", member);
-
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
         int sortType = sort.orElse(0);
-        System.out.println("========================\n" + date1);
-        System.out.println(date2);
-        System.out.println(time1);
-        System.out.println(time2);
 
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("pageSize", pageSize);
@@ -82,21 +73,7 @@ public class CarControllerSangLV {
         model.addAttribute("totolPage", totalPages);
 
         if (totalPages > 0) {
-            int start = Math.max(1, currentPage - 2);
-            int end = Math.min(currentPage + 2, totalPages);
-            if (totalPages > 5) {
-                if (end == totalPages) {
-                    start = end - 4;
-                } else {
-                    if (start == 1) {
-                        end = start + 4;
-                    }
-                }
-            }
-            List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("pageNumbers", Paging.genPageList(totalPages,currentPage));
         }
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -53,6 +53,7 @@ button {
     width: 150px;
     height: 42px;
     color: black;
+    font-weight: 450;
     border: 1px solid black;
     border-radius: 4px;
 }

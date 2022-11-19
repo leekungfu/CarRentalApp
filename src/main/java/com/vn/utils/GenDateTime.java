@@ -3,6 +3,7 @@ package com.vn.utils;
 import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,5 +29,9 @@ public class GenDateTime {
             return LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return  LocalDate.parse(date,formatter);
+    }
+    public static LocalDateTime getDateTime(String date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(date, formatter);
     }
 }
