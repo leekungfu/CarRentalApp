@@ -16,4 +16,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     public Member findByEmail(String email);
 
     public Member findByResetPasswordToken(String token);
+
+//	Member findByName(String memberName);
 }

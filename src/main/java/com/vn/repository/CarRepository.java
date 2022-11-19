@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
     Car findCarByLicensePlate(String licensePlate);
+
     Page<Car> findByCity(String city, Pageable pageable);
 
     void deleteById(Integer id);
