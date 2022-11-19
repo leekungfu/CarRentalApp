@@ -24,7 +24,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -148,11 +147,11 @@ public class GeneralController {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
 
-        // The notification popup will be displayed as "Invalid token" if the token not be found in the DB.
+        // The notification popup will be displayed as "The request is expired!" if the token not be found in the DB.
         Member member = memberService.findByResetPasswordToken(token);
 
         if (member == null) {
-            model.addAttribute("message", "Invalid token");
+            model.addAttribute("message", "The request is expired!");
             return "account/reset_password";
         } else {
             memberService.updatePassword(member, password);

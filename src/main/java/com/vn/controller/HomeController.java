@@ -15,8 +15,6 @@ public class HomeController {
         CustomUserDetails detail;
         try {
             detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            int a = detail.getId();
-            System.out.println(a);
             Member member = new Member();
             member.setFullName(detail.getUsername());
             model.addAttribute("user", member);

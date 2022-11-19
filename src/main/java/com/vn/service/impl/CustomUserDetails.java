@@ -12,6 +12,15 @@ import java.util.List;
 public class CustomUserDetails implements UserDetails {
     private final Member member;
     private Integer id;
+    private String fullName;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public Integer getId() {
         return id;
@@ -24,6 +33,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(Member member) {
         this.member = member;
         this.id = member.getId();
+        this.fullName = member.getFullName();
     }
 
     @Override

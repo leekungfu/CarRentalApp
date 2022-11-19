@@ -25,7 +25,7 @@ public class ParaSecurity {
 
     public static String[] customerPages ={
             "/home/",
-            "/home_customer/",
+            "/home_customer",
             "/forgot_password",
             "/reset_password",
             "/customer_profile",
