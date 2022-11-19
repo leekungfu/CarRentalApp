@@ -37,6 +37,7 @@
     background-color:#CC0041 ;
     border: none;
     font-weight: 500;
+    line-height: 1;
 }
 .car_item_info_detail{
     display: flex;

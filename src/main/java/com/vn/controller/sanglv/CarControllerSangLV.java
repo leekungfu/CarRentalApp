@@ -1,46 +1,41 @@
-package com.vn.controller;
+package com.vn.controller.sanglv;
 
-import com.vn.dto.CarDTO;
 import com.vn.entities.Car;
 import com.vn.entities.Member;
 import com.vn.service.CarService;
-import com.vn.service.MemberService;
-import com.vn.utils.CarStatusEnum;
-import com.vn.utils.Const;
+import com.vn.service.impl.CustomUserDetails;
+import com.vn.utils.GenDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.domain.Sort;
-
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.Authentication;
-
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-public class CarController {
+public class CarControllerSangLV {
     @Autowired
     private CarService carService;
 
-    @Autowired
-    private MemberService memberService;
-
-    @GetMapping("/search/car")
+    @GetMapping("/search_car")
     public String searchCarPage(Model model,
-                                @RequestParam(name = "city", required = false) String city,
+                                @RequestParam(name = "city", required = false, defaultValue = "") String city,
+                                @RequestParam(name = "date1", required = false, defaultValue = "") String date1,
+                                @RequestParam(name = "date2", required = false, defaultValue = "") String date2,
+                                @RequestParam(name = "time1", required = false, defaultValue = "") String time1,
+                                @RequestParam(name = "time2", required = false, defaultValue = "") String time2,
                                 @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("sort") Optional<Integer> sort) {
@@ -53,10 +48,18 @@ public class CarController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
         int sortType = sort.orElse(0);
+        System.out.println("========================\n" + date1);
+        System.out.println(date2);
+        System.out.println(time1);
+        System.out.println(time2);
+
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("city", city);
-        model.addAttribute("sortType", sortType);
+        model.addAttribute("date1", GenDateTime.genDate(date1));
+        model.addAttribute("date2", GenDateTime.genDate(date2));
+        model.addAttribute("time1", GenDateTime.genTime(time1));
+        model.addAttribute("time2", GenDateTime.genTime(time2));
 
         Pageable pageable;
         switch (sortType) {
@@ -73,17 +76,10 @@ public class CarController {
                 pageable = PageRequest.of(currentPage - 1, pageSize);
         }
 
-        Page<Car> resultPage = carService.findByCity(city, pageable);
-        List<CarDTO> carDTOs = new ArrayList<>();
-        for (Car car : resultPage.getContent()) {
-            carDTOs.add(new CarDTO(car));
-        }
+        Page<Car> resultPage = carService.findByCityAndDate(city,GenDateTime.genD(date1), pageable);
         int totalPages = resultPage.getTotalPages();
         model.addAttribute("resultPage", resultPage);
-        model.addAttribute("carDTOs", carDTOs);
         model.addAttribute("totolPage", totalPages);
-        Car car  = new Car();
-
 
         if (totalPages > 0) {
             int start = Math.max(1, currentPage - 2);
@@ -102,6 +98,9 @@ public class CarController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("fullName", detail.getFullName());
         return "car/listCarSearch";
     }
 }

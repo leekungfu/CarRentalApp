@@ -20,8 +20,10 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!--    CSS-->
-    <link rel="stylesheet" href="/assets/css/common/menu.css">
     <link rel="stylesheet" href="/assets/css/car/car_search.css">
+    >
+    <link rel="stylesheet" href="/assets/css/fragment/header.css">
+    <link rel="stylesheet" href="/assets/css/fragment/search.css">
     <link rel="stylesheet" href="/assets/css/car/car_item.css">
     <link rel="stylesheet" href="/assets/css/car/car_detail.css">
 </head>
@@ -29,68 +31,12 @@
 <body>
 
 
-<div class="uc16_header" style="background-image: url('/images/car_background.jpg');">
-    <div class="uc16_header_background">
-        <div class="uc16_header_menu">
-            <div class="uc16_header_menu_info">
-                <span style="color:white;">EMAIL: SUPPORT@RENTALCARSERVICES.COM</span>
-                <span style="color: white">MON - SUN: 24/7</span>
-            </div>
-            <div class="uc16_header_menu_logo" style="background-image: url('/images/car_logo.jpg')"></div>
-            <div class="uc16_header_nav">
-                <nav class="navbar navbar-expand-sm">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">HOME</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">ABOUT US</a>
-                        </li>
-                        <!-- Dropdown -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                                <img th:src="@{/images/person_1.jpg}"
-                                     style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">Sava Le
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">My profile</a>
-                                <a class="dropdown-item" href="#">My booking</a>
-                                <a class="dropdown-item" href="#">My wallet</a>
-                                <a class="dropdown-item" href="#">Logout</a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-
-            </div>
-        </div>
-        <div class="uc16_header_title">
-            <h1>RENT A CAR</h1>
-            <h3>Start the great journey</h3>
-        </div>
-    </div>
+<div th:insert="~{/fragment/header::menu2(${fullName})}">
+</div>
+<div th:insert="~{/fragment/search::search(${city}, ${date1}, ${time1}, ${date2}, ${time2})}">
 </div>
 
-<div class="uc16_search">
-    <div class="uc16_search_body">
-        <h3>ENTER LOCATION AND TIME</h3>
-        <div class="uc16_search_input">
-            <input  class="form-control form-control-lg" type="text" placeholder="Please enter location">
-            <input class="input_date" type="date" name="" id="">
-            <input class="input_time" type="time">
-            <input class="input_date" type="date" name="" id="">
-            <input class="input_time" type="time">
-        </div>
 
-    </div>
-    <div class="uc16_search_bottom">
-        <button class="bg-gold">SEARCH</button>
-    </div>
-
-</div>
-<div class="uc16_search_result">
-
-</div>
 <div class="list_car_header">
     <div>
         <p style="color: black">There are <span th:text="${resultPage.getTotalElements()}"></span> cars that available
@@ -103,7 +49,7 @@
         <a href="#" class="icon_border show_table">
             <i class="fa-solid fa-table"></i>
         </a>
-        <form th:action="@{/search/car}">
+        <form th:action="@{/search_car}">
             <select class="custom-select" name="sort" onchange="this.form.submit()">
                 <option value="0" th:selected="${sortType==0}">None</option>
                 <option value="1" th:selected="${sortType==1}">Year</option>
@@ -113,84 +59,19 @@
             <input type="hidden" name="city" th:value="${city}">
             <input type="hidden" name="size" th:value="${pageSize}">
             <input type="hidden" name="page" th:value="${currentPage}">
+            <input type="hidden" name="date1" th:value="${date1}">
+            <input type="hidden" name="date2" th:value="${date2}">
+            <input type="hidden" name="time1" th:value="${time1}">
+            <input type="hidden" name="time2" th:value="${time2}">
         </form>
     </div>
 </div>
 
+
 <div class="list_car_content" th:if="${resultPage.getTotalElements()>0}">
     <div th:insert="~{/fragment/carInfo::car_item(${resultPage.getContent()})}"></div>
-<!--CONTENT BEGIN-->
-<div class="list_car_content" th:if="${totolCar>0}">
-    <div class="car_item" th:each="carDTO :${carDTOs}">
-        <div class="car_image">
-            <div th:id="'carDTO' + ${carDTO.getId()}" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" th:src="@{${carDTO.getImages()[0]}}" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" th:src="@{${carDTO.getImages()[1]}}" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" th:src="@{${carDTO.getImages()[2]}}" alt="Third slide">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" th:href="'#'+ 'carDTO' + ${carDTO.getId()}" role="button"
-                   data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" th:href="'#' + 'carDTO' + ${carDTO.getId()}" role="button"
-                   data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-        <div class="car_info">
-            <div class="uc20_info_header">
-                <label th:text="${carDTO.getName()} +'   '"></label>
-            </div>
-
-            <div class="uc20_info_body">
-                <div class="uc20_info_label">
-                    <p>The powerful, stylish 2022 Camry Hybrid gives up nothing with its optimized fuel economy, *
-                        advanced
-                        tech and stirring drive. We have expanded our hybrid battery warranty to reflect our confidence
-                        in
-                        the quality, dependability and reliability of our products. </p>
-                </div>
-
-                <div class="uc20_info_detail">
-                    <div class="uc20_info_detail_item">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <p> Ha Noi - Bac Tu Liem</p>
-                    </div>
-                    <div class="uc20_info_detail_item">
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <p> $500.000</p>
-                    </div>
-                    <div class="uc20_info_detail_item">
-                        <i class="fa-solid fa-gear"></i>
-                        <p> 7</p>
-                    </div>
-
-                </div>
-            </div>
-            <div class="car_action">
-                <button type="submit" class="btn btn-success">RENT NOW</button>
-                <button type="submit" class="btn btn-success">VIEW DETAIL</button>
-            </div>
-        </div>
-    </div>
     <div class="car_paging">
-
-        <form th:action="@{/search/car}">
+        <form th:action="@{/search_car}">
             <label for="page_size">Page size </label>
             <select id="page_size" class="custom-select" name="size" onchange="this.form.submit()">
                 <option th:selected="${pageSize==5}" value="5">5</option>
@@ -198,39 +79,32 @@
                 <option th:selected="${pageSize==15}" value="15">15</option>
             </select>
             <input type="hidden" name="city" th:value="${city}">
+            <input type="hidden" name="date1" th:value="${date1}">
+            <input type="hidden" name="date2" th:value="${date2}">
+            <input type="hidden" name="time1" th:value="${time1}">
+            <input type="hidden" name="time2" th:value="${time2}">
         </form>
         <nav>
             <ul class="pagination" style="margin: 0">
                 <li th:class="${currentPage==1}? 'page-item disabled' : 'page-item'">
                     <a class="page-link"
-                       th:href="@{/search/car(city = ${city}, size = ${pageSize}, page = ${1})}">First</a>
+                       th:href="@{/search_car(city = ${city}, size = ${pageSize},date1 =${date1},date2 =${date2},time1 =${time1},time2 =${time2}, page = ${1})}">First</a>
                 </li>
                 <li th:each="pageNumber: ${pageNumbers}"
                     th:class="${pageNumber == currentPage}? 'page-item active': 'page-item'">
                     <a class="page-link "
-                       th:href="@{/search/car(city = ${city}, size = ${pageSize}, page = ${pageNumber})}"
+                       th:href="@{/search_car(city = ${city}, size = ${pageSize},date1 =${date1},date2 =${date2},time1 =${time1},time2 =${time2}, page = ${pageNumber})}"
                        th:text="${pageNumber}"></a>
                 </li>
                 <li th:class="${currentPage==totolPage}? 'page-item disabled' : 'page-item'">
                     <a class="page-link"
-                       th:href="@{/search/car(city = ${city}, size = ${pageSize}, page = ${totolPage})}">Last</a>
+                       th:href="@{/search_car(city = ${city}, size = ${pageSize},date1 =${date1},date2 =${date2},time1 =${time1},time2 =${time2}, page = ${totolPage})}">Last</a>
                 </li>
             </ul>
         </nav>
     </div>
 </div>
 
-<!--<div class="modal fade" id="modalID" tabindex="-1" role="dialog">-->
-<!--    <div class="modal-dialog modal-xl" role="document">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-body" th:insert="~{/fragment/detailCar::car_detail}">-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 <!-- JQUERY -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

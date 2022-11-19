@@ -18,6 +18,7 @@ public class HomeController {
             Member member = new Member();
             member.setFullName(detail.getUsername());
             model.addAttribute("user", member);
+            model.addAttribute("fullName", detail.getFullName());
             long countRoleCustomer = detail.getAuthorities().stream().filter(x -> x.getAuthority().contains("CUSTOMER")).count();
             if (countRoleCustomer > 0) return "home/home_customer";
             return "home/home_car_owner";

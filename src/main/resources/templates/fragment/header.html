@@ -50,5 +50,46 @@
         </li>
       </nav>
     </div>
+    <div class="header2" style="background-image: url('/images/car_background.jpg');" th:fragment="menu2(fullName)">
+      <div class="header2_background">
+        <div class="header2_menu">
+          <div class="header2_menu_contact">
+            <span style="color:white;">EMAIL: SUPPORT@RENTALCARSERVICES.COM</span>
+            <span style="color: white">MON - SUN: 24/7</span>
+          </div>
+          <div class="header2_menu_logo" style="background-image: url('/images/car_logo.jpg')"></div>
+          <div class="header2_menu_nav">
+            <nav class="navbar navbar-expand-sm">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/home}">HOME</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/about_us}">ABOUT US</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <img th:src="@{/images/person_1.jpg}"
+                         style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">
+                    <span th:text="${fullName}"></span>
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/my_profile}">My profile</a>
+                    <a class="dropdown-item" th:href="@{/my_booking}">My booking</a>
+                    <a class="dropdown-item" th:href="@{/my_wallet}">My wallet</a>
+                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                  </div>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+        <div class="header2_description">
+          <h1 class="text-white">RENT A CAR</h1>
+          <h3 class="text-white">Start the great journey</h3>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
