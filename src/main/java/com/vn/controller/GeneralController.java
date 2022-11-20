@@ -6,17 +6,13 @@ import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -59,13 +54,13 @@ public class GeneralController {
     }
 
     @PostMapping("/signup")
-    public String signUpPage(@ModelAttribute("member")Member member, Model model) {
+    public String signUpPage(@ModelAttribute("member") Member member, Model model) {
 
         Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
 
-            return "home/home_guest";
+            return "redirect:/home_guest";
         }
         memberService.save(member);
 
@@ -88,9 +83,7 @@ public class GeneralController {
 
 
     @PostMapping("/login")
-    public String signInPage() {
-            return "redirect:/home";
-    }
+    public String signInPage(){return "redirect:/home";}
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
@@ -145,11 +138,11 @@ public class GeneralController {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
 
-        // The notification popup will be displayed as "Invalid token" if the token not be found in the DB.
+        // The notification popup will be displayed as "The request is expired!" if the token not be found in the DB.
         Member member = memberService.findByResetPasswordToken(token);
 
         if (member == null) {
-            model.addAttribute("message", "Invalid token");
+            model.addAttribute("message", "The request is expired!");
             return "account/reset_password";
         } else {
             memberService.updatePassword(member, password);
@@ -164,4 +157,9 @@ public class GeneralController {
         return "home/home_guest";
     }
 
+    @GetMapping("/logoutCarOwner")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
 }
