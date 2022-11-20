@@ -28,10 +28,6 @@ public class BookingController {
     @PostMapping("/booking/status")
     public String checkAddStatus(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
 
-//        Integer bookingId = car.getBookingId();
-//        List<Booking> booking = (List<Booking>) bookingRepository.getOne(bookingId);
-//
-//        car.setBookings(booking);
         car.setStatus(CarStatusEnum.Booked);
         carRepository.save(car);
         redirectAttributes.addFlashAttribute("messDeposit", "Confirm Deposit successful");

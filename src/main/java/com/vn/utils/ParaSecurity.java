@@ -49,6 +49,7 @@ public class ParaSecurity {
             "/booking/*",
             "/car/*",
             "/listCar",
-            "/home_car_owner"
+            "/home_car_owner",
+            "/booking/status"
     };
 }

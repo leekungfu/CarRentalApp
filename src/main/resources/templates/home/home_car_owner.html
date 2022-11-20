@@ -35,24 +35,79 @@
     <link rel="stylesheet" href="/assets/boostrap/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="/assets/boostrap/css/jquery.timepicker.css">
     <link rel="stylesheet" href="/assets/boostrap/css/style.css">
+    <link rel="stylesheet" href="/assets/css/home/home_car_owner.css">
 
 </head>
 
 <body>
 <div th:insert="~{/fragment/header::menu(${user})}">
 </div>
-
-<div class="list_car_header">
-    <div style="display: flex; align-items: center">
-        <h5>Make money on your car right away</h5>
-        <!--        <a href="/testAddCar" class="btn btn-outline-primary">Add Car</a>-->
-        <!--        <a href="/listCar" class="btn btn-outline-primary">List Your Car Today</a>-->
-        <!--        <a href="/logoutCarOwner" class="btn btn-outline-primary">Log out</a>-->
+<div class="container1">
+    <div class="container1s">
+        <h4 class="container2-header">Have a car for rent? Don't miss out of your benefit</h4>
+        <div class="body3">
+            <div class="container2-body">
+                <div class="container2-body2">
+                    <h5><i class="fa-solid fa-circle-dollar-to-slot"></i>How the insurance works</h5>
+                    <div class="body-description">From the minute you hand the keys over till the second you get them
+                        back you are covered. Your private insurance is not affected.
+                    </div>
+                </div>
+                <div class="container2-body2">
+                    <h5><i class="fa-solid fa-car"></i>Handing over your vehicle</h5>
+                    <div class="body-description">You arrange th time and location for the exchange of your vehicle with
+                        the renter.Both parties
+                        willneed to agree and sign the vehicle rental sheet before and after key handover.
+                    </div>
+                </div>
+            </div>
+            <div class="container2-body">
+                <div class="container2-body2">
+                    <h5><i class="fa-solid fa-shield-halved"></i>It's completely free</h5>
+                    <div class="body-description">We offer both owners and renters free sign-ups. It's only onceaa
+                        vehicle is rentedout that a
+                        share
+                        is
+                        deducted to cover admin and insurance.
+                    </div>
+                    <div class="container2-body2">
+                        <h5><i class="fa-solid fa-triangle-exclamation"></i>You are in charge</h5>
+                        <div class="body-description">All renters are pre-screened by us to ensure safety and get your
+                            approval. If you do not
+                            feel
+                            comfortable with someone youare able to decline a booking.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container2-body">
+                <div class="container2-body2">
+                    <h5><i class="fa-solid fa-check"></i>You decide the price</h5>
+                    <div class="body-description">When you list a car you decide the price. We can help with as to
+                        price, but
+                        ultimately you decide!
+                    </div>
+                </div>
+                <div class="container2-body2">
+                    <h5><i class="fa-regular fa-credit-card"></i>Set payment</h5>
+                    <div class="body-description">We pay you once a month and you can always view much your car has
+                        earned under you user
+                        profile.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
-<div><a href="/testAddCar" class="btn btn-outline-primary">Add Car</a>
-    <a href="/listCar" class="btn btn-outline-primary">List Your Car Today</a>
-    <a href="/logout" class="btn btn-outline-primary">Log Out</a>
+<div>
+    <div class="list_car_header">
+        <h4 class="container2-header" style="padding-top: 20px">Make money on your car right away</h4>
+    </div>
+    <div class="list-car">
+<!--        <a href="/listCar" class="btn btn-primary">List Your Car Today</a>-->
+        <a href="/listCar" class="btn btn-outline-primary">List Your Car Today</a>
+    </div>
 </div>
 
 <!--FOOTER BEGIN-->
@@ -154,7 +209,6 @@
                 stroke="#F96D00"/>
     </svg>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
