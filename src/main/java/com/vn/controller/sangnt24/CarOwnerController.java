@@ -42,9 +42,7 @@ public class CarOwnerController {
                               @RequestParam("sort") Optional<String> sort) {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Member m = new Member();
-        m.setFullName(detail.getUsername());
-        model.addAttribute("user", m);
+        model.addAttribute("fullName", detail.getFullName());
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
@@ -103,10 +101,7 @@ public class CarOwnerController {
     public String addContentUi(Model model, HttpSession session) {
         // Check role Car Owner
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Member m = new Member();
-        m.setFullName(detail.getUsername());
-        model.addAttribute("user", m);
+        model.addAttribute("fullName", detail.getFullName());
 
         model.addAttribute("addCar", new Car());
         model.addAttribute("carStatus", CarStatusEnum.values());
@@ -121,10 +116,9 @@ public class CarOwnerController {
         if (result.hasErrors()) {
             return "/car/addCar";
         }
+
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Member m = new Member();
-        m.setFullName(detail.getUsername());
-        model.addAttribute("user", m);
+        model.addAttribute("fullName", detail.getFullName());
 
         Member member = memberService.findById(detail.getId());
         car.setMember(member);
@@ -139,10 +133,7 @@ public class CarOwnerController {
     @GetMapping("/editCar/{id}")
     public String editCar(Model model, @PathVariable("id") Integer idCar, HttpSession session) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Member m = new Member();
-        m.setFullName(detail.getUsername());
-        model.addAttribute("user", m);
+        model.addAttribute("fullName", detail.getFullName());
 
         Car car = carService.findByIdCar(idCar);
 
@@ -157,10 +148,7 @@ public class CarOwnerController {
 
         // Edit Car by email Member (role: Car owner)
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Member m = new Member();
-        m.setFullName(detail.getUsername());
-        model.addAttribute("user", m);
+        model.addAttribute("fullName", detail.getFullName());
 
         Car editCar = carService.findByIdCar(car.getId());
         editCar.setPrice(car.getPrice());

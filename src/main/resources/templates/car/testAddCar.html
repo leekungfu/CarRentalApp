@@ -27,11 +27,25 @@
     <link rel="stylesheet" href="/assets/boostrap/css/icomoon.css">
     <link rel="stylesheet" href="/assets/boostrap/css/style.css">
     <!-- ICON -->
+
+    <link rel="stylesheet" href="/assets/css/home/home_customer.css">
+    <link rel="stylesheet" href="/assets/css/car/search_car.css">
+
+    <!--    ICON-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
           integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="/assets/css/home/home_customer.css">
-    <link rel="stylesheet" href="/assets/css/car/search_car.css">
+
+    <!--    BOOTSTRAP-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--    CSS-->
+    <link rel="stylesheet" href="/assets/css/car/car_search.css">
+    <link rel="stylesheet" href="/assets/css/fragment/header.css">
+    <link rel="stylesheet" href="/assets/css/fragment/search.css">
+    <link rel="stylesheet" href="/assets/css/car/car_item.css">
+    <link rel="stylesheet" href="/assets/css/car/car_detail.css">
     <style>
         .error {
             color: red;
@@ -40,12 +54,15 @@
 </head>
 <body>
 <body>
-<!--<div th:insert="~{/fragment/header::menu(${user})}">-->
-<!--</div>-->
+<div th:insert="~{/fragment/header::menu2(${fullName})}">
+</div>
 
 <div style="margin:32px">
     <a th:href="@{/home}">Home</a>
-    <span> > Add Cars</span>
+    <span> > </span>
+    <a th:href="@{/listCar}">My Cars</a>
+    <span> > </span>
+    <span>Add a car</span>
 </div>
 
 <div class="container">
@@ -409,6 +426,9 @@
         integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+<!--JS-->
+<script src="/assets/js/search_car.js"></script>
 <script type="text/javascript">
     //show image input
     $(document).ready(function () {
