@@ -40,7 +40,8 @@
     <div th:class="${cars.indexOf(car) %2 ==0}? 'car_item_info order2' : 'car_item_info order1'">
         <p class="text_header" th:text="${car.getBrand() + ' ' + car.getModel() + ' ' + car.getYear()}"></p>
 
-        <p class="text_description">The powerful, stylish 2022 Camry Hybrid gives up nothing with its optimized fuel economy, *
+        <p class="text_description">The powerful, stylish 2022 Camry Hybrid gives up nothing with its optimized fuel
+            economy, *
             advanced
             tech and stirring drive. We have expanded our hybrid battery warranty to reflect our confidence
             in
@@ -53,7 +54,7 @@
             </div>
             <div class="uc20_info_detail_item">
                 <i class="fa-solid fa-file-invoice-dollar"></i>
-                <p th:text="${car.getPrice()} +'/day'"></p>
+                <p th:text="${car.genDeposit()} +'/day'"></p>
             </div>
             <div class="uc20_info_detail_item">
                 <i class="fa-solid fa-gear"></i>
@@ -63,9 +64,12 @@
 
         <div class="car_action">
             <a th:href="@{/rent_car(carID = ${car.getId()})}" class="btn btn-success">RENT NOW</a>
-            <button type="button" class="btn btn-success js-btn-view-detail">VIEW DETAIL</button>
+            <button type="button" class="btn btn-success js-btn-view-detail" th:value="${car.getId() + 'modal'}">VIEW
+                DETAIL
+            </button>
         </div>
     </div>
+   <div th:insert="~{fragment/modal::car_detail(${car})}"></div>
 </div>
 </body>
 </html>

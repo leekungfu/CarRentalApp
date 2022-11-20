@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    $('.js-btn-view-detail').click(function (){
-        $('#modalID').modal('show');
-    })
+     $('.js-btn-view-detail').each(function (){
+        $(this).click(function (){
+            const modalID = '#' + $(this).val();
+            $(modalID).modal('show');
+        })
+     })
 });

@@ -37,8 +37,12 @@ public class Member {
 	private String role;
 	@Column(length = 30)
 	private String resetPasswordToken;
+
 	@OneToMany(mappedBy = "member")
 	private List<Booking> bookings;
+
+	@OneToMany(mappedBy = "member")
+	private List<MemberTransaction> memberTransactions;
 
 	@OneToMany(mappedBy = "member")
 	private List<Car> cars;
