@@ -47,7 +47,8 @@ public class BookingController {
 	
 	@PostMapping("/booking_result")
 	public String bookingSuccessful(@ModelAttribute("payment")Integer paymentMethod,
-									HttpSession httpSession){
+									HttpSession httpSession,
+									Model model){
 		
 		Booking booking = new Booking();
 		
@@ -65,6 +66,7 @@ public class BookingController {
 		
 		bookingService.addBooking(booking);
 		
+		model.addAttribute("booking", booking);
 		return "booking/booking_successful";
 	}
 	
@@ -76,16 +78,16 @@ public class BookingController {
 		return "booking/booking_detail";
 	}
 	
-	@GetMapping("/all_bookings")
+	@GetMapping("/my_booking")
 	public String bookingsListByMember(Model model,
-										@RequestParam(name="member") Integer member_id) {
+										@RequestParam(name="userID") Integer memberId) {
 //		String memberName = null;
 //		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //		if(auth.isAuthenticated()) {
 //			memberName = auth.;
 //		}
 //		Member member = memberRepository.findByName(memberName);
-		List<Booking> bookings = bookingService.findAllByMember(member_id);
+		List<Booking> bookings = bookingService.findAllByMember(memberId);
 		model.addAttribute("bookings", bookings);
 		
 		return "booking/booking_list";
