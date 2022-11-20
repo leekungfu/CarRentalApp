@@ -7,6 +7,7 @@
 <body>
 	Booking Details
 </body>
+	<div th:text=${booking.toString()}></div>
 	<div>
 		<table>
 			<thead>
@@ -18,11 +19,11 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td th:text="${booking.id}"></td>
-					<td th:text="${booking.car_id}"></td>
-					<td th:text="${booking.driver_id}"></td>
+					<td th:text="${booking.getId()}"></td>
+					<td th:text="${booking.getCar().getId()}"></td>
+					<td th:text="${booking.getMember().getId()}"></td>
 				</tr>
-			</tbody>
+			</tbody>	
 		</table>
 	</div>
 </html>

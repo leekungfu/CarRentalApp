@@ -17,9 +17,9 @@
 			</thead>
 			<tbody>
 				<tr th:each="booking: ${bookings}">
-					<td th:text="${booking.id}"></td>
-					<td th:text="${booking.car_id}"></td>
-					<td th:text="${booking.driver_id}"></td>
+					<td th:text="${booking.getId()}"></td>
+					<td th:text="${booking.getCar().getId()}"></td>
+					<td th:text="${booking.getMember().getId()}"></td>
 				</tr>
 			</tbody>
 		</table>

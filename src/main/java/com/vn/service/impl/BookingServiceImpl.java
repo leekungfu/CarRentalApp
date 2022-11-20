@@ -15,8 +15,8 @@ public class BookingServiceImpl implements BookingService{
 	BookingRepository bookingRepository;
 	
 	@Override
-	public List<Booking> findAllByMember(Integer memberId) {
-		return bookingRepository.findAllByMember(memberId);
+	public List<Booking> findAllByMemberId(Integer memberId) {
+		return bookingRepository.findAllByMemberId(memberId);
 	}
 
 	@Override

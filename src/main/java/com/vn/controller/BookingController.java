@@ -58,13 +58,11 @@ public class BookingController {
 		booking.setCar(car);
 		booking.setPaymentMethod(paymentMethod);
 		
-		Member member = new Member();
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Optional<Member> optional = memberService.findUserById(detail.getId());
 		if(optional.isEmpty()) {
 			return "redirect:/login";
-		} else member = optional.get();
-		booking.setMember(member);
+		} else booking.setMember(optional.get());
 		
 		bookingService.addBooking(booking);
 		
@@ -76,7 +74,7 @@ public class BookingController {
 	public String bookingDetail(Model model,
 								@RequestParam(name = "booking_id") Integer bookingId) {
 		Booking booking = bookingService.findBookingById(bookingId);
-		model.addAttribute(booking);
+		model.addAttribute("booking", booking);
 		return "booking/booking_detail";
 	}
 	
@@ -88,10 +86,10 @@ public class BookingController {
 		Optional<Member> optional = memberService.findUserById(detail.getId());
 		
 		if(optional.isEmpty()) {
-			return "redirect:/login";
+			return "home/home_guest";
 		} else member = optional.get();
 		
-		List<Booking> bookings = bookingService.findAllByMember(member.getId());
+		List<Booking> bookings = bookingService.findAllByMemberId(member.getId());
 		model.addAttribute("bookings", bookings);
 		
 		return "booking/booking_list";
