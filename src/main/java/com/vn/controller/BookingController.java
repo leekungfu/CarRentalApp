@@ -18,15 +18,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.vn.entities.Booking;
 import com.vn.entities.Car;
 import com.vn.entities.Member;
-import com.vn.repository.CarRepository;
 import com.vn.service.BookingService;
+import com.vn.service.CarService;
+import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.CarStatusEnum;
 
 @Controller
 public class BookingController {
+	
     @Autowired
-    private CarRepository carRepository;
+    CarService carService;
+    
+    @Autowired
+    MemberService memberService;
 
 	@Autowired
 	BookingService bookingService;
@@ -55,7 +60,7 @@ public class BookingController {
 		
 		Member member = new Member();
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<Member> optional = memberSerivce.findUserById(detail.getId());
+		Optional<Member> optional = memberService.findUserById(detail.getId());
 		if(optional.isEmpty()) {
 			return "redirect:/login";
 		} else member = optional.get();
@@ -76,15 +81,17 @@ public class BookingController {
 	}
 	
 	@GetMapping("/my_booking")
-	public String bookingsListByMember(Model model,
-										@RequestParam(name="userID") Integer memberId) {
-//		String memberName = null;
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		if(auth.isAuthenticated()) {
-//			memberName = auth.;
-//		}
-//		Member member = memberRepository.findByName(memberName);
-		List<Booking> bookings = bookingService.findAllByMember(memberId);
+	public String bookingsListByMember(Model model) {
+		
+		Member member = new Member();
+		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Optional<Member> optional = memberService.findUserById(detail.getId());
+		
+		if(optional.isEmpty()) {
+			return "redirect:/login";
+		} else member = optional.get();
+		
+		List<Booking> bookings = bookingService.findAllByMember(member.getId());
 		model.addAttribute("bookings", bookings);
 		
 		return "booking/booking_list";
@@ -107,7 +114,7 @@ public class BookingController {
 //
 //        car.setBookings(booking);
         car.setStatus(CarStatusEnum.Booked);
-        carRepository.save(car);
+        carService.saveCar(car);
         redirectAttributes.addFlashAttribute("messDeposit", "Confirm Deposit successful");
         model.addAttribute("carStatus", CarStatusEnum.Booked);
 
@@ -137,7 +144,7 @@ public class BookingController {
 //        Booking booking = car.getBookings().get(0);
 //        booking.setBookingStatus(BookingStatusEnum.Completed);
 
-        carRepository.save(car);
+        carService.saveCar(car);
         redirectAttributes.addFlashAttribute("messPayment", "Confirm Payment successful");
         model.addAttribute("carStatus", CarStatusEnum.values());
 
