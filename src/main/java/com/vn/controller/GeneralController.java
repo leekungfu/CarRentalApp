@@ -2,6 +2,7 @@ package com.vn.controller;
 
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
+import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.Const;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
@@ -63,22 +64,21 @@ public class GeneralController {
 
     @PostMapping("/signup")
     public String signUpPage(@ModelAttribute("member")Member member, Model model) {
-
         Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
-
             return "home/home_guest";
         }
         memberService.save(member);
 
-        // Auto login after user signed up successfully
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
-        authorities.add(authority);
-        User u = new User(member.getEmail(), member.getPassword(), authorities);
+//        // Auto login after user signed up successfully
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
+//        authorities.add(authority);
+//        User u = new User(member.getEmail(), member.getPassword(), authorities);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(u, null, authorities);
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "redirect:/home";
@@ -91,7 +91,9 @@ public class GeneralController {
 
 
     @PostMapping("/login")
-    public String signInPage(){return "redirect:/home";}
+    public String signInPage(){
+        return "redirect:/home";
+    }
 
     @GetMapping("/forgot_password")
     public String forgotPassForm() {
@@ -146,11 +148,11 @@ public class GeneralController {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
 
-        // The notification popup will be displayed as "Invalid token" if the token not be found in the DB.
+        // The notification popup will be displayed as "The request is expired!" if the token not be found in the DB.
         Member member = memberService.findByResetPasswordToken(token);
 
         if (member == null) {
-            model.addAttribute("message", "Invalid token");
+            model.addAttribute("message", "The request is expired!");
             return "account/reset_password";
         } else {
             memberService.updatePassword(member, password);

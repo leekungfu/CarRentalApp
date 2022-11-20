@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <div class="menu" th:fragment="menu(user)">
+    <div class="menu" th:fragment="menu(fullName)">
       <div class="left">
         <i class="fa-solid fa-car-side"></i>
         <label>Rent a car today</label>
@@ -19,23 +19,23 @@
              aria-expanded="false" style="padding: 8px 16px 8px 0px">
             <img th:src="@{/images/person_1.jpg}"
                  style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">
-            <label><span th:text="${user.getFullName()}"></span></label>
+            <label><span th:text="${fullName}"></span></label>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <a class="dropdown-item" th:href="@{/my_profile(userID = ${user.getId()})}">
+              <a class="dropdown-item" th:href="@{/my_profile}">
                 <i class="fa-solid fa-address-card"></i>
                 <label>My profile</label>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" th:href="@{/my_booking(userID = ${user.getId()})}">
+              <a class="dropdown-item" th:href="@{/my_booking}">
                 <i class="fa-solid fa-list"></i>
                 <label>My Booking</label>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" th:href="@{/my_wallet(userID = ${user.getId()})}">
+              <a class="dropdown-item" th:href="@{/my_walle}">
                 <i class="fa-solid fa-wallet"></i>
                 <label>My wallet</label>
               </a>
@@ -49,6 +49,47 @@
           </ul>
         </li>
       </nav>
+    </div>
+    <div class="header2" style="background-image: url('/images/car_background.jpg');" th:fragment="menu2(fullName)">
+      <div class="header2_background">
+        <div class="header2_menu">
+          <div class="header2_menu_contact">
+            <span style="color:white;">EMAIL: SUPPORT@RENTALCARSERVICES.COM</span>
+            <span style="color: white">MON - SUN: 24/7</span>
+          </div>
+          <div class="header2_menu_logo" style="background-image: url('/images/car_logo.jpg')"></div>
+          <div class="header2_menu_nav">
+            <nav class="navbar navbar-expand-sm">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/home}">HOME</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/about_us}">ABOUT US</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <img th:src="@{/images/person_1.jpg}"
+                         style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">
+                    <span th:text="${fullName}"></span>
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/my_profile}">My profile</a>
+                    <a class="dropdown-item" th:href="@{/my_booking}">My booking</a>
+                    <a class="dropdown-item" th:href="@{/my_wallet}">My wallet</a>
+                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                  </div>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+        <div class="header2_description">
+          <h1 class="text-white">RENT A CAR</h1>
+          <h3 class="text-white">Start the great journey</h3>
+        </div>
+      </div>
     </div>
 </body>
 </html>

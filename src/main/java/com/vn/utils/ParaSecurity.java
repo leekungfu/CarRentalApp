@@ -21,23 +21,11 @@ public class ParaSecurity {
             "/search/car",
             "/detail_car",
             "/rent_car",
-            "/assets/fonts/flaticon/font/**",
-            "/assets/fonts/icomoon/**",
-            "/assets/fonts/ionicons/css/**",
-            "/assets/fonts/ionicons/fonts/**",
-            "/assets/fonts/open-iconic/**",
-            "/assets/scss/bootstrap/**",
-            "/assets/scss/bootstrap/mixins/**",
-            "/assets/scss/bootstrap/utilities/**",
-            "/assets/scss/bootstrap/vendor/**",
-            "/listCar",
-            "/booking/status",
-            "/car/payment"
     };
 
     public static String[] customerPages ={
             "/home/",
-            "/home_customer/",
+            "/home_customer",
             "/forgot_password",
             "/reset_password",
             "/customer_profile",

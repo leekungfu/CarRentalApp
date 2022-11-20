@@ -1,12 +1,12 @@
 package com.vn.entities;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import com.vn.utils.CarStatusEnum;
 import lombok.AllArgsConstructor;
@@ -24,11 +24,8 @@ public class Car {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-    @NotEmpty
 	private String brand;
-    @NotEmpty
 	private String model;
-    @NotEmpty
 	private Integer year;
 	private String licensePlate;
 	private String color;
@@ -40,6 +37,7 @@ public class Car {
 	private String insuranceUrl;
 	private Double mileage;
 	private Double fuelConsumption;
+
     @NotEmpty
     @Nationalized
 	private String city;
@@ -63,7 +61,7 @@ public class Car {
 
     @Enumerated(EnumType.STRING)
     private CarStatusEnum status;
-	
+
 	@OneToMany(mappedBy = "car")
 	private List<Booking> bookings;
 
@@ -79,14 +77,37 @@ public class Car {
 		imagesArray[2] = stz.nextToken();
 		return imagesArray;
 	}
-    @Transient
-    public String getName() {
-        return this.brand + " " + this.model + " " + this.year;
-    }
+	public String genDeposit(){
+		Locale locale = new Locale("vi", "VN");
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+		return  numberFormat.format(this.price);
+	}
+	public String genPrice(){
+		Locale locale = new Locale("vi", "VN");
+		NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+		return  numberFormat.format(this.deposit);
+	}
+	public int genRating1(){
+		int a  = rating.intValue();
+		if ((rating-a)>0.5)
+			return a+1;
+		return a;
+	}
+	public int genRating2(){
+		int a = rating.intValue();
+		double delta = rating -a;
+		int result = 0;
+		if(delta >0 && delta<=0.5)
+			result =1;
+		return  result;
+	}
+	@Transient
+	public String getName() {
+		return this.brand + " " + this.model + " " + this.year;
+	}
 
-    @Transient
-    public String getAddress() {
-        return this.district + ", " + this.city;
-    }
-
+	@Transient
+	public String getAddress() {
+		return this.district + ", " + this.city;
+	}
 }

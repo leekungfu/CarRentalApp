@@ -1,10 +1,3 @@
-.search_car_form_content {
-    background-color: #f8f9fa;
-    display: flex;
-    align-items: self-end;
-    padding: 32px 80px 48px;
-    margin: 0 32px 32px;
-}
 
 .list_car_header {
     display: flex;
@@ -18,7 +11,6 @@
     margin-right: 16px;
     border: 1px solid #ffc107;
 }
-
 .icon_border:hover {
     background-color: #ffc107;
 }
@@ -32,7 +24,6 @@ i {
     flex-direction: column;
 }
 
-
 .car_paging {
     display: flex;
     padding: 16px 32px;
@@ -40,34 +31,41 @@ i {
     color: black;
     align-items: center;
 }
-.car_paging select{
+.car_paging select {
     width: 100px;
     margin-right: 32px;
     margin-left: 16px;
 }
-.uc20_info_header{
-     color: black;
-     font-weight: 450;
-     font-size: 1.8rem;
- }
-.uc20_info_body{
+.uc20_info_header {
+    color: black;
+    font-weight: 450;
+    font-size: 1.8rem;
+}
+.uc20_info_body {
     text-align: justify;
     margin-bottom: 16px;
     color: black;
 }
-.uc20_info_label{
+.uc20_info_label {
     margin: 24px 24px 24px 0px;
 }
-.uc20_info_detail{
+.uc20_info_detail {
     display: flex;
     margin-bottom: 16px;
 }
-.uc20_info_detail_item{
+.uc20_info_detail_item {
     display: flex;
     align-items: center;
     align-content: center;
     margin-right: 32px;
 }
-.uc20_info_detail_item p, i{
+.uc20_info_detail_item p, i {
     margin: 0px 6px 0px 0;
+}
+
+.navbar, nav-item {
+    background-color: unset;
+}
+.navbar li{
+    margin-right: 32px;
 }
