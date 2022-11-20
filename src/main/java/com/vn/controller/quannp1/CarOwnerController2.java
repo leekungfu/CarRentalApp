@@ -41,7 +41,7 @@ public class CarOwnerController2 {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getFullName());
-        return "car/testAddCar";
+        return "car/addCar";
     }
 
     @PostMapping("/Add-Car")
@@ -55,7 +55,7 @@ public class CarOwnerController2 {
         Car carCheck = carService.findCarByLicensePlate(car.getLicensePlate());
         if (carCheck != null) {
             model.addAttribute("msg", "Car is already exits");
-            return "car/testAddCar";
+            return "car/addCar";
         }
         //Lay ten goc cua anh them vao car
         String registrationPaper = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
@@ -79,6 +79,7 @@ public class CarOwnerController2 {
 
         Member member = memberService.findById(detail.getId());
         car.setMember(member);
+        car.setStatus(CarStatusEnum.Available);
 
         Car saveCars = carService.saveCar(car);
         String uploadDir = "./src/main/resources/static/images/" + saveCars.getId();
@@ -130,7 +131,7 @@ public class CarOwnerController2 {
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
         model.addAttribute("carStatus", CarStatusEnum.values());
-        return "car/testEditCar";
+        return "car/editCar";
     }
 
     @PostMapping("/car/edit/{id}")
