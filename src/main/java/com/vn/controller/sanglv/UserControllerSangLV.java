@@ -3,24 +3,19 @@ package com.vn.controller.sanglv;
 import com.vn.entities.MemberTransaction;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
-import com.vn.utils.GenDateTime;
-import com.vn.utils.GenMoney;
-import com.vn.utils.Paging;
-import com.vn.utils.PrintfLog;
+import com.vn.utils.DateTimeUtil;
+import com.vn.utils.MoneyUtil;
+import com.vn.utils.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -36,7 +31,7 @@ public class UserControllerSangLV {
                                @RequestParam(value = "date2", required = false, defaultValue = "") String date2) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getFullName());
-        model.addAttribute("wallet", GenMoney.genMoney(detail.getWallet()));
+        model.addAttribute("wallet", MoneyUtil.genMoney(detail.getWallet()));
 
         model.addAttribute("date1", date1);
         model.addAttribute("date2", date2);
@@ -53,15 +48,15 @@ public class UserControllerSangLV {
         } else {
             resultPage = memberService.findByMemberAndDate(
                     detail.getId(),
-                    GenDateTime.getDateTime(date1 + " 00:00"),
-                    GenDateTime.getDateTime(date2 + " 23:59"),
+                    DateTimeUtil.getDateTime(date1 + " 00:00"),
+                    DateTimeUtil.getDateTime(date2 + " 23:59"),
                     pageable);
         }
         int totalPages = resultPage.getTotalPages();
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("totalPages", totalPages);
         if (totalPages > 0) {
-            model.addAttribute("pageList", Paging.genPageList(totalPages, currentPage));
+            model.addAttribute("pageList", PagingUtil.genPageList(totalPages, currentPage));
         }
 
         return "wallet";

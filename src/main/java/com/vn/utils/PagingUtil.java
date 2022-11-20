@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Paging {
+public class PagingUtil {
     public static List<Integer> genPageList(Integer totalPages, Integer currentPage){
             int start = Math.max(1, currentPage - 2);
             int end = Math.min(currentPage + 2, totalPages);

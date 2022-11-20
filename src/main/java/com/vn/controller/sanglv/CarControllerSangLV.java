@@ -1,11 +1,10 @@
 package com.vn.controller.sanglv;
 
 import com.vn.entities.Car;
-import com.vn.entities.Member;
 import com.vn.service.CarService;
 import com.vn.service.impl.CustomUserDetails;
-import com.vn.utils.GenDateTime;
-import com.vn.utils.Paging;
+import com.vn.utils.DateTimeUtil;
+import com.vn.utils.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,13 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 public class CarControllerSangLV {
@@ -47,10 +40,10 @@ public class CarControllerSangLV {
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("city", city);
-        model.addAttribute("date1", GenDateTime.genDate(date1));
-        model.addAttribute("date2", GenDateTime.genDate(date2));
-        model.addAttribute("time1", GenDateTime.genTime(time1));
-        model.addAttribute("time2", GenDateTime.genTime(time2));
+        model.addAttribute("date1", DateTimeUtil.genDate(date1));
+        model.addAttribute("date2", DateTimeUtil.genDate(date2));
+        model.addAttribute("time1", DateTimeUtil.genTime(time1));
+        model.addAttribute("time2", DateTimeUtil.genTime(time2));
 
         Pageable pageable;
         switch (sortType) {
@@ -67,13 +60,13 @@ public class CarControllerSangLV {
                 pageable = PageRequest.of(currentPage - 1, pageSize);
         }
 
-        Page<Car> resultPage = carService.findByCityAndDate(city,GenDateTime.genD(date1), pageable);
+        Page<Car> resultPage = carService.findByCityAndDate(city, DateTimeUtil.genD(date1), pageable);
         int totalPages = resultPage.getTotalPages();
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("totolPage", totalPages);
 
         if (totalPages > 0) {
-            model.addAttribute("pageNumbers", Paging.genPageList(totalPages,currentPage));
+            model.addAttribute("pageNumbers", PagingUtil.genPageList(totalPages,currentPage));
         }
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

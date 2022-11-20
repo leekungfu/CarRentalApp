@@ -1,13 +1,11 @@
 package com.vn.utils;
 
-import net.bytebuddy.asm.Advice;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class GenDateTime {
+public class DateTimeUtil {
     public static String genDate(String date) {
         if (date.equals(""))
             return LocalDate.now().toString();

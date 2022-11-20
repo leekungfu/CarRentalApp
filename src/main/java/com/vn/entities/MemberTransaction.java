@@ -1,11 +1,10 @@
 package com.vn.entities;
 
-import com.vn.utils.GenMoney;
+import com.vn.utils.MoneyUtil;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @Entity
@@ -22,6 +21,6 @@ public class MemberTransaction {
     @JoinColumn(name = "member_id")
     private Member member;
     public String genAmount(){
-        return GenMoney.genMoney(this.amount);
+        return MoneyUtil.genMoney(this.amount);
     }
 }
