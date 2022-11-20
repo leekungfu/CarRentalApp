@@ -72,24 +72,4 @@ $(document).ready(function () {
 
         },
     });
-
-    $(document).on("click", "#signupSubmit", function submitForm() {
-        var email = document.getElementsByName('email').values();
-        if ($("form").valid()) {
-            Swal.fire(
-                'Good job!',
-                'Log in successfully!',
-                'success',
-                'timer:10000'
-            )
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-                timer: '10000',
-                footer: '<a href="">Why do I have this issue?</a>'
-            })
-        }
-    });
 });

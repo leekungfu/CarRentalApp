@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -69,9 +70,9 @@ public class CarServiceImpl implements CarService {
         carRepository.deleteById(id);
         return true;
     }
-//    @Override
-//    public List<Car> findByIdMember(Integer id) {
-//        return carRepository.findByMemberId(id);
-//    }
 
+    @Override
+    public Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable) {
+        return carRepository.findByCityAndDate(city, date, pageable);
+    }
 }

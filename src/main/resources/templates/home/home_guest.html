@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>CarRental</title>
@@ -25,10 +25,6 @@
           integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-    <!-- SWEET ALERT-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.9/dist/sweetalert2.all.min.js"
-            integrity="sha256-Q1mSm6zOdNtBepsOtzQZa+VXNOJ96OMqJlbefdcpwjY=" crossorigin="anonymous"></script>
-
     <style>
         .error {
             color: red;
@@ -47,7 +43,7 @@
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa-solid fa-bars"></i> Menu
+            <span class="oi oi-menu"></span> Menu
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
@@ -91,10 +87,7 @@
                                     <div class="form-group">
                                         <a th:href="@{/forgot_password}">Forgot your password?</a>
                                     </div>
-                                    <button type="submit" class="btn" id="loginSubmit" onclick="function submitForm() {
-                        }
-                    submitForm();">Sign in
-                                    </button>
+                                    <button type="submit" class="btn">Sign in</button>
                                 </form>
                             </div>
                         </div>
@@ -166,9 +159,7 @@
                                 </label>
                                 <a style="text-decoration: underline;" href="#">Terms & Conditions</a>
                             </div>
-                            <button type="submit" class="btn" onclick="function submitForm() {
-                        }
-                    submitForm();" id="signupSubmit">Submit</button>
+                            <button type="submit" class="btn">Submit</button>
                             <!--                            id="signUpSubmit" data-dismiss="modal" data-toggle="modal" href="#loginPage"-->
                         </form>
                     </div>

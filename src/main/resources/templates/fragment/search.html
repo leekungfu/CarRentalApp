@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="search" th:fragment="search(city, date1, time1, date2, time2)">
+    <form th:action="@{search_car}">
+        <div class="search_body">
+            <h3>ENTER LOCATION AND TIME</h3>
+            <div class="search_input">
+                <input class="form-control form-control-lg" type="text" placeholder="Please enter location" name="city"
+                       th:value="${(city==null)? '' : city}">
+                <input class="input_date" type="date" name="date1" th:value="${(date1==null)? 0 : date1}">
+                <input class="input_time" type="time" name="time1" th:value="${(time1==null)? 0 : time1}">
+                <input class="input_date" type="date" name="date2" th:value="${(date2==null)? 0 : date2}">
+                <input class="input_time" type="time" name="time2" th:value="${(time2==null)? 0 : time2}">
+            </div>
+        </div>
+        <div class="search_bottom">
+            <button class="bg-gold" type="submit">SEARCH</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
