@@ -15,11 +15,8 @@ public class HomeController {
         CustomUserDetails detail;
         try {
             detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Member member = new Member();
-            member.setFullName(detail.getUsername());
-            model.addAttribute("user", member);
-            model.addAttribute("fullName", detail.getFullName());
             long countRoleCustomer = detail.getAuthorities().stream().filter(x -> x.getAuthority().contains("CUSTOMER")).count();
+            model.addAttribute("fullName", detail.getFullName() );
             if (countRoleCustomer > 0) return "home/home_customer";
             return "home/home_car_owner";
         } catch (Exception e) {

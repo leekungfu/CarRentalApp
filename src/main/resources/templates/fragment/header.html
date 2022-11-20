@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <div class="menu" th:fragment="menu(user)">
+    <div class="menu" th:fragment="menu(fullName)">
       <div class="left">
         <i class="fa-solid fa-car-side"></i>
         <label>Rent a car today</label>
@@ -19,23 +19,23 @@
              aria-expanded="false" style="padding: 8px 16px 8px 0px">
             <img th:src="@{/images/person_1.jpg}"
                  style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">
-            <label><span th:text="${user.getFullName()}"></span></label>
+            <label><span th:text="${fullName}"></span></label>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <a class="dropdown-item" th:href="@{/my_profile(userID = ${user.getId()})}">
+              <a class="dropdown-item" th:href="@{/my_profile}">
                 <i class="fa-solid fa-address-card"></i>
                 <label>My profile</label>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" th:href="@{/my_booking(userID = ${user.getId()})}">
+              <a class="dropdown-item" th:href="@{/my_booking}">
                 <i class="fa-solid fa-list"></i>
                 <label>My Booking</label>
               </a>
             </li>
             <li>
-              <a class="dropdown-item" th:href="@{/my_wallet(userID = ${user.getId()})}">
+              <a class="dropdown-item" th:href="@{/my_walle}">
                 <i class="fa-solid fa-wallet"></i>
                 <label>My wallet</label>
               </a>

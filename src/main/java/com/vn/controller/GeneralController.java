@@ -2,6 +2,7 @@ package com.vn.controller;
 
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
+import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.Const;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
@@ -66,18 +67,18 @@ public class GeneralController {
         Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
-
             return "home/home_guest";
         }
         memberService.save(member);
 
-        // Auto login after user signed up successfully
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
-        authorities.add(authority);
-        User u = new User(member.getEmail(), member.getPassword(), authorities);
+//        // Auto login after user signed up successfully
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
+//        authorities.add(authority);
+//        User u = new User(member.getEmail(), member.getPassword(), authorities);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(u, null, authorities);
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "redirect:/home";
