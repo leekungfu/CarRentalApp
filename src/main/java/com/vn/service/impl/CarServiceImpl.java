@@ -70,4 +70,9 @@ public class CarServiceImpl implements CarService {
         carRepository.deleteById(id);
         return true;
     }
+
+    @Override
+    public Car findCarById(Integer id) {
+        return carRepository.findCarById(id);
+    }
 }

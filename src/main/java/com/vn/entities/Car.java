@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
 @Getter
 @Setter
@@ -40,19 +41,23 @@ public class Car {
 	private Double mileage;
 	private Double fuelConsumption;
     @NotEmpty
+    @Nationalized
 	private String city;
     @NotEmpty
+    @Nationalized
 	private String district;
+    @Nationalized
 	private String ward;
+    @Nationalized
 	private String street;
 	private String description;
-	private Integer addFunction;
+	private String addFunction;
 	private String images;
     @NotEmpty
 	private Double price;
     @NotEmpty
 	private Double deposit;
-	private Integer term;
+	private String term;
 	private String termExtra;
 	private Double rating;
 

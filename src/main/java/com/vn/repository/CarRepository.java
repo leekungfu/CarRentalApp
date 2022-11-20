@@ -19,4 +19,6 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 //    List<Car> findByMemberId(Integer idMember);
 
     Page<Car> findByMemberId(Integer id, Pageable pageable);
+
+    Car findCarById(Integer id);
 }

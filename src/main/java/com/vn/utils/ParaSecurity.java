@@ -30,7 +30,9 @@ public class ParaSecurity {
             "/assets/scss/bootstrap/mixins/**",
             "/assets/scss/bootstrap/utilities/**",
             "/assets/scss/bootstrap/vendor/**",
-            "/listCar"
+            "/listCar",
+            "/booking/status",
+            "/car/payment"
     };
 
     public static String[] customerPages ={
@@ -59,6 +61,7 @@ public class ParaSecurity {
             "/booking/*",
             "/car/*",
             "/listCar",
-            "/home_car_owner"
+            "/home_car_owner",
+            "/booking/status"
     };
 }

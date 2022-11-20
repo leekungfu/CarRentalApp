@@ -25,4 +25,6 @@ public interface CarService {
 
     boolean delete(Integer id);
 
+    Car findCarById(Integer id);
+
 }
