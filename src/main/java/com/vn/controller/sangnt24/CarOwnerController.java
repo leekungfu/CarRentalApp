@@ -129,33 +129,33 @@ public class CarOwnerController {
 //        return "redirect:/listCar";
 //    }
 //
-//    // Edit Car
-//    @GetMapping("/editCar/{id}")
-//    public String editCar(Model model, @PathVariable("id") Integer idCar, HttpSession session) {
+    // Edit Car
+//    @GetMapping("/confirmDeposit/{id}")
+//    public String editCar(Model model, @PathVariable("id") Integer idCar, RedirectAttributes redirectAttributes) {
 //        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        model.addAttribute("fullName", detail.getFullName());
 //
 //        Car car = carService.findByIdCar(idCar);
 //
 //        model.addAttribute("carStatus", CarStatusEnum.values());
-//        model.addAttribute("editCar", car);
-//        return "/car/editCar";
+//        model.addAttribute("carDeposit", car);
+//        redirectAttributes.addFlashAttribute("message", "Confirm deposit sucessfull");
+//        return "car/editCar";
 //    }
 //
-//    @PostMapping("/editCar")
-//    public String editContentById(@ModelAttribute("editCar") Car car,
+//    @PostMapping("/confirmDeposit")
+//    public String editContentById(@ModelAttribute("carDeposit") Car car,
 //                                  Model model, RedirectAttributes redirectAttributes) {
 //
 //        // Edit Car by email Member (role: Car owner)
 //        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        model.addAttribute("fullName", detail.getFullName());
 //
-//        Car editCar = carService.findByIdCar(car.getId());
-//        editCar.setPrice(car.getPrice());
-//        editCar.setDeposit(car.getDeposit());
-//        editCar.setStatus(car.getStatus());
+//        Car confirmDeposit = carService.findByIdCar(car.getId());
+//        confirmDeposit.setStatus(CarStatusEnum.Booked);
 //
-//        carService.update(editCar);
+//        carService.update(confirmDeposit);
+//        model.addAttribute("carStatus", CarStatusEnum.Booked);
 //        redirectAttributes.addFlashAttribute("message", "Edit car sucessfull");
 //        return "redirect:/listCar";
 //    }
@@ -168,4 +168,5 @@ public class CarOwnerController {
         redirectAttributes.addFlashAttribute("message", "Delete car sucessfull");
         return "redirect:/listCar";
     }
+
 }

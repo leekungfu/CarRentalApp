@@ -135,14 +135,14 @@ public class CarOwnerController2 {
     }
 
     @PostMapping("/car/edit/{id}")
-    public String submitEditCar(@ModelAttribute Car car, @PathVariable("id") Integer id, Model model) {
+    public String submitEditCar(@ModelAttribute Car car, @PathVariable("id") Integer id, Model model,RedirectAttributes redirectAttributes) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getFullName());
 
-        model.addAttribute("message", "Edit car successful");
+        redirectAttributes.addFlashAttribute("message", "Edit car successful");
         model.addAttribute("carStatus", CarStatusEnum.values());
         carService.saveCar(car);
-        return "redirect:/listCar";
+        return "car/editCar";
     }
 
 }
