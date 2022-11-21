@@ -50,6 +50,18 @@
         .error {
             color: red;
         }
+
+        .img-size {
+            max-width: 500px;
+            max-height: 200px;
+        }
+
+        .container2-header {
+            padding-top: 20px;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            font-weight: 600
+        }
     </style>
 </head>
 <body>
@@ -65,6 +77,10 @@
     <span>Add a car</span>
 </div>
 
+<div class="">
+    <h4 class="container2-header">Add a car</h4>
+</div>
+
 <div class="container">
     <form action="/Add-Car" method="post" class="add-car-form-1" id="regForm" enctype="multipart/form-data">
         <!-- Circles which indicates the steps of the form: -->
@@ -74,7 +90,6 @@
             <span class="step">Pricing</span>
             <span class="step">Finish</span>
         </div>
-        <h1>Add a car:</h1>
         <div class="tab">
             <div class="text-danger" th:utext="${msg}"></div>
             <p class="tabinput">
@@ -171,18 +186,22 @@
                 </div>
                 <div class="radiochoice col-md-6">
                     <div class="form-group">
-                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio" name="transmission" id="option1"
+                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio"
+                               name="transmission" id="option1"
                                autocomplete="off" value="Automatic" checked hidden>
                         <label class="btn btn-radio" for="option1">Automatic</label>
-                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio" name="transmission" id="option2"
+                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio"
+                               name="transmission" id="option2"
                                autocomplete="off" value="Manual" hidden>
                         <label class="btn btn-radio" for="option2">Manual</label>
                     </div>
                     <div class="form-group">
-                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio" name="fuel" id="option3"
+                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio" name="fuel"
+                               id="option3"
                                autocomplete="off" value="Gasoline" checked hidden>
                         <label class="btn btn-radio " for="option3">Gasoline</label>
-                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio" name="fuel" id="option4"
+                        <input type="radio" oninput="this.className = ''" class="btn-check btn-radio" name="fuel"
+                               id="option4"
                                autocomplete="off" value="Diesel" hidden>
                         <label class="btn btn-radio" for="option4">Diesel</label>
                     </div>
@@ -192,17 +211,17 @@
                 <div class="drop-zone">
                     <label>Registration paper:</label>
                     <input type="file" name="pregistration" accept="image/jpeg, image/png" id="target1">
-                    <img alt="" id="thumbnail1">
+                    <img class="img-size" alt="Image show" id="thumbnail1">
                 </div>
                 <div class="drop-zone">
-                    <label >Certificate of inspection</label>
+                    <label>Certificate of inspection</label>
                     <input type="file" name="pinspection" accept="image/jpeg, image/png" id="target2">
-                    <img alt="" id="thumbnail2">
+                    <img class="img-size" alt="Image show" id="thumbnail2">
                 </div>
                 <div class="drop-zone">
-                    <label >Insurance</label>
+                    <label>Insurance</label>
                     <input type="file" name="pinsuranceUrl" accept="image/jpeg, image/png" id="target3">
-                    <img alt="" id="thumbnail3">
+                    <img class="img-size" alt="Image show" id="thumbnail3">
                 </div>
             </div>
         </div>
@@ -212,7 +231,8 @@
                     <input placeholder="Mileage" type="number" oninput="this.className = ''" name="mileage">
                 </div>
                 <div class="form-group">
-                    <input placeholder="Fuel consumption (liter/100km)" type="number" name="fuelConsumption" oninput="this.className = ''"/>
+                    <input placeholder="Fuel consumption (liter/100km)" type="number" name="fuelConsumption"
+                           oninput="this.className = ''"/>
                 </div>
             </div>
             <div class="form-group">
@@ -244,25 +264,25 @@
             <div class="form-group">
                 <div class="checkboxgroup1">
                     Bluetooth
-                    <input value="BLUETOOTH" class="fntchk" type="checkbox" >
+                    <input value="BLUETOOTH" class="fntchk" type="checkbox">
                     GPS
-                    <input value="GPS" class="fntchk"  type="checkbox">
+                    <input value="GPS" class="fntchk" type="checkbox">
                     Camera
-                    <input value="CAMERA" class="fntchk"  type="checkbox">
+                    <input value="CAMERA" class="fntchk" type="checkbox">
                 </div>
                 <div class="checkboxgroup2">
                     Sun roof
-                    <input value="SUNROOF" class="fntchk"  type="checkbox" >
+                    <input value="SUNROOF" class="fntchk" type="checkbox">
                     Child lock
-                    <input value="CHILDLOCK" class="fntchk"  type="checkbox">
+                    <input value="CHILDLOCK" class="fntchk" type="checkbox">
                     Child seat
-                    <input value="CHILDSEAT" class="fntchk"  type="checkbox">
+                    <input value="CHILDSEAT" class="fntchk" type="checkbox">
                 </div>
                 <div class="checkboxgroup3">
                     DVD
-                    <input value="DVD" class="fntchk"  type="checkbox">
+                    <input value="DVD" class="fntchk" type="checkbox">
                     USB
-                    <input value="USB" class="fntchk"  type="checkbox">
+                    <input value="USB" class="fntchk" type="checkbox">
                 </div>
                 <input name="addFunction" id="finalvalue" hidden>
             </div>
@@ -270,22 +290,22 @@
                 <div>
                     <label>Front</label>
                     <input type="file" name="pimages" accept="image/jpeg, image/png" id="target4">
-                    <img alt="Image show" id="thumbnail4">
+                    <img class="img-size" alt="Image show" id="thumbnail4">
                 </div>
                 <div>
                     <label>Left</label>
                     <input type="file" name="pimages" accept="image/jpeg, image/png" id="target5">
-                    <img alt="Image show" id="thumbnail5">
+                    <img class="img-size" alt="Image show" id="thumbnail5">
                 </div>
                 <div>
                     <label>Right</label>
                     <input type="file" name="pimages" accept="image/jpeg, image/png" id="target6">
-                    <img alt="Image show" id="thumbnail6">
+                    <img class="img-size" alt="Image show" id="thumbnail6">
                 </div>
                 <div>
                     <label>Back</label>
                     <input type="file" name="pimages" accept="image/jpeg, image/png" id="target7">
-                    <img alt="Image show" id="thumbnail7">
+                    <img class="img-size" alt="Image show" id="thumbnail7">
                 </div>
             </div>
         </div>
@@ -304,7 +324,8 @@
                 <input type="checkbox" class="fntchk2" oninput="this.className = ''" value="NOFOODINCAR">No food in car
                 <input type="checkbox" class="fntchk2" oninput="this.className = ''" value="NOPET">No Pet
                 <input name="term" id="finalvalue2">
-                <input type="checkbox" name="" oninput="this.className = ''" value="Other" id="toggle" onclick="opennewtab()">Other
+                <input type="checkbox" name="" oninput="this.className = ''" value="Other" id="toggle"
+                       onclick="opennewtab()">Other
                 <div id="content" class="is-hidden">
                     <label>Please specify:</label>
                     <textarea name="termExtra" cols="30" rows="10"
@@ -376,6 +397,7 @@
             showImageThumbnail7(this);
         });
     });
+
     function showImageThumbnail1(fileInput) {
         file = fileInput.files[0];
         reader = new FileReader();
@@ -384,6 +406,7 @@
         };
         reader.readAsDataURL(file);
     }
+
     function showImageThumbnail2(fileInput) {
         file = fileInput.files[0];
         reader = new FileReader();
@@ -392,6 +415,7 @@
         };
         reader.readAsDataURL(file);
     }
+
     function showImageThumbnail3(fileInput) {
         file = fileInput.files[0];
         reader = new FileReader();
@@ -400,6 +424,7 @@
         };
         reader.readAsDataURL(file);
     }
+
     function showImageThumbnail4(fileInput) {
         file = fileInput.files[0];
         reader = new FileReader();
@@ -408,6 +433,7 @@
         };
         reader.readAsDataURL(file);
     }
+
     function showImageThumbnail5(fileInput) {
         file = fileInput.files[0];
         reader = new FileReader();
@@ -416,6 +442,7 @@
         };
         reader.readAsDataURL(file);
     }
+
     function showImageThumbnail6(fileInput) {
         file = fileInput.files[0];
         reader = new FileReader();
@@ -424,6 +451,7 @@
         };
         reader.readAsDataURL(file);
     }
+
     function showImageThumbnail7(fileInput) {
         file = fileInput.files[0];
         reader = new FileReader();
@@ -432,20 +460,22 @@
         };
         reader.readAsDataURL(file);
     }
+
     //json input car model
     var brand = document.getElementById("brand");
     var model = document.getElementById("model");
-    var Parameter0 ={
-        url : "https://raw.githubusercontent.com/FormidableLabs/radon-typeahead/master/demo/car-models.json",
-        method : "GET",
+    var Parameter0 = {
+        url: "https://raw.githubusercontent.com/FormidableLabs/radon-typeahead/master/demo/car-models.json",
+        method: "GET",
         responseType: "application/json",
     };
     var promises = axios(Parameter0);
     promises.then(function (result) {
-        renderBrand (result.data);
+        renderBrand(result.data);
     });
+
     function renderBrand(data) {
-        for(const x of data){
+        for (const x of data) {
             brand.options[brand.options.length] = new Option(x.brand, x.brand);
         }
         brand.onchange = function () {
@@ -458,6 +488,7 @@
             }
         };
     }
+
     //json input location
     var cities = document.getElementById("cityID");
     var districts = document.getElementById("districtID");
@@ -471,6 +502,7 @@
     promise.then(function (result) {
         renderCity(result.data);
     });
+
     function renderCity(data) {
         for (const x of data) {
             cities.options[cities.options.length] = new Option(x.Name, x.Name);
@@ -496,6 +528,7 @@
             }
         };
     }
+
     //save value checkbox
     $(document).ready(function () {
         $('.fntchk').click(function () {
@@ -513,14 +546,14 @@
             $('#finalvalue2').val(selected);
         });
     });
+
     //open checkbox other
-    function opennewtab(){
+    function opennewtab() {
         var selectedCheckbox = document.getElementById("toggle");
         var showBox = document.getElementById("content");
-        if(selectedCheckbox.checked == true){
+        if (selectedCheckbox.checked == true) {
             showBox.style.display = "block";
-        }
-        else{
+        } else {
             showBox.style.display = "none";
         }
     }
