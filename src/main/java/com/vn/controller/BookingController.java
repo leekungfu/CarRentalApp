@@ -1,5 +1,6 @@
 package com.vn.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ import com.vn.service.BookingService;
 import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
+import com.vn.utils.BookingStatusEnum;
 import com.vn.utils.CarStatusEnum;
 
 @Controller
@@ -42,27 +44,45 @@ public class BookingController {
 								HttpSession httpSession) {
 		Car car = carService.findById(carID);
 		model.addAttribute("car", car);
+		httpSession.setAttribute("carModel", car);
 		
-		httpSession.setAttribute("car", car);
 		return "booking/booking_process";
+		
 	}
 	
 	@PostMapping("/booking_result")
 	public String bookingSuccessful(@ModelAttribute("payment")Integer paymentMethod,
+									@ModelAttribute("startDate") String startDate,
+									@ModelAttribute("endDate") String endDate,
 									HttpSession httpSession,
 									Model model){
 		
 		Booking booking = new Booking();
 		
-		Car car = (Car) httpSession.getAttribute("car");
+		Car car = (Car) httpSession.getAttribute("carModel");
 		booking.setCar(car);
 		booking.setPaymentMethod(paymentMethod);
+		booking.setStartDate(LocalDate.parse(startDate));
+		booking.setEndDate(LocalDate.parse(endDate));
+		
+		switch(paymentMethod) {
+		case 1:
+			booking.setBookingStatus(BookingStatusEnum.Pending_deposit);
+			break;
+		case 2,3:
+			booking.setBookingStatus(BookingStatusEnum.Pending_payment);
+			break;
+		default: 
+			break;
+		}
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Optional<Member> optional = memberService.findUserById(detail.getId());
 		if(optional.isEmpty()) {
 			return "redirect:/login";
-		} else booking.setMember(optional.get());
+		} else {
+			booking.setMember(optional.get());
+		}
 		
 		bookingService.addBooking(booking);
 		

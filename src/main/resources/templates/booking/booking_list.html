@@ -5,7 +5,10 @@
     <title>Booking List</title>
 </head>
 <body>
-	Booking List
+	<div th:insert="~{/fragment/header::menu2(${fullName})}">
+	</div>
+	
+	<h1>Booking List</h1>
 	<div>
 		<table>
 			<thead>
@@ -13,6 +16,8 @@
 					<th>id</th>
 					<th>Car id</th>
 					<th>Member id</th>
+					<th>Start Date</th>
+					<th>Return Date</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -20,6 +25,8 @@
 					<td th:text="${booking.getId()}"></td>
 					<td th:text="${booking.getCar().getId()}"></td>
 					<td th:text="${booking.getMember().getId()}"></td>
+					<td th:text="${booking.getStartDate()}"></td>
+					<td th:text="${booking.getEndDate()}"></td>
 				</tr>
 			</tbody>
 		</table>
