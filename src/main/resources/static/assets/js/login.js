@@ -37,4 +37,44 @@ $(document).ready(function () {
             },
         },
     });
+
+    // $(document).on("click", "#loginButton", function submitForm() {
+    //     if ($("form").valid()) {
+    //         Swal.fire(
+    //             'Well done!',
+    //             'Log in successfully!',
+    //             'success',
+    //             'timer:500000'
+    //         )
+    //     }
+    // });
+
+    $("#loginButton").click(function submitForm() {
+            // event.preventDefault();
+            // const form_data = $(this).serialize();
+            $.ajax({
+                url:"./signup",
+                method:'POST',
+                data:{data},
+                success: function(data){
+                    if(data)
+                    {
+                        Swal.fire(
+                            'Well done!',
+                            'Log in successfully!',
+                            'success',
+                            'timer:50000'
+                        )
+                    }else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            time: '50000',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    }
+                }
+            });
+    });
 });

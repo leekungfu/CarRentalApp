@@ -43,6 +43,12 @@ public class CarServiceImpl implements CarService {
     public Car findById(Integer id) {
         return carRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Page<Car> listCarByMemberId(Integer id, Pageable pageable) {
+        return carRepository.findByMemberId(id,pageable);
+    }
+
     public Page<Car> listAll(int pageNumber, String sortField, String sortDir, Integer id) {
         Sort sort = Sort.by("price");
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
@@ -50,11 +56,6 @@ public class CarServiceImpl implements CarService {
         Pageable pageable = PageRequest.of(pageNumber - 1,4,sort);
         return carRepository.findByMemberId(id,pageable);
     }
-
-//    @Override
-//    public Page<Car> findByMemberEmail(String email, Pageable pageable) {
-//        return carRepository.findByMemberEmail(email,pageable);
-//    }
 
     @Override
     public Car findByIdCar(Integer id) {
@@ -71,6 +72,10 @@ public class CarServiceImpl implements CarService {
         return true;
     }
 
+    @Override
+    public Car findCarById(Integer id) {
+        return carRepository.findCarById(id);
+        }
     @Override
     public Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable) {
         return carRepository.findByCityAndDate(city, date, pageable);

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,9 +26,8 @@ public interface MemberService {
     void updatePassword(Member member, String newPassword);
 
     Member findByEmail(String email);
-
+    List<Member> findAll();
     Optional<Member> findUserById(Integer id);
-
     Member findById(Integer id);
 
     Page<MemberTransaction> findByMember(Integer memberId, Pageable pageable);

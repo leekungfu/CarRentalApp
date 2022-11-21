@@ -233,6 +233,37 @@
 <!--    </div>-->
 <!--</div>-->
 
+
+<!--<div class="text-center">Total Items: [[${totalItems}]] - Page [[${currentPage}]] of-->
+<!--    [[${totalPages}]]-->
+<!--    &nbsp; - &nbsp;-->
+<!--<a th:if="${currentPage > 1}" th:href="@{'/page/1' + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">First</a>-->
+<!--        <a th:unless="${currentPage > 1}">First</a>-->
+<!--        &nbsp;-->
+
+<!--        <a th:if="${currentPage > 1}"-->
+<!--           th:href="@{'/page/' + ${currentPage - 1}  + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">Previous</a>-->
+<!--        <a th:unless="${currentPage > 1}">Previous</a>-->
+<!--        &nbsp;-->
+
+<!--        <span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
+<!--                            <a th:if="${i != currentPage}"-->
+<!--                               th:href="@{'/page/' + ${i} + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
+<!--                            <span th:unless="${i != currentPage}">[[${i}]]</span>-->
+<!--                            &nbsp;&nbsp;-->
+<!--                        </span>-->
+
+<!--        <a th:if="${currentPage < totalPages}"-->
+<!--           th:href="@{'/page/' + ${currentPage + 1}  + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">Next</a>-->
+<!--        <a th:unless="${currentPage < totalPages}">Next</a>-->
+<!--        &nbsp;-->
+
+<!--        <a th:if="${currentPage < totalPages}"-->
+<!--           th:href="@{'/page/' + ${totalPages}  + '?sortField=' +${sortField}+ '&sortDir=' + ${sortDir}}">Last</a>-->
+<!--        <a th:unless="${currentPage < totalPages}">Last</a>-->
+<!--        &nbsp;-->
+<!--</div>-->
+
 <!-- Javascript -->
 <script src="/assets/js/jquery-1.11.1.min.js"></script>
 <script src="/assets/boostrap/js/bootstrap.min.js"></script>

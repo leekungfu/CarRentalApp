@@ -22,6 +22,10 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 
     Page<Car> findByMemberId(Integer id, Pageable pageable);
 
+
+    Car findCarById(Integer id);
+
     @Query(value = "SELECT c FROM Car c LEFT JOIN c.bookings b WHERE c.city = :city AND (b.endDate < :date OR b.endDate IS NULL)")
     Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable);
+
 }
