@@ -5,11 +5,11 @@ import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,7 +64,7 @@ public class MemberController {
 
         memberService.updateMember(m);
 
-        String uploadDir = "./src/main/resources/static/images/"+user.getId();
+        String uploadDir = "./src/main/resources/static/images/";
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
 
