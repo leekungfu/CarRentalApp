@@ -3,7 +3,6 @@ package com.vn.controller;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
-import com.vn.utils.Const;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +29,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 @Controller
 public class GeneralController {
 
