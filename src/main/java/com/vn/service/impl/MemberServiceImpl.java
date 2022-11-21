@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -29,7 +30,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member updateMember(Member member) {
-        return null;
+
+        return memberRepository.save(member);
     }
 
     @Override
@@ -71,7 +73,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member findByEmail(String email) {
+
         return memberRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 
     @Override
