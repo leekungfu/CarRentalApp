@@ -14,6 +14,25 @@ public class CustomUserDetails implements UserDetails {
     @Getter
     private final Member member;
     private Integer id;
+    private String fullName;
+
+    private Double wallet;
+
+    public Double getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Double wallet) {
+        this.wallet = wallet;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public Integer getId() {
         return id;
@@ -28,6 +47,8 @@ public class CustomUserDetails implements UserDetails {
         this.id = member.getId();
 
 
+        this.fullName = member.getFullName();
+        this.wallet = member.getWallet();
     }
 
     @Override

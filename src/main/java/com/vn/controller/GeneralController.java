@@ -1,23 +1,16 @@
 package com.vn.controller;
 
-
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
+import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Controller
 public class GeneralController {
@@ -42,7 +32,6 @@ public class GeneralController {
     private Utility utility;
 
 
-
     @GetMapping("/about")
     public String aboutPage() {
         return "home/about";
@@ -51,16 +40,17 @@ public class GeneralController {
     @GetMapping("/home_logout")
     public String testLogout() {
         return "home/home_logout";
+
     }
 
     @GetMapping("/signup")
     public String signUp() {
         return "home/home_guest";
+
     }
 
     @PostMapping("/signup")
     public String signUpPage(@ModelAttribute("member")Member member, Model model) {
-
         Member checkMem = memberService.findByEmail(member.getEmail());
         if (checkMem != null) {
             model.addAttribute("msg", "Email is taken!");
@@ -68,13 +58,14 @@ public class GeneralController {
         }
         memberService.save(member);
 
-        // Auto login after user signed up successfully
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
-        authorities.add(authority);
-        User u = new User(member.getEmail(), member.getPassword(), authorities);
+//        // Auto login after user signed up successfully
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
+//        authorities.add(authority);
+//        User u = new User(member.getEmail(), member.getPassword(), authorities);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(u, null, authorities);
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return "redirect:/home";
@@ -85,9 +76,10 @@ public class GeneralController {
         return "home/home_guest";
     }
 
+
     @PostMapping("/login")
-    public String signInPage() {
-            return "redirect:/home";
+    public String signInPage(){
+        return "redirect:/home";
     }
 
     @GetMapping("/forgot_password")
@@ -143,11 +135,11 @@ public class GeneralController {
         String token = request.getParameter("token");
         String password = request.getParameter("password");
 
-        // The notification popup will be displayed as "Invalid token" if the token not be found in the DB.
+        // The notification popup will be displayed as "The request is expired!" if the token not be found in the DB.
         Member member = memberService.findByResetPasswordToken(token);
 
         if (member == null) {
-            model.addAttribute("message", "Invalid token");
+            model.addAttribute("message", "The request is expired!");
             return "account/reset_password";
         } else {
             memberService.updatePassword(member, password);
@@ -162,4 +154,9 @@ public class GeneralController {
         return "home/home_guest";
     }
 
+    @GetMapping("/logoutCarOwner")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/login";
+    }
 }

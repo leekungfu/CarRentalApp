@@ -20,43 +20,26 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!--    CSS-->
-    <link rel="stylesheet" href="/assets/css/common/menu.css">
     <link rel="stylesheet" href="/assets/css/car/car_search.css">
+    <link rel="stylesheet" href="/assets/css/fragment/header.css">
+    <link rel="stylesheet" href="/assets/css/fragment/search.css">
     <link rel="stylesheet" href="/assets/css/car/car_item.css">
     <link rel="stylesheet" href="/assets/css/car/car_detail.css">
 </head>
 
 <body>
 
-<div th:insert="~{/fragment/header::menu(${user})}">
+
+<div th:insert="~{/fragment/header::menu2(${fullName})}">
+</div>
+<div th:insert="~{/fragment/search::search(${city}, ${date1}, ${time1}, ${date2}, ${time2})}">
 </div>
 
-<div style="margin:32px">
-    <a th:href="@{/home}">Home</a>
-    <span> > Search result</span>
-</div>
-
-<form action="">
-    <div class="search_car_form_content">
-        <div class="form-group" style="flex: 2; margin-right: 16px; margin-bottom: 0px">
-            <label for="location">Location</label>
-            <input type="text" class="form-control" id="location" name="city" th:value="${city}">
-        </div>
-        <div class="form-group" style="flex: 1;margin: 0px 16px">
-            <label for="from_time">From</label>
-            <input type="datetime-local" class="form-control" id="from_time">
-        </div>
-        <div class="form-group" style="flex: 1; margin: 0px 16px">
-            <label for="to_time">To</label>
-            <input type="datetime-local" class="form-control" id="to_time">
-        </div>
-        <button type="submit" class="btn btn-primary" style="flex: 1; margin-left: 16px">Search</button>
-    </div>
-</form>
 
 <div class="list_car_header">
     <div>
-        <p style="color: black">There are <span th:text="${resultPage.getTotalElements()}"></span> cars that available for you!</p>
+        <p style="color: black">There are <span th:text="${resultPage.getTotalElements()}"></span> cars that available
+            for you!</p>
     </div>
     <div style="display: flex; align-items: center">
         <a href="#" class="icon_border show_list" style="background-color: #ffc107;">
@@ -65,7 +48,7 @@
         <a href="#" class="icon_border show_table">
             <i class="fa-solid fa-table"></i>
         </a>
-        <form th:action="@{/search/car}">
+        <form th:action="@{/search_car}">
             <select class="custom-select" name="sort" onchange="this.form.submit()">
                 <option value="0" th:selected="${sortType==0}">None</option>
                 <option value="1" th:selected="${sortType==1}">Year</option>
@@ -75,14 +58,19 @@
             <input type="hidden" name="city" th:value="${city}">
             <input type="hidden" name="size" th:value="${pageSize}">
             <input type="hidden" name="page" th:value="${currentPage}">
+            <input type="hidden" name="date1" th:value="${date1}">
+            <input type="hidden" name="date2" th:value="${date2}">
+            <input type="hidden" name="time1" th:value="${time1}">
+            <input type="hidden" name="time2" th:value="${time2}">
         </form>
     </div>
 </div>
 
+
 <div class="list_car_content" th:if="${resultPage.getTotalElements()>0}">
     <div th:insert="~{/fragment/carInfo::car_item(${resultPage.getContent()})}"></div>
     <div class="car_paging">
-        <form th:action="@{/search/car}">
+        <form th:action="@{/search_car}">
             <label for="page_size">Page size </label>
             <select id="page_size" class="custom-select" name="size" onchange="this.form.submit()">
                 <option th:selected="${pageSize==5}" value="5">5</option>
@@ -90,39 +78,32 @@
                 <option th:selected="${pageSize==15}" value="15">15</option>
             </select>
             <input type="hidden" name="city" th:value="${city}">
+            <input type="hidden" name="date1" th:value="${date1}">
+            <input type="hidden" name="date2" th:value="${date2}">
+            <input type="hidden" name="time1" th:value="${time1}">
+            <input type="hidden" name="time2" th:value="${time2}">
         </form>
         <nav>
             <ul class="pagination" style="margin: 0">
                 <li th:class="${currentPage==1}? 'page-item disabled' : 'page-item'">
                     <a class="page-link"
-                       th:href="@{/search/car(city = ${city}, size = ${pageSize}, page = ${1})}">First</a>
+                       th:href="@{/search_car(city = ${city}, size = ${pageSize},date1 =${date1},date2 =${date2},time1 =${time1},time2 =${time2}, page = ${1})}">First</a>
                 </li>
                 <li th:each="pageNumber: ${pageNumbers}"
                     th:class="${pageNumber == currentPage}? 'page-item active': 'page-item'">
                     <a class="page-link "
-                       th:href="@{/search/car(city = ${city}, size = ${pageSize}, page = ${pageNumber})}"
+                       th:href="@{/search_car(city = ${city}, size = ${pageSize},date1 =${date1},date2 =${date2},time1 =${time1},time2 =${time2}, page = ${pageNumber})}"
                        th:text="${pageNumber}"></a>
                 </li>
                 <li th:class="${currentPage==totolPage}? 'page-item disabled' : 'page-item'">
                     <a class="page-link"
-                       th:href="@{/search/car(city = ${city}, size = ${pageSize}, page = ${totolPage})}">Last</a>
+                       th:href="@{/search_car(city = ${city}, size = ${pageSize},date1 =${date1},date2 =${date2},time1 =${time1},time2 =${time2}, page = ${totolPage})}">Last</a>
                 </li>
             </ul>
         </nav>
     </div>
 </div>
 
-<div class="modal fade" id="modalID" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-body" th:insert="~{/fragment/detailCar::car_detail}">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- JQUERY -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

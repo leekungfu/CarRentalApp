@@ -7,6 +7,7 @@ public class ParaSecurity {
             "/reset_password",
             "/signup",
             "/login",
+            "/home_logout",
             "/home_guest",
             "/about",
             "/images/**",
@@ -15,27 +16,16 @@ public class ParaSecurity {
             "/assets/icon/**",
             "/assets/boostrap/css/**",
             "/assets/boostrap/js/**",
+            "/booking_process",
             "/images/**",
             "/search/car",
             "/detail_car",
             "/rent_car",
-            "/editProfile",
-            "/",
-            "/assets/fonts/flaticon/font/**",
-            "/assets/fonts/icomoon/**",
-            "/assets/fonts/ionicons/css/**",
-            "/assets/fonts/ionicons/fonts/**",
-            "/assets/fonts/open-iconic/**",
-            "/assets/scss/bootstrap/**",
-            "/assets/scss/bootstrap/mixins/**",
-            "/assets/scss/bootstrap/utilities/**",
-            "/assets/scss/bootstrap/vendor/**",
-
     };
 
     public static String[] customerPages ={
             "/home/",
-            "/home_customer/",
+            "/home_customer",
             "/forgot_password",
             "/reset_password",
             "/customer_profile",
@@ -57,6 +47,11 @@ public class ParaSecurity {
             "/owner_reports",
             "/logout",
             "/about",
-            "/editProfile"
+            "/editProfile",
+            "/about",
+            "/booking/*",
+            "/car/*",
+            "/home_car_owner",
+            "/booking/status"
     };
 }

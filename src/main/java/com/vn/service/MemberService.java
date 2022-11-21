@@ -1,10 +1,15 @@
 package com.vn.service;
 
 import com.vn.entities.Member;
+import com.vn.entities.MemberTransaction;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -24,4 +29,8 @@ public interface MemberService {
     List<Member> findAll();
     Optional<Member> findUserById(Integer id);
     Member findById(Integer id);
+
+    Page<MemberTransaction> findByMember(Integer memberId, Pageable pageable);
+
+    Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable);
 }

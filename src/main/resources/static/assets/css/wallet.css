@@ -1,0 +1,47 @@
+*{
+    font-family: "Exo 2";
+}
+
+.wallet_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.wallet_content_header{
+    width: 1300px;
+    display: flex;
+    margin: 64px;
+}
+.wallet_info{
+    flex: 1;
+    background-color: #183156;
+    border-radius: 4px;
+    color: white;
+    margin-left: 32px;
+    border: 1px solid #AFB4BA;
+    padding: 32px ;
+}
+.wallet_search{
+    flex: 1;
+    padding: 32px;
+    border: 1px solid #AFB4BA;
+    border-radius: 4px;
+    margin-left: 48px;
+}
+.wallet_info_balance{
+    border-radius: 4px;
+    color: #5AC0E3;
+    height: 42px;
+    margin: 24px 0;
+}
+.wallet_transaction{
+}
+.wallet_search_input{
+    display: flex;
+    justify-content: space-between;
+    height: 42px;
+    margin: 24px 0;
+}
+.wallet_content_detail{
+    width: 1000px;
+}
