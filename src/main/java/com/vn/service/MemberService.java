@@ -1,7 +1,6 @@
 package com.vn.service;
 
 import com.vn.entities.Member;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +10,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public interface MemberService {
-    Member updateMember( Member member);
+    Member updateMember(Member member);
 
     Integer save(Member member);
 
@@ -24,4 +23,5 @@ public interface MemberService {
     Member findByEmail(String email);
     List<Member> findAll();
     Optional<Member> findUserById(Integer id);
+    Member findById(Integer id);
 }

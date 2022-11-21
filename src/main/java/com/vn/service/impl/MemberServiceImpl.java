@@ -20,19 +20,9 @@ public class MemberServiceImpl implements MemberService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public Member updateMember( Member member) {
-        Member user = memberRepository.findByEmail(member.getEmail());
-        if (user == null) {
-            return null;
-        }
-        user.setFullName(member.getFullName());
-        user.setPhone(member.getPhone());
-        user.setNationalID(member.getNationalID());
-        user.setCityID(member.getCityID());
-        user.setDistrictID(member.getDistrictID());
-        user.setWardID(member.getWardID());
-        user.setStreet(member.getStreet());
-        return memberRepository.save( member );
+    public Member updateMember(Member member) {
+
+        return memberRepository.save(member);
     }
 
     @Override
@@ -87,5 +77,10 @@ public class MemberServiceImpl implements MemberService {
     public Optional<Member> findUserById(Integer id) {
         return memberRepository.findById(id);
 
+    }
+
+    @Override
+    public Member findById(Integer id) {
+        return memberRepository.getOne(id);
     }
 }
