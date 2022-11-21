@@ -20,9 +20,8 @@ public interface CarService {
 
     Car findById(Integer id);
 
-    Page<Car> listAll(int pageNumber, String sortField, String sortDir, Integer id);
+    Page<Car> listCarByMemberId(Integer id,Pageable pageable);
 
-//    Page<Car> findByMemberEmail(String email, Pageable pageable);
 
     Car findByIdCar(Integer id);
 
@@ -30,5 +29,8 @@ public interface CarService {
 
     boolean delete(Integer id);
 
+    Car findCarById(Integer id);
+
     public Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable);
+
 }
