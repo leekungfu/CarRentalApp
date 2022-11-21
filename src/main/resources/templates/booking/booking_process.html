@@ -9,33 +9,31 @@
 <link rel="stylesheet" href="assets/boostrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="assets/css/font-awesome-pro.css" />
 <link rel="stylesheet" href="assets/css/form-element.css" />
+<link rel="stylesheet" href="/assets/css/fragment/header.css">
 
 </head>
 <body>
-	<div class="bookingDetails">
-		<h3>Booking Details</h3>
-		<p>Change details</p>
-		<ul>
-			<li>Pick-up location: </li>
-			<li>Pick up date and time: </li>
-			<li>Return date and time: </li>
-		</ul>
+	<div th:insert="~{/fragment/header::menu2(${fullName})}">
 	</div>
-	<div class="bookingSummary">
-		<div>
-			<p>Ratings: </p>
-			<p>No. of rides: </p>
-			<p>Price: </p>
-			<p>Location: </p>
-			<p>Status: </p>
-		</div>
-		<div>
-			<h3>Booking summary</h3>
-			<p>Number of days: </p>
-			<p>Price per day: </p>
-			<p>Total: </p>
-			<p>Deposit: </p>
-		</div>
+	
+	<div class="container booking_summary">
+		<div class="row">
+			<div class="col">
+				<p>Ratings: <span th:text="${car.getRating()}"></span></p>
+				<p>No. of rides: </p>
+				<p>Price: <span th:text="${car.getPrice()}"></span>/day</p>
+				<p>Location: <span th:text="${car.getCity()}"></span></p>
+				<p>Status: <span th:text="${car.getStatus()}"></span></p>
+			</div>
+			<div class="col">
+				<h3>Booking summary</h3>
+				<p>Number of days: <span id="totalDay"></span></p>
+				<p>Price per day: <span id="pricePerDay" th:text="${car.getPrice()}"></span>/day</p>
+				<p>Total: <span id="totalPrice"></span></p>
+				<p>Deposit: <span th:text="${car.getDeposit()}"></span></p>
+			</div>
+		</div>		
+		
 	</div>
 	<form th:action="@{/booking_result}" method="POST">
 		<div class="step1">
@@ -65,8 +63,16 @@
 						</div>
 						<div class="mb-3">
 							<label for="drivingLicense" class="form-label">Driving license: </label>
-							<input type="file" class="form-control" id="renterDrivingLicense" name="renterDrivingLicense">
+							<input type="file" class="form-control" id="renterDrivingLicense" name="renterDrivingLicense" required>
 						</div>
+						<div class="mb-3">
+								<label for="drivingLicense" class="form-label">Start Date: </label>
+								<input type="date" class="form-control" id="startDate" name="startDate">
+							</div>
+							<div class="mb-3">
+								<label for="drivingLicense" class="form-label">End Date: </label>
+								<input type="date" class="form-control" id="endDate" name="endDate">
+							</div>
 					</div>
 					<div class="mb-3">
 							<label for="address" class="form-label">Address: </label>
@@ -111,7 +117,7 @@
 								<input type="email" class="form-control" id="driverEmail" name="driverEmail">
 							</div>
 							<div class="mb-3">
-								<label for="drivingLicense" class="form-label">Driving license: </label>
+								<label for="drivingLicense" class="form-label">Driving License: </label>
 								<input type="file" class="form-control" id="driverDrivingLicense" name="driverDrivingLicense">
 							</div>
 						</div>
@@ -143,9 +149,9 @@
 					<div>
 						<input class="form-check-input" type="radio" name="payment" id="wallet" value=1>
 						<label class="form-check-label" for="wallet">My wallet</label>
-						<p>Current balance: <span></span> <span class="text-danger">(Insufficient)</span></p>
+						<p>Current balance: <span></span> <span class="text-danger not-enough-money" style="display:none">(Insufficient)</span></p>
 						<p>The deposit amount will be deducted from your wallet</p>
-						<p>Please go to My wallet to top-up and try again</p>
+						<p style="display:none">Please go to My wallet to top-up and try again</p>
 					</div>
 					<div>
 						<input class="form-check-input" type="radio" name="payment" id="cash" value=2>

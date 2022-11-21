@@ -13,9 +13,9 @@
 			<p>Our operator will contact you with further guidance about pickup.</p>
 		</div>
 		<div>
-			<a class="btn btn-link" href="../home/home_guest.html" role="button">Go to homepage</a>
-			<button class="btn btn-secondary">Book another car</button>
-			<button class="btn btn-primary">View Booking</button>
+			<a class="btn btn-link" th:href="@{/home}" role="button">Go to Homepage</a>
+			<a class="btn btn-secondary" th:href="@{/search/car}" role="button">Book another car</a>
+			<a class="btn btn-primary" th:href="@{/booking(booking_id = ${booking.getId()})}" role="button">View Booking</a>
 		</div>
 	</div>
 </body>
