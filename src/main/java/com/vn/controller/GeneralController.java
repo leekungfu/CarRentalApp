@@ -1,5 +1,6 @@
 package com.vn.controller;
 
+import com.vn.dto.StringMessageDTO;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
@@ -7,17 +8,18 @@ import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
@@ -43,43 +45,42 @@ public class GeneralController {
 
     }
 
-    @GetMapping("/signup")
+    @GetMapping("/signupAjax")
     public String signUp() {
         return "home/home_guest";
 
     }
 
-    @PostMapping("/signup")
-    public String signUpPage(@ModelAttribute("member")Member member, Model model) {
+    @PostMapping("/signupAjax")
+    @ResponseBody
+    public ResponseEntity<?> signUpPageAjax(@RequestBody Member member) {
         Member checkMem = memberService.findByEmail(member.getEmail());
-        if (checkMem != null) {
-            model.addAttribute("msg", "Email is taken!");
-            return "home/home_guest";
+        if (checkMem == null) {
+            memberService.save(member);
+
+            // Auto login after user signed up successfully
+            CustomUserDetails customUserDetails = new CustomUserDetails(member);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return ResponseEntity.ok(new StringMessageDTO("YES"));
         }
-        memberService.save(member);
+        return ResponseEntity.ok(new StringMessageDTO("NO"));
+    }
 
-//        // Auto login after user signed up successfully
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
-//        authorities.add(authority);
-//        User u = new User(member.getEmail(), member.getPassword(), authorities);
-
-        CustomUserDetails customUserDetails = new CustomUserDetails(member);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return "redirect:/home";
+    @PostMapping("/loginAjax")
+    @ResponseBody
+    public ResponseEntity<?> loginPageAjax(@RequestBody Member member, HttpServletRequest request) {
+        try {
+            request.login(member.getEmail(), member.getPassword());
+            return ResponseEntity.ok(new StringMessageDTO("OK"));
+        } catch (Exception exception) {
+            return ResponseEntity.ok(new StringMessageDTO("FAILED"));
+        }
     }
 
     @GetMapping("/login")
-    public String signIn() {
+    public String loginPage(){
         return "home/home_guest";
-    }
-
-
-    @PostMapping("/login")
-    public String signInPage(){
-        return "redirect:/home";
     }
 
     @GetMapping("/forgot_password")
@@ -96,7 +97,6 @@ public class GeneralController {
         String email = request.getParameter("email");
         // Random token chain, which will be used to determine ex
         String token = RandomString.make(30);
-
 
         try {
             // Set value for user found by the given email and persist change to the DB
@@ -147,16 +147,5 @@ public class GeneralController {
         }
 
         return "account/reset_password_success";
-    }
-
-    @GetMapping("/logout")
-    public String logOut() {
-        return "home/home_guest";
-    }
-
-    @GetMapping("/logoutCarOwner")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "redirect:/login";
     }
 }

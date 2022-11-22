@@ -73,14 +73,42 @@ $(document).ready(function () {
         },
     });
 
-    $(document).on("click", "#signupButton", function submitForm() {
-        if ($("form").valid()) {
-            Swal.fire(
-                'Well done!',
-                'Log in successfully!',
-                'success',
-                'timer:500000'
-            )
-        }
+    $(".signUpp").submit(function (event) {
+        event.preventDefault();
+        fire_ajax_submit();
     });
+
+    function fire_ajax_submit() {
+        let member = {};
+        member["fullName"] = $('[name = fullName]').val();
+        member["email"] = $('.signup-email[name = email]').val();
+        member["phone"] = $('[name = phone]').val();
+        member["password"] = $('.signup-password[name = password]').val();
+        member["role"] = $('[name = role]:checked').val();
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/signupAjax",
+            data: JSON.stringify(member),
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                if (data.message === "YES") {
+                    Swal.fire(
+                        'Good job!',
+                        'Sign up successfully!',
+                        'success'
+                    )
+                    window.location.href = "/home"
+                } else if (data.message === "NO") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email is taken! Try again please.',
+                    })
+                }
+            }
+        })
+    }
 });
