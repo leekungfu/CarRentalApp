@@ -49,10 +49,7 @@ public class BookingController {
 		httpSession.setAttribute("carModel", car);
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<Member> optional = memberService.findUserById(detail.getId());
-		if(optional.isPresent()) {
-			model.addAttribute("user", optional.get());
-		}		
+		model.addAttribute("user", detail.getMember());
 		
 		model.addAttribute("fullName", detail.getFullName());
 		return "booking/booking_process";
@@ -81,7 +78,8 @@ public class BookingController {
 		case 1:
 			booking.setBookingStatus(BookingStatusEnum.Confirmed);
 			break;
-		case 2,3:
+		case 2:
+		case 3:
 			booking.setBookingStatus(BookingStatusEnum.Pending_deposit);
 			break;
 		default: 

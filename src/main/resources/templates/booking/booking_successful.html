@@ -19,8 +19,8 @@
 	<div>
 		<h1>Step 3: Confirm Booking</h1>
 		<div>
-			<p>You've successfully booked  from  to </p>
-			<p>Your booking number is: </p>
+			<p>You've successfully booked <span th:text="${booking.getCar().getBrand()} + ' ' + ${booking.getCar().getModel()} + ' ' + ${booking.getcar().getYear()}"></span> from <span th:text="${booking.getStartDate()}"></span> to <span th:text="${booking.getEndDate()}"></span> </p>
+			<p>Your booking number is: <span th:text="${booking.getId()"></span> </p>
 			<p>Our operator will contact you with further guidance about pickup.</p>
 		</div>
 		<div>

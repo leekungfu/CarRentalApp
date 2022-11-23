@@ -10,8 +10,9 @@ window.onload = function(){
     dateChangeInputs.forEach(function(e){
         e.onchange = function(){
             let date = dateCalculate();
+            console.log(date);
             document.querySelector("#totalDay").innerHTML = date;
-            document.querySelector("#totalPrice").innerHTML = date 
+            document.querySelector("#totalPrice").innerHTML = date
         };
     });
 }
@@ -44,12 +45,12 @@ function hideDriverInfo(){
 
     var checkbox = document.getElementById("notRenter");
     checkbox.onchange = function(){
-        if(checkbox.checked){
+        if(checkbox.checked == true){
             driverInfo.style.display = "";
             renterLicense.required = false;
             driverLicense.required = true;
         } else {
-            driverInfo.style.disaplay = "none"
+            driverInfo.style.display = "none";
             renterLicense.required = true;
             driverLicense.required = false;
         }
