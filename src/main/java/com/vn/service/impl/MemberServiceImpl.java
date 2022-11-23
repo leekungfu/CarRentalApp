@@ -31,6 +31,12 @@ public class MemberServiceImpl implements MemberService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    public Member updatePassword(Member member) {
+        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+        return memberRepository.save(member);
+    }
+
+    @Override
     public Member updateMember(Member member) {
         log.info("Update user profile {} in the database", member.getEmail());
         return memberRepository.save(member);
