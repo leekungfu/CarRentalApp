@@ -175,7 +175,7 @@ public class CarOwnerController {
     @GetMapping("/confirmDeposit/{id}")
     public String confirmDeposit(Model model, @PathVariable("id") Integer id) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
         car.setStatus(CarStatusEnum.Booked);
@@ -189,7 +189,7 @@ public class CarOwnerController {
     @GetMapping("/confirmPayment/{id}")
     public String confirmPayment(Model model, @PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
         car.setStatus(CarStatusEnum.Available);
