@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -135,11 +136,11 @@ public class CarOwnerController2 {
     }
 
     @PostMapping("/car/edit/{id}")
-    public String submitEditCar(@ModelAttribute Car car, @PathVariable("id") Integer id, Model model,RedirectAttributes redirectAttributes) {
+    public String submitEditCar(@Valid @ModelAttribute Car car, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getFullName());
 
-        redirectAttributes.addFlashAttribute("message", "Edit car successful");
+        redirectAttributes.addFlashAttribute("messEditCar", "Edit car successful");
         model.addAttribute("carStatus", CarStatusEnum.values());
         carService.saveCar(car);
         return "car/editCar";
