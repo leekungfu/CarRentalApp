@@ -70,7 +70,7 @@ public class CarControllerSangLV {
         }
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
         return "car/listCarSearch";
     }
 }
