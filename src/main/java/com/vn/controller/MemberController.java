@@ -27,6 +27,23 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
+//    @GetMapping("/resetPassword")
+//    public  String resetspassword(){
+//        return  "/editProfile";
+//    }
+//    @PostMapping("/resetPassword")
+//    public  String resetspassword(@ModelAttribute("member") Member member, Model model){
+//        CustomUserDetails detail;
+//
+//        detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+////        Member member = memberService.findByEmail(detail.getMember().getEmail());
+//        Member m = memberService.findById(detail.getMember().getId());
+//        m.setFullName(member.getFullName());
+//        m.setPassword(detail.getPassword());
+//        memberService.save(m);
+//        model.addAttribute("member",m);
+//        return  "/editProfile";
+//    }
     @GetMapping("/editProfile")
     public String updateProfile(Model model) {
 
