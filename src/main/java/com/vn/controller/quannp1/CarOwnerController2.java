@@ -63,8 +63,6 @@ public class CarOwnerController2 {
 
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
-        Member member = memberService.findById(detail.getId());
         model.addAttribute("fullName", detail.getMember().getFullName());
 
         Member member = memberService.findById(detail.getMember().getId());

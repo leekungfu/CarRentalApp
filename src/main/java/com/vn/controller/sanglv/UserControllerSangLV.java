@@ -76,7 +76,7 @@ public class UserControllerSangLV {
         WalletResponseDTO walletResponseDTO = new WalletResponseDTO();
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Member member = memberService.findById(detail.getId());
+        Member member = memberService.findById(detail.getMember().getId());
         if (member.getWallet() == null)
             member.setWallet(0.0);
         member.setWallet(member.getWallet() + amount);
@@ -96,7 +96,7 @@ public class UserControllerSangLV {
         memberTransactionService.save(memberTransaction);
 
         Pageable pageable = PageRequest.of(0, 5, Sort.by("date").descending());
-        Page<MemberTransaction> resultPage = memberService.findByMember(detail.getId(), pageable);
+        Page<MemberTransaction> resultPage = memberService.findByMember(detail.getMember().getId(), pageable);
 
         walletResponseDTO.setTran(resultPage.getContent());
         walletResponseDTO.setMessage("You have just top up " + amount);
