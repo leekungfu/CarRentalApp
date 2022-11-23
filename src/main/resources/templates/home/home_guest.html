@@ -79,25 +79,21 @@
                     <div class="col-sm-12">
                         <div class="">
                             <div class="form-bottom">
-                                <form class="login-form" th:action="@{/login}" method="post" id="loginForm">
+                                <form class="login-form" th:action="@{/loginAjax}" method="post" id="loginForm">
                                     <div class="form-group">
                                         <label class="sr-only">Email</label>
                                         <input type="text" name="email" placeholder="Your email address"
-                                               class="form-email form-control"/>
+                                               class="form-email form-control login-email"/>
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only">Password</label>
                                         <input type="password" name="password" placeholder="Password..."
-                                               class="form-password form-control"/>
+                                               class="form-password form-control login-password"/>
                                     </div>
                                     <div class="form-group">
                                         <a th:href="@{/forgot_password}">Forgot your password?</a>
                                     </div>
-                                    <button type="submit" class="btn" onclick="function submitForm(
-
-                                    ) {
-
-                                    } submitForm();" id="loginButton">Sign in
+                                    <button type="submit" class="btn">Sign in
                                     </button>
                                 </form>
                             </div>
@@ -122,27 +118,27 @@
             <div class="modal-body">
                 <div class="col-sm-12">
                     <div class="form-bottom">
-                        <form role="form" th:action="@{/signup}" method="post" class="registration-form signUpp"
+                        <form role="form" th:action="@{/signupAjax}" method="post" class="registration-form signUpp"
                               id="signUpForm">
                             <div class="form-group">
                                 <label class="sr-only">Name</label>
-                                <input type="text" name="fullName" placeholder="Your name"
+                                <input type="text" name="fullName" id="fullName" placeholder="Your name"
                                        class="form-name form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only">Email</label>
-                                <input type="text" name="email" placeholder="Your email"
-                                       class="form-email form-control"/>
+                                <input type="text" name="email" id="email" placeholder="Your email"
+                                       class="form-email form-control signup-email"/>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only">Phone Number</label>
-                                <input type="text" name="phone" placeholder="Your phone number"
+                                <input type="text" name="phone" id="phone" placeholder="Your phone number"
                                        class="form-phone form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only">Password</label>
                                 <input type="password" name="password" placeholder="Enter your password"
-                                       class="form-password form-control" id="password"/>
+                                       class="form-password form-control signup-password" id="password"/>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only">Confirm password</label>
@@ -170,11 +166,7 @@
                                 </label>
                                 <a style="text-decoration: underline;" href="#">Terms & Conditions</a>
                             </div>
-                            <button type="submit" class="btn btn-primary" onclick="function submitForm(
-
-                                    ) {
-
-                                    } submitForm();" id="signupButton">Submit
+                            <button type="submit" class="btn btn-primary">Submit
                             </button>
                         </form>
                     </div>

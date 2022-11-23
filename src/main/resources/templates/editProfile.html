@@ -74,7 +74,7 @@
                 <li>
                     <a class="dropdown-item" th:href="@{/logout}">
                         <i class="fa-solid fa-right-from-bracket"></i>
-                        <label>Logout</label>
+                        <label href="#" data-toggle="modal" data-target="#logoutModal">Logout</label>
                     </a>
                 </li>
             </ul>
@@ -318,6 +318,26 @@
         </div>
     </div>
 </footer>
+
+<!-- Modal begin-->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" data-dismiss="modal" role="button">Cancel</a>
+                <a class="btn btn-primary" th:href="@{/home_guest}" role="button">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal end-->
+
 <script src="/assets/boostrap/js/jquery.min.js"></script>
 <script src="/assets/boostrap/js/jquery-migrate-3.0.1.min.js"></script>
 <script src="/assets/boostrap/js/popper.min.js"></script>

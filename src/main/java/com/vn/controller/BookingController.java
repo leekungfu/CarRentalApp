@@ -79,10 +79,10 @@ public class BookingController {
 		
 		switch(paymentMethod) {
 		case 1:
-			booking.setBookingStatus(BookingStatusEnum.Pending_deposit);
+			booking.setBookingStatus(BookingStatusEnum.Confirmed);
 			break;
 		case 2,3:
-			booking.setBookingStatus(BookingStatusEnum.Pending_payment);
+			booking.setBookingStatus(BookingStatusEnum.Pending_deposit);
 			break;
 		default: 
 			break;
