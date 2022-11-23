@@ -38,6 +38,8 @@ public class BookingController {
 	@Autowired
 	BookingService bookingService;
 	
+	
+	//rent-a-car
 	@GetMapping("/rent_car")
 	public String bookingProcess(Model model,
 								@RequestParam(name = "carID") Integer carID,
@@ -46,6 +48,10 @@ public class BookingController {
 		model.addAttribute("car", car);
 		httpSession.setAttribute("carModel", car);
 		
+		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("user", detail.getMember());
+		
+		model.addAttribute("fullName", detail.getFullName());
 		return "booking/booking_process";
 		
 	}
@@ -60,6 +66,9 @@ public class BookingController {
 		Booking booking = new Booking();
 		
 		Car car = (Car) httpSession.getAttribute("carModel");
+		car.setStatus(CarStatusEnum.Booked);
+		carService.update(car);
+		
 		booking.setCar(car);
 		booking.setPaymentMethod(paymentMethod);
 		booking.setStartDate(LocalDate.parse(startDate));
@@ -67,10 +76,11 @@ public class BookingController {
 		
 		switch(paymentMethod) {
 		case 1:
-			booking.setBookingStatus(BookingStatusEnum.Pending_deposit);
+			booking.setBookingStatus(BookingStatusEnum.Confirmed);
 			break;
-		case 2,3:
-			booking.setBookingStatus(BookingStatusEnum.Pending_payment);
+		case 2:
+		case 3:
+			booking.setBookingStatus(BookingStatusEnum.Pending_deposit);
 			break;
 		default: 
 			break;
@@ -86,6 +96,7 @@ public class BookingController {
 		
 		bookingService.addBooking(booking);
 		
+		model.addAttribute("fullName", detail.getFullName());
 		model.addAttribute("booking", booking);
 		return "booking/booking_successful";
 	}
@@ -95,22 +106,21 @@ public class BookingController {
 								@RequestParam(name = "booking_id") Integer bookingId) {
 		Booking booking = bookingService.findBookingById(bookingId);
 		model.addAttribute("booking", booking);
+		
+		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("fullName", detail.getFullName());
 		return "booking/booking_detail";
 	}
 	
 	@GetMapping("/my_booking")
 	public String bookingsListByMember(Model model) {
 		
-		Member member = new Member();
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<Member> optional = memberService.findUserById(detail.getId());
 		
-		if(optional.isEmpty()) {
-			return "home/home_guest";
-		} else member = optional.get();
-		
-		List<Booking> bookings = bookingService.findAllByMemberId(member.getId());
+		List<Booking> bookings = bookingService.findAllByMemberId(detail.getId());
 		model.addAttribute("bookings", bookings);
+		
+		model.addAttribute("fullName", detail.getFullName());
 		
 		return "booking/booking_list";
 	}

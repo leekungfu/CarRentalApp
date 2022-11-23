@@ -5,7 +5,8 @@
 <title>Booking</title>
 
 <!--CSS-->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500" />
+<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+      rel="stylesheet">
 <link rel="stylesheet" href="assets/boostrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="assets/css/font-awesome-pro.css" />
 <link rel="stylesheet" href="assets/css/form-element.css" />
@@ -16,16 +17,16 @@
 	<div th:insert="~{/fragment/header::menu2(${fullName})}">
 	</div>
 	
-	<div class="container booking_summary">
-		<div class="row">
-			<div class="col">
+	<div class="container mb-3 booking_summary">
+		<div class="row justify-content-center">
+			<div class="col mb-3">
+				<h3 th:text="${car.getBrand()} + ' ' + ${car.getModel()} + ' ' + ${car.getYear()}"></h3>
 				<p>Ratings: <span th:text="${car.getRating()}"></span></p>
-				<p>No. of rides: </p>
 				<p>Price: <span th:text="${car.getPrice()}"></span>/day</p>
 				<p>Location: <span th:text="${car.getCity()}"></span></p>
 				<p>Status: <span th:text="${car.getStatus()}"></span></p>
 			</div>
-			<div class="col">
+			<div class="col mb-3 text-right">
 				<h3>Booking summary</h3>
 				<p>Number of days: <span id="totalDay"></span></p>
 				<p>Price per day: <span id="pricePerDay" th:text="${car.getPrice()}"></span>/day</p>
@@ -35,137 +36,159 @@
 		</div>		
 		
 	</div>
-	<form th:action="@{/booking_result}" method="POST">
+	<form th:action="@{/booking_result}" method="POST" th:object="${user}">
 		<div class="step1">
-			<h1>Step 1: Booking Information</h1>
-				<div id="renter">
-				Renter's Information
-					<div>
-						<div class="mb-3">
-							<label for="fullName" class="form-label">Full name: </label>
-							<input type="text" class="form-control" id="renterFullName" name="renterFullName" required>
-						</div>
-						<div class="mb-3">
-							<label for="phone" class="form-label">Phone Number: </label>
-							<input type="text" class="form-control" id="renterPhone" name="renterPhone" required>
-						</div>
-						<div class="mb-3">
-							<label for="nationalId" class="form-label">National ID No.: </label>
-							<input type="number" class="form-control" id="renterNationalId" name="renterNationalId" required>
-						</div>
-						<div class="mb-3">
-							<label for="dob" class="form-label">Date of Birth: </label>
-							<input type="date" class="form-control" id="renterDob" name="renterDob" required>
-						</div>
-						<div class="mb-3">
-							<label for="email" class="form-label">Email Address: </label>
-							<input type="email" class="form-control" id="renterEmail" name="renterEmail">
-						</div>
-						<div class="mb-3">
-							<label for="drivingLicense" class="form-label">Driving license: </label>
-							<input type="file" class="form-control" id="renterDrivingLicense" name="renterDrivingLicense" required>
-						</div>
-						<div class="mb-3">
-								<label for="drivingLicense" class="form-label">Start Date: </label>
-								<input type="date" class="form-control" id="startDate" name="startDate">
-							</div>
-							<div class="mb-3">
-								<label for="drivingLicense" class="form-label">End Date: </label>
-								<input type="date" class="form-control" id="endDate" name="endDate">
-							</div>
+			<h1 class="text-center">Step 1: Booking Information</h1>
+			<div id="renter" class="container">
+			Renter's Information
+				<div class="row row-cols-1 row-cols-md-2">
+					<div class="mb-3 col">
+						<label for="fullName" class="form-label">Full name: </label>
+						<input type="text" class="form-control" id="renterFullName" name="renterFullName" required>
 					</div>
-					<div class="mb-3">
-							<label for="address" class="form-label">Address: </label>
-							<select class="form-control" id="renterCity" name="renterCity">
-								<option>
-							</select>
-							<select class="form-control" id="renterDistrict" name="renterDistrict">
-								<option>
-							</select>
-							<select class="form-control" id="renterWard" name="renterWard">
-								<option>
-							</select>
-							<input type="text" class="form-control" id="renterAddress" name="renterAddress">
+					<div class="mb-3 col">
+						<label for="phone" class="form-label">Phone Number: </label>
+						<input type="text" class="form-control" id="renterPhone" name="renterPhone" required>
+					</div>
+					<div class="mb-3 col">
+						<label for="nationalId" class="form-label">National ID No.: </label>
+						<input type="text" class="form-control" id="renterNationalId" name="renterNationalId" required>
+					</div>
+					<div class="mb-3 col">
+						<label for="dob" class="form-label">Date of Birth: </label>
+						<input type="date" class="form-control" id="renterDob" name="renterDob" required>
+					</div>
+					<div class="mb-3 col">
+						<label for="email" class="form-label">Email Address: </label>
+						<input type="email" class="form-control" id="renterEmail" name="renterEmail">
+					</div>
+					<div class="mb-3 col">
+						<label for="drivingLicense" class="form-label">Driving license: </label>
+						<input type="file" class="form-control" id="renterDrivingLicense" name="renterDrivingLicense" required>
+					</div>
+					<div class="mb-3 col">
+						<label for="drivingLicense" class="form-label">Start Date: </label>
+						<input type="date" class="form-control date-change" id="startDate" name="startDate" required>
+					</div>
+					<div class="mb-3 col">
+						<label for="drivingLicense" class="form-label">End Date: </label>
+						<input type="date" class="form-control date-change" id="endDate" name="endDate" required>
 					</div>
 				</div>
-				<div id="notRenterCheck">
+				<div class="row row-cols-1 row-cols-md-4 adress-form">
+					<div class="mb-3 col">
+						<label for="renterCity" class="form-label">City: </label>
+						<select class="form-control city" id="renterCity" name="renterCity" oninput="this.className=''">
+							<option value="" selected="">Select City</option>
+						</select>
+					</div>
+					<div class="mb-3 col">
+						<label for="renterDistrict" class="form-label">District: </label>	
+						<select class="form-control district" id="renterDistrict" name="renterDistrict" oninput="this.className=''">
+							<option value="" selected="">Select District</option>
+						</select>
+					</div>
+					<div class="mb-3 col">
+						<label for="renterWard" class="form-label">Ward: </label>
+						<select class="form-control ward" id="renterWard" name="renterWard" oninput="this.className=''">
+							<option value="" selected="">Select Ward</option>
+						</select>
+					</div>
+					<div class="mb-3 col">
+						<label for="renterAddress" class="form-label">Street: </label>
+						<input type="text" class="form-control" id="renterAddress" name="renterAddress">
+					</div>
+				</div>
+				<div class="form-check row">
+					<input type="checkbox" class="form-check-input" id="notRenter" name="notRenter">
+					<label class="form-check-label" for="notRenter">Different than Renter's information</label>
+				</div>
+			</div>
+			<div id="notRenterCheck">				
+				<div id="driver" class="container">
 					Driver's Information
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="notRenter" name="notRenter">
-						<label class="form-check-label" for="notRenter">Different than Renter's information</label>
-					</div>
-					<div id="driver">
-						<div>
-							<div class="mb-3">
-								<label for="fullName" class="form-label">Full name: </label>
-								<input type="text" class="form-control" id="driverFullName" name="driverFullName">
-							</div>
-							<div class="mb-3">
-								<label for="phone" class="form-label">Phone Number: </label>
-								<input type="text" class="form-control" id="driverPhone" name="driverPhone">
-							</div>
-							<div class="mb-3">
-								<label for="nationalId" class="form-label">National ID No.: </label>
-								<input type="number" class="form-control" id="driverNationalId" name="driverNationalId">
-							</div>
-							<div class="mb-3">
-								<label for="dob" class="form-label">Date of Birth: </label>
-								<input type="date" class="form-control" id="driverDob" name="driverDob">
-							</div>
-							<div class="mb-3">
-								<label for="email" class="form-label">Email Address: </label>
-								<input type="email" class="form-control" id="driverEmail" name="driverEmail">
-							</div>
-							<div class="mb-3">
-								<label for="drivingLicense" class="form-label">Driving License: </label>
-								<input type="file" class="form-control" id="driverDrivingLicense" name="driverDrivingLicense">
-							</div>
+					<div class="row row-cols-1 row-cols-2">
+						<div class="mb-3 col">
+							<label for="fullName" class="form-label">Full name: </label>
+							<input type="text" class="form-control" id="driverFullName" name="driverFullName">
 						</div>
-						<div class="mb-3">
-								<label for="address" class="form-label">Address: </label>
-								<select class="form-control" id="driverCity" name="driverCity">
-									<option>
-								</select>
-								<select class="form-control" id="driverDistrict" name="driverDistrict">
-									<option>
-								</select>
-								<select class="form-control" id="driverWard" name="driverWard">
-									<option>
-								</select>
-								<input type="text" class="form-control" id="driverAddress" name="driverAddress">
+						<div class="mb-3 col">
+							<label for="phone" class="form-label">Phone Number: </label>
+							<input type="text" class="form-control" id="driverPhone" name="driverPhone">
+						</div>
+						<div class="mb-3 col">
+							<label for="nationalId" class="form-label">National ID No.: </label>
+							<input type="text" class="form-control" id="driverNationalId" name="driverNationalId">
+						</div>
+						<div class="mb-3 col">
+							<label for="dob" class="form-label">Date of Birth: </label>
+							<input type="date" class="form-control" id="driverDob" name="driverDob">
+						</div>
+						<div class="mb-3 col">
+							<label for="email" class="form-label">Email Address: </label>
+							<input type="email" class="form-control" id="driverEmail" name="driverEmail">
+						</div>
+						<div class="mb-3 col">
+							<label for="drivingLicense" class="form-label">Driving License: </label>
+							<input type="file" class="form-control" id="driverDrivingLicense" name="driverDrivingLicense">
+						</div>
+					</div>
+					<div class="row row-cols-1 row-cols-md-4 address-form">
+						<div class="mb-3 col">
+							<label for="driverCity" class="form-label">City: </label>
+							<select class="form-control city" id="driverCity" name="driverCity" oninput="this.className=''">
+								<option value="" selected="">Select City</option>
+							</select>
+						</div>
+						<div class="mb-3 col">
+							<label for="driverDistrict" class="form-label">District: </label>	
+							<select class="form-control district" id="driverDistrict" name="driverDistrict" oninput="this.className=''">
+								<option value="" selected="">Select District</option>
+							</select>
+						</div>
+						<div class="mb-3 col">
+							<label for="driverWard" class="form-label">Ward: </label>
+							<select class="form-control ward" id="driverWard" name="driverWard" oninput="this.className=''">
+								<option value="" selected="">Select Ward</option>
+							</select>
+						</div>
+						<div class="mb-3 col">
+							<label for="driverAddress" class="form-label">Street: </label>
+							<input type="text" class="form-control" id="driverAddress" name="driverAddress">
 						</div>
 					</div>
 				</div>
-			<div>
-				<a role="button" class="btn btn-secondary" href="redirect:/search/car">Back</a>
+			</div>
+			<div class="text-center mb-5">
+				<a role="button" class="btn btn-secondary" th:href="@{/search_car(city = ${car.getCity()})}">Back</a>
 				<input type="button" class="btn btn-link" id="to-tep-2" value="Next" th:onclick="step2Display()"> 
 			</div>
 		</div>
 		<div class="step2">
-			<h1>Step 2: Payment Processing</h1>
-			<div>
+			<h1 class="text-center">Step 2: Payment Processing</h1>
+			<div class="container">
 				<h3>Please select your payment method:</h3>
-				<div class="form-check">
-					<div>
+				<div id="payment-check">
+					<div class="form-check">
 						<input class="form-check-input" type="radio" name="payment" id="wallet" value=1>
 						<label class="form-check-label" for="wallet">My wallet</label>
-						<p>Current balance: <span></span> <span class="text-danger not-enough-money" style="display:none">(Insufficient)</span></p>
-						<p>The deposit amount will be deducted from your wallet</p>
+						<p>Current balance: <span th:text="${user.getWallet} ?:''"></span> <span class="text-danger not-enough-money" style="display:none">(Insufficient)</span></p>
+						<p style="display:none">The deposit amount will be deducted from your wallet</p>
 						<p style="display:none">Please go to My wallet to top-up and try again</p>
 					</div>
-					<div>
+					<div class="form-check">
 						<input class="form-check-input" type="radio" name="payment" id="cash" value=2>
 						<label class="form-check-label" for="cash">Cash</label>
 						<p>Our operator will contact you for further instruction</p>
 					</div>
-					<div>
+					<div class="form-check">
 						<input class="form-check-input" type="radio" name="payment" id="bankTransfer" value=3>
 						<label class="form-check-label" for="bankTransfer">Bank Transfer</label>
 						<p>Our operator will contact you for further instruction</p>
 					</div>
 				</div>
 			</div>
-			<div>
+			<div class="text-center mb-5">
 				<input type="button" class="btn btn-link" id="to-step-1" value="Back" th:onclick="initialDisplay()">
 				<input type="submit" class="btn btn-primary" value="Confirm Payment">
 			</div>
@@ -181,5 +204,48 @@
 
 
 <script src="assets/js/booking-process.js" type="text/javascript"></script>
+<script type="text/javascript">
+var addressForms = document.querySelectorAll("div[class*='address-form'");
+addressForms.forEach = function(){
+    var cities = document.querySelectorAll("input[class* = 'city']");
+    var districts = document.querySelectorAll("input[class* = 'district']");
+    var wards = document.querySelectorAll("input[class* = 'ward']");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            cities.options[cities.options.length] = new Option(x.Name, x.Name);
+        }
+        cities.onchange = function () {
+            districts.length = 1;
+            wards.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Name === this.value);
+                for (const k of result[0].Districts) {
+                    districts.options[districts.options.length] = new Option(k.Name, k.Name);
+                }
+            }
+        };
+        districts.onchange = function () {
+            wards.length = 1;
+            const dataCity = data.filter((n) => n.Name === cities.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards;
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Name);
+                }
+            }
+        };
+    }
+}
+</script>
 </body>
 </html>
