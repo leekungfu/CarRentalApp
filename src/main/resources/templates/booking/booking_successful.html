@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Booking Successfully</title>
+	<meta charset="ISO-8859-1">
+	<title>Booking Successfully</title>
+
+<!-- CSS -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+      rel="stylesheet">
+<link rel="stylesheet" href="assets/boostrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="assets/css/font-awesome-pro.css" />
+<link rel="stylesheet" href="/assets/css/fragment/header.css">
+
 </head>
 <body>
+	<div th:insert="~{/fragment/header::menu2(${fullName})}">
+	</div>
+	
 	<div>
 		<h1>Step 3: Confirm Booking</h1>
 		<div>
