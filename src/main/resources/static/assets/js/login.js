@@ -37,4 +37,39 @@ $(document).ready(function () {
             },
         },
     });
+
+    $('#loginForm').submit(function (event) {
+        event.preventDefault();
+        login_submit();
+    });
+
+    function login_submit() {
+        let member = {};
+        member["email"] = $('.login-email[name = email]').val();
+        member["password"] = $('.login-password[name = password]').val();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/loginAjax",
+            data: JSON.stringify(member),
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                if (data.message === "OK") {
+                    Swal.fire(
+                        'Good job!',
+                        'Login successfully!',
+                        'success'
+                    )
+                    window.location.href = "/home"
+                } else if (data.message === "FAILED") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email or password incorrect! Try again please.',
+                    })
+                }
+            }
+        })
+    }
 });

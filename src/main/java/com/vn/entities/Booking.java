@@ -27,7 +27,7 @@ public class Booking {
 	private BookingStatusEnum bookingStatus;
 	
 	@ManyToOne
-	@JoinColumn(name = "driver_id")
+	@JoinColumn(name = "member_id")
 	private Member member;
 	
 	@ManyToOne

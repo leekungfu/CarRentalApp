@@ -5,10 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Member {
 	@Id
@@ -60,14 +58,7 @@ public class Member {
 		this.drivingLicense = drivingLicense;
 	}
 
-	@Override
-	public String toString() {
-		return "Member{" +
-				"city='" + city + '\'' +
-				", district='" + district + '\'' +
-				", ward='" + ward + '\'' +
-				'}';
-	}
+
 
 	@OneToMany(mappedBy = "member")
 	private List<MemberTransaction> memberTransactions;
