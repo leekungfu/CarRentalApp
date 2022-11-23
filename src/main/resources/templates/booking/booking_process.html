@@ -78,19 +78,19 @@
 				<div class="row row-cols-1 row-cols-md-4 adress-form">
 					<div class="mb-3 col">
 						<label for="renterCity" class="form-label">City: </label>
-						<select class="form-control city" id="renterCity" name="renterCity" oninput="this.className=''">
+						<select class="form-control city" id="renterCity" name="renterCity">
 							<option value="" selected="">Select City</option>
 						</select>
 					</div>
 					<div class="mb-3 col">
 						<label for="renterDistrict" class="form-label">District: </label>	
-						<select class="form-control district" id="renterDistrict" name="renterDistrict" oninput="this.className=''">
+						<select class="form-control district" id="renterDistrict" name="renterDistrict">
 							<option value="" selected="">Select District</option>
 						</select>
 					</div>
 					<div class="mb-3 col">
 						<label for="renterWard" class="form-label">Ward: </label>
-						<select class="form-control ward" id="renterWard" name="renterWard" oninput="this.className=''">
+						<select class="form-control ward" id="renterWard" name="renterWard">
 							<option value="" selected="">Select Ward</option>
 						</select>
 					</div>
@@ -198,6 +198,8 @@
 <!--JS-->
 <script src="assets/js/jquery-1.11.1.min.js" type="text/javascript"></script>
 <script src="assets/boostrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
         integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
@@ -205,12 +207,11 @@
 
 <script src="assets/js/booking-process.js" type="text/javascript"></script>
 <script type="text/javascript">
-var addressForms = document.querySelectorAll("div[class*='address-form'");
-addressForms.forEach = function(){
-    var cities = document.querySelectorAll("input[class* = 'city']");
-    var districts = document.querySelectorAll("input[class* = 'district']");
-    var wards = document.querySelectorAll("input[class* = 'ward']");
-    var Parameter = {
+/* renter Address */
+    let cities = document.querySelector("#renterCity");
+    let districts = document.querySelector("#renterDistrict");
+    let wards = document.querySelector("#renterWard");
+    let Parameter = {
         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
         method: "GET",
         responseType: "application/json",
@@ -245,7 +246,46 @@ addressForms.forEach = function(){
             }
         };
     }
-}
+/* driver Address */
+	/* let cities1 = document.querySelector("#driverCity");
+    let districts1 = document.querySelector("#driverDistrict");
+    let wards1 = document.querySelector("#driverWard");
+    let Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity1(result.data);
+    });
+
+    function renderCity1(data) {
+        for (const x of data) {
+            cities1.options[cities1.options.length] = new Option(x.Name, x.Name);
+        }
+        cities1.onchange = function () {
+            districts1.length = 1;
+            wards1.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Name === this.value);
+                for (const k of result[0].Districts) {
+                    districts1.options[districts1.options.length] = new Option(k.Name, k.Name);
+                }
+            }
+        };
+        districts1.onchange = function () {
+            wards1.length = 1;
+            const dataCity = data.filter((n) => n.Name === cities1.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards;
+                for (const w of dataWards) {
+                    wards1.options[wards1.options.length] = new Option(w.Name, w.Name);
+                }
+            }
+        };
+    }
+ */
 </script>
 </body>
 </html>
