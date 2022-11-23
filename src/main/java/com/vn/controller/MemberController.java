@@ -57,7 +57,7 @@ public class MemberController {
 
         detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        Member member = memberService.findByEmail(detail.getMember().getEmail());
-        Member member = memberService.findById(detail.getId());
+        Member member = memberService.findById(detail.getMember().getId());
         member.setEmail(detail.getMember().getEmail());
 
 //        System.out.println("====================/n==============" + member);
@@ -74,7 +74,7 @@ public class MemberController {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Member m = memberService.findById(detail.getId());
+        Member m = memberService.findById(detail.getMember().getId());
         m.setFullName(user.getFullName());
         m.setBirthDay(user.getBirthDay());
         m.setPhone(user.getPhone());

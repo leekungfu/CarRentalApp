@@ -39,12 +39,6 @@ public class GeneralController {
         return "home/about";
     }
 
-    @GetMapping("/home_logout")
-    public String testLogout() {
-        return "home/home_logout";
-
-    }
-
     @GetMapping("/signupAjax")
     public String signUp() {
         return "home/home_guest";
