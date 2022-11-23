@@ -35,7 +35,7 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item" th:href="@{/my_walle}">
+              <a class="dropdown-item" th:href="@{/my_wallet}">
                 <i class="fa-solid fa-wallet"></i>
                 <label>My wallet</label>
               </a>
@@ -74,10 +74,10 @@
                     <span th:text="${fullName}"></span>
                   </a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/my_profile}">My profile</a>
+                    <a class="dropdown-item" th:href="@{/editProfile}">My profile</a>
                     <a class="dropdown-item" th:href="@{/my_booking}">My booking</a>
                     <a class="dropdown-item" th:href="@{/my_wallet}">My wallet</a>
-                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
                   </div>
                 </li>
               </ul>

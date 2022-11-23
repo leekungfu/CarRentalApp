@@ -5,32 +5,36 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(columnDefinition = "NVARCHAR(50)")
 	private String fullName;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthDay;
-	private Integer nationalID;
+	private String nationalID;
 
 	@Column(unique = true)
 	private String email;
 	private String password;
 	private String phone;
-	private Integer cityID;
-	private Integer districtID;
-	private Integer wardID;
+	@Column(columnDefinition = "NVARCHAR(50)")
+	private String city;
+	@Column(columnDefinition = "NVARCHAR(50)")
+	private String district;
+	@Column(columnDefinition = "NVARCHAR(50)")
+	private String ward;
 	private String street;
 	private String drivingLicense;
 	private Double wallet;
@@ -40,6 +44,21 @@ public class Member {
 
 	@OneToMany(mappedBy = "member")
 	private List<Booking> bookings;
+
+	public Member(String fullName, LocalDate birthDay, String nationalID, String email, String phone, String city, String district, String ward, String street, String drivingLicense) {
+		this.fullName = fullName;
+		this.birthDay = birthDay;
+		this.nationalID = nationalID;
+		this.email = email;
+		this.phone = phone;
+		this.city = city;
+		this.district = district;
+		this.ward = ward;
+		this.street = street;
+		this.drivingLicense = drivingLicense;
+	}
+
+
 
 	@OneToMany(mappedBy = "member")
 	private List<MemberTransaction> memberTransactions;

@@ -1,46 +1,414 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>EditProfile</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/assets/css/font-awesome-pro.css"/>
+    <link rel="stylesheet" href="/assets/css/form-element.css"/>
+    <link rel="stylesheet" href="/assets/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/boostrap/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/animated.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/aos.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/ionicons.min.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/icomoon.css">
+    <link rel="stylesheet" href="/assets/boostrap/css/style.css">
+    <link rel="stylesheet" href="/assets/css/home/home_customer.css">
+    <link rel="stylesheet" href="/assets/css/common/menu.css">
 
+
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <form>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="fullname">FullName</label>
-                <input type="text" class="form-control" id="fullname" placeholder="FullName" name="fullname">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="dateorbrith">Date or Brith</label>
-                <input type="date" class="form-control" id="dateorbrith" placeholder="Date or Brith" name="dateorbrith">
-            </div>
-            <section class="my-5">
+<div class="menu" th:fragment="menu(user)">
+    <div class="left">
+        <i class="fa-solid fa-car-side"></i>
+        <label>Rent a car today</label>
+    </div>
+    <nav class="nav">
+        <li style="padding: 8px 32px">
+            <a href="#">About Us</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false" style="padding: 8px 16px 8px 0px">
+                <img th:src="@{/images/person_1.jpg}"
+                     style="width: 32px; height: 32px;border-radius: 50%; margin-right: 6px">
+                <label><span th:text="${user.fullName}"></span></label>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                    <a class="dropdown-item" th:href="@{/editProfile(userID = ${user.getId})}">
+                        <i class="fa-solid fa-address-card"></i>
+                        <label>My profile</label>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" th:href="@{/my_booking(userID = ${user.getId()})}">
+                        <i class="fa-solid fa-list"></i>
+                        <label>My Booking</label>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" th:href="@{/my_wallet(userID = ${user.getId()})}">
+                        <i class="fa-solid fa-wallet"></i>
+                        <label>My wallet</label>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" th:href="@{/logout}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <label href="#" data-toggle="modal" data-target="#logoutModal">Logout</label>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </nav>
+</div>
 
-                        <div class="form-group col-md-6">
-                            <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-                            <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <input type="file" name="image" accept="image/*" class="form-control-file">
-<!--                                    <button type="submit" class="btn-primary">Upload image</button>-->
+
+<div class="container">
+    <div class="row flex-lg-nowrap">
+        <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+        </div>
+    </div>
+
+        <div class="col">
+            <div class="row">
+                <div class="col mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="e-profile">
+                                <div class="row">
+                                    <div class="col-12 col-sm-auto mb-3">
+                                        <div class="mx-auto" style="width: 140px;">
+                                            <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;">140x140</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"><label><span th:text="${user.getFullName()}"></span></label></h4>
+                                            <p class="mb-0">@johnny.s</p>
+                                            <div class="text-muted"><small>Last seen 2 hours ago</small></div>
+                                            <div class="mt-2">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fa fa-fw fa-camera"></i>
+                                                    <span>Change Photo</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-sm-right">
+                                            <span class="badge badge-secondary">administrator</span>
+                                            <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item"><a href="" class="active nav-link">ProFile</a></li>
+                                    <li class="nav-item"><a href="" class="active nav-link">Reset Password</a></li>
+                                </ul>
+
+                                <div class="tab-content pt-3">
+                                    <div class="tab-pane active">
+                                        <form class="form" novalidate="" th:action="@{/editProfile}" th:object="${user}" enctype="multipart/form-data"
+                                            id=""  method="post">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Full Name:</label>
+                                                                <input  class="form-control" type="text" name="fullName" id="fullName" th:field="*{fullName}" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Date or birth"</label>
+                                                                <input class="form-control" type="date" name="birthDay" id="birthDay" th:field="*{birthDay}" >
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Phone Number:</label>
+                                                                <input class="form-control" type="text" name="phone" placeholder="84+" id="phone" th:field="*{phone}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Email:</label>
+                                                                <input class="form-control" type="text" name="email" id="email" th:field="*{email} "disabled >
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>National ID No:</label>
+                                                                <input class="form-control" type="text" name="nationalID" placeholder="John Smith" id="nationalID" th:field="*{nationalID}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Driving license: </label>
+                                                                <input class="form-control" type="file" id="drivingLicense" name="pdrivingLicense" accept="image/png, image/jpeg" >
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Address</label>
+<!--                                                               -->
+                                                                <select class="custom-select" id="city" name="city"  th:field="*{city}">
+                                                                    <option value="" selected placeholder="City/Province" th:each = "user: ${user}" th:value = "${user.city}" th:text = "${user.city}"  >City</option>
+
+                                                                </select>
+
+
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <select class="custom-select" id="district" name="district" th:field="*{district}">
+                                                                            <option value="" selected placeholder="District" th:each = "user: ${user}" th:value = "${user.district}" th:text = "${user.district}">District</option>
+
+                                                                        </select>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <select class="custom-select" id="ward" name="ward" th:field="*{ward}">
+                                                                            <option value="" selected placeholder="Ward" th:each = "user: ${user}" th:value = "${user.ward}" th:text = "${user.ward}">Ward</option>
+
+                                                                        </select>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <input class="form-control" type="text" placeholder="House number, Street" id="street" name="street" th:field="*{street}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                            </div>
+
+                                <div class="row">
+                                    <div class="col d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                                    </div>
                                 </div>
 
-                            </form>
-                            <span th:if="${msg != null}" th:text="${msg}"></span>
+                                </form>
+                                        <span th:if="${msg != null}" th:text="${msg}"></span>
+                            </div>
                         </div>
-
-            </section>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+<!--        <div class="col-12 col-md-3 mb-3">-->
+<!--            <div class="card mb-3">-->
+<!--                <div class="card-body">-->
+<!--                    <div class="px-xl-3">-->
+<!--                        <button class="btn btn-block btn-secondary">-->
+<!--                            <i class="fa fa-sign-out"></i>-->
+<!--                            <span>Logout</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+
 </div>
+</div>
+</div>
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2"><a href="#" class="logo">Car<span>Rental</span></a></h2>
+                    <p><a href="#">Search Cars And Rates</a></p>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">CUSTOMER ACCESS</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">Manage My Booking</a></li>
+                        <li><a href="#" class="py-2 d-block">My Wallet</a></li>
+                        <li><a href="#" class="py-2 d-block">My Car</a></li>
+                        <li><a href="#" class="py-2 d-block">Log in</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">JOIN US</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="py-2 d-block">New User Sign Up</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">HAVE A QUESTION?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon icon-map-marker"></span><span class="text">369 Duy Tan, Cau Giay, Ha Noi, Viet Nam</span></li>
+                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+1900 0091</span></a></li>
+                            <li><a href="#"><span class="icon icon-envelope"></span><span
+                                    class="text">carrental@support.com</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <p>
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal begin-->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" data-dismiss="modal" role="button">Cancel</a>
+                <a class="btn btn-primary" th:href="@{/home_guest}" role="button">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal end-->
+
+<script src="/assets/boostrap/js/jquery.min.js"></script>
+<script src="/assets/boostrap/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/assets/boostrap/js/popper.min.js"></script>
+<script src="/assets/boostrap/js/bootstrap.min.js"></script>
+<script src="/assets/boostrap/js/jquery.easing.1.3.js"></script>
+<script src="/assets/boostrap/js/jquery.waypoints.min.js"></script>
+<script src="/assets/boostrap/js/jquery.stellar.min.js"></script>
+<script src="/assets/boostrap/js/owl.carousel.min.js"></script>
+<script src="/assets/boostrap/js/jquery.magnific-popup.min.js"></script>
+<script src="/assets/boostrap/js/aos.js"></script>
+<script src="/assets/boostrap/js/jquery.animateNumber.min.js"></script>
+<script src="/assets/boostrap/js/bootstrap-datepicker.js"></script>
+<script src="/assets/boostrap/js/jquery.timepicker.min.js"></script>
+<script src="/assets/boostrap/js/scrollax.min.js"></script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="js/google-map.js"></script>
+<script src="/assets/boostrap/js/main.js"></script>
+
+<script src="/assets/js/jquery-1.11.1.min.js"></script>
+<!--<script src="/assets/boostrap/js/bootstrap.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+        integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/assets/js/login.js"></script>
+<script src="/assets/js/signup.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    //json input location
+
+  var cities = document.getElementById("city");
+  var districts = document.getElementById("district");
+  var wards = document.getElementById("ward");
+  var Parameter = {
+    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+    method: "GET",
+    responseType: "application/json",
+  };
+  var promise = axios(Parameter);
+  promise.then(function (result) {
+    renderCity(result.data);
+  });
+
+  function renderCity(data) {
+    for (const x of data) {
+      cities.options[cities.options.length] = new Option(x.Name, x.Name);
+    }
+    cities.onchange = function () {
+      districts.length = 1;
+      wards.length = 1;
+      if (this.value != "") {
+        const result = data.filter(n => n.Name === this.value);
+
+        for (const k of result[0].Districts) {
+          districts.options[districts.options.length] = new Option(k.Name, k.Name);
+        }
+      }
+    };
+    districts.onchange = function () {
+      wards.length = 1;
+      const dataCity = data.filter((n) => n.Name === cities.value);
+      if (this.value != "") {
+        const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards;
+
+        for (const w of dataWards) {
+          wards.options[wards.options.length] = new Option(w.Name, w.Name);
+        }
+      }
+    };
+  }
+</script>
+
 </body>
 </html>

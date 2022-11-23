@@ -403,6 +403,25 @@
 </footer>
 <!--FOOTER END-->
 
+<!-- Modal begin-->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" data-dismiss="modal" role="button">Cancel</a>
+                <a class="btn btn-primary" th:href="@{/logout}" role="button">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal end-->
+
 
 <!-- loader -->
 <div id="ftco-loader" class="show fullscreen">
@@ -429,13 +448,8 @@
 <script src="/assets/boostrap/js/bootstrap-datepicker.js"></script>
 <script src="/assets/boostrap/js/jquery.timepicker.min.js"></script>
 <script src="/assets/boostrap/js/scrollax.min.js"></script>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-<script src="js/google-map.js"></script>
 <script src="/assets/boostrap/js/main.js"></script>
-
 <script src="/assets/js/jquery-1.11.1.min.js"></script>
-<!--<script src="/assets/boostrap/js/bootstrap.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
         integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
