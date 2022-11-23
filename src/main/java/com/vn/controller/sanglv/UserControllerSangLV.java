@@ -38,9 +38,8 @@ public class UserControllerSangLV {
                                @RequestParam(value = "date1", required = false, defaultValue = "") String date1,
                                @RequestParam(value = "date2", required = false, defaultValue = "") String date2) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
-        Member member = memberService.findById(detail.getMember().getId());
-        model.addAttribute("wallet", MoneyUtil.genMoney(member.getWallet()));
+        model.addAttribute("fullName", detail.getMember().getFullName());
+        model.addAttribute("wallet", MoneyUtil.genMoney(detail.getMember().getWallet()));
 
         model.addAttribute("date1", date1);
         model.addAttribute("date2", date2);
@@ -53,10 +52,10 @@ public class UserControllerSangLV {
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("date").descending());
         Page<MemberTransaction> resultPage;
         if (date1.equals("")) {
-            resultPage = memberService.findByMember(detail.getId(), pageable);
+            resultPage = memberService.findByMember(detail.getMember().getId(),pageable);
         } else {
             resultPage = memberService.findByMemberAndDate(
-                    detail.getId(),
+                    detail.getMember().getId(),
                     DateTimeUtil.getDateTime(date1 + " 00:00"),
                     DateTimeUtil.getDateTime(date2 + " 23:59"),
                     pageable);

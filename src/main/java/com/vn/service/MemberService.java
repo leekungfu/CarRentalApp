@@ -15,6 +15,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public interface MemberService {
+    Member updatePassword(Member member);
     Member updateMember(Member member);
 
     Integer save(Member member);

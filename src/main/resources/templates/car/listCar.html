@@ -31,7 +31,12 @@
             padding-top: 20px;
             margin-left: 30px;
             margin-bottom: 20px;
+            font-size: 2.5rem;
             font-weight: 600
+        }
+        .button-x {
+            display: flex;
+            justify-content: flex-end;
         }
     </style>
 </head>
@@ -50,6 +55,7 @@
 <div class="">
     <h4 class="container2-header">List of Cars</h4>
 </div>
+<div class="text-success" th:utext="${message}" style="margin-left: 30px"></div>
 
 <div class="list_car_header">
     <div class="car_action" style="display: flex; align-items: center">
@@ -144,7 +150,7 @@
                         <div class="modal-content p-4">
                             <div class="modal-header pt-1 pl-2">
                                 <h5 class="modal-title" id="confirmDedeteLabel">Confirm delete</h5>
-                                <button type="button" style="color: white" class="close" data-dismiss="modal"
+                                <button type="button"  class="close button-x" data-dismiss="modal" style="background-color: white;"
                                         aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>

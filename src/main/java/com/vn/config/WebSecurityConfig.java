@@ -1,5 +1,6 @@
 package com.vn.config;
 
+import com.vn.service.impl.CustomUserDetailsServiceImpl;
 import com.vn.utils.ParaSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -31,14 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http   	.csrf().disable()
                 .cors()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/home")
-                .failureUrl("/home_guest?action=false")
+//                .and()
+//                .formLogin()
+//                .loginPage("/loginAjax")
+//                .loginProcessingUrl("/loginAjax")
+//                .usernameParameter("email")
+//                .passwordParameter("password")
+//                .defaultSuccessUrl("/home")
+//                .failureUrl("/home_guest?action=false")
                 .and()
                 .rememberMe()
                 .userDetailsService(userDetailsService)

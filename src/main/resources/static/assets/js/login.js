@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $.validator.addMethod(
         "emailValidate",
         function (value, element, params) {
@@ -37,36 +38,38 @@ $(document).ready(function () {
         },
     });
 
-
-    $("#signUpForm").submit(function (event) {
+    $('#loginForm').submit(function (event) {
         event.preventDefault();
-        fire_ajax_submit();
+        login_submit();
     });
 
-    function fire_ajax_submit() {
+    function login_submit() {
         let member = {};
-        member["fullName"] = $("#fullName").val();
-        member["email"] = $("#email").val();
-        member["phone"] = $("#phone").val();
-        member["password"] = $("#password").val();
-        member["role"] = $('[name=role]').val();
+        member["email"] = $('.login-email[name = email]').val();
+        member["password"] = $('.login-password[name = password]').val();
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/signupAjax",
+            url: "/loginAjax",
             data: JSON.stringify(member),
             dataType: 'json',
             cache: false,
             success: function (data) {
-                if (data.message == "YES")
+                if (data.message === "OK") {
+                    Swal.fire(
+                        'Good job!',
+                        'Login successfully!',
+                        'success'
+                    )
                     window.location.href = "/home"
-                else{
-                    //TODO SOMETHING
+                } else if (data.message === "FAILED") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email or password incorrect! Try again please.',
+                    })
                 }
-            },
+            }
         })
     }
-
-    $("#loginButton").click(function () {
-    });
 });

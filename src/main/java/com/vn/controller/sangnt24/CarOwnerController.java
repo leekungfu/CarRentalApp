@@ -1,10 +1,12 @@
 package com.vn.controller.sangnt24;
 
+import com.vn.entities.Booking;
 import com.vn.entities.Car;
 import com.vn.entities.Member;
 import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
+import com.vn.utils.BookingStatusEnum;
 import com.vn.utils.CarStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,13 +39,13 @@ public class CarOwnerController {
     // List Car
     @GetMapping("/listCar")
     public String listCarByMemberId(Model model,
-                              @RequestParam(name = "id", required = false) Integer id,
-                              @RequestParam("page") Optional<Integer> page,
-                              @RequestParam("size") Optional<Integer> size,
-                              @RequestParam("sort") Optional<String> sort) {
+                                    @RequestParam(name = "id", required = false) Integer id,
+                                    @RequestParam("page") Optional<Integer> page,
+                                    @RequestParam("size") Optional<Integer> size,
+                                    @RequestParam("sort") Optional<String> sort) {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
@@ -64,7 +67,7 @@ public class CarOwnerController {
                 pageable = PageRequest.of(currentPage - 1, pageSize);
         }
 
-        Page<Car> resultPage = carService.listCarByMemberId(detail.getId(), pageable);
+        Page<Car> resultPage = carService.listCarByMemberId(detail.getMember().getId(), pageable);
 
         List<Car> carList = resultPage.getContent();
 
@@ -166,6 +169,43 @@ public class CarOwnerController {
                                 RedirectAttributes redirectAttributes) {
         carService.delete(idCar);
         redirectAttributes.addFlashAttribute("message", "Delete car sucessfull");
+        return "redirect:/listCar";
+    }
+
+    @GetMapping("/confirmDeposit/{id}")
+    public String confirmDeposit(Model model, @PathVariable("id") Integer id) {
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("fullName", detail.getMember().getFullName());
+
+        Car car = carService.findCarById(id);
+        car.setStatus(CarStatusEnum.Booked);
+        model.addAttribute("car", car);
+        model.addAttribute("carStatus", CarStatusEnum.Booked);
+        model.addAttribute("messageConfirmDeposit", "Change car status and deposit successfully");
+        carService.saveCar(car);
+        return "/car/confirmPayment";
+    }
+
+    @GetMapping("/confirmPayment/{id}")
+    public String confirmPayment(Model model, @PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("fullName", detail.getMember().getFullName());
+
+        Car car = carService.findCarById(id);
+        car.setStatus(CarStatusEnum.Available);
+//        car.getBookings().sort(new Comparator<Booking>() {
+//            @Override
+//            public int compare(Booking o1, Booking o2) {
+//                return o2.getId() - o1.getId();
+//            }
+//        });
+//        Booking booking = car.getBookings().get(0);
+//        booking.setBookingStatus(BookingStatusEnum.Completed);
+
+        carService.saveCar(car);
+        model.addAttribute("car", car);
+        model.addAttribute("carStatus", CarStatusEnum.values());
+        redirectAttributes.addFlashAttribute("message", "Change car status and payment successfully");
         return "redirect:/listCar";
     }
 

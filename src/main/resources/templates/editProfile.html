@@ -42,8 +42,12 @@
         <label>Rent a car today</label>
     </div>
     <nav class="nav">
-        <li style="padding: 8px 32px">
-            <a href="#">About Us</a>
+
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/home}">HOME</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/about_us}">ABOUT US</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -54,7 +58,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                    <a class="dropdown-item" th:href="@{/editProfile(userID = ${user.getId})}">
+                    <a class="dropdown-item" th:href="@{/editProfile}">
                         <i class="fa-solid fa-address-card"></i>
                         <label>My profile</label>
                     </a>
@@ -74,7 +78,7 @@
                 <li>
                     <a class="dropdown-item" th:href="@{/logout}">
                         <i class="fa-solid fa-right-from-bracket"></i>
-                        <label>Logout</label>
+                        <label href="#" data-toggle="modal" data-target="#logoutModal">Logout</label>
                     </a>
                 </li>
             </ul>
@@ -123,7 +127,7 @@
                                 </div>
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item"><a href="" class="active nav-link">ProFile</a></li>
-                                    <li class="nav-item"><a href="" class="active nav-link">Reset Password</a></li>
+                                    <li class="nav-item"><a  th:href="@{/ChangePassword}" class="active nav-link">Reset Password</a></li>
                                 </ul>
 
                                 <div class="tab-content pt-3">
@@ -234,30 +238,19 @@
                                     </div>
                                 </div>
 
-                                </form>
-                                        <span th:if="${msg != null}" th:text="${msg}"></span>
+                                    </form>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
-<!--        <div class="col-12 col-md-3 mb-3">-->
-<!--            <div class="card mb-3">-->
-<!--                <div class="card-body">-->
-<!--                    <div class="px-xl-3">-->
-<!--                        <button class="btn btn-block btn-secondary">-->
-<!--                            <i class="fa fa-sign-out"></i>-->
-<!--                            <span>Logout</span>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
-
-</div>
 </div>
 </div>
 <footer class="ftco-footer ftco-bg-dark ftco-section">
@@ -318,6 +311,26 @@
         </div>
     </div>
 </footer>
+
+<!-- Modal begin-->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" data-dismiss="modal" role="button">Cancel</a>
+                <a class="btn btn-primary" th:href="@{/home_guest}" role="button">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal end-->
+
 <script src="/assets/boostrap/js/jquery.min.js"></script>
 <script src="/assets/boostrap/js/jquery-migrate-3.0.1.min.js"></script>
 <script src="/assets/boostrap/js/popper.min.js"></script>

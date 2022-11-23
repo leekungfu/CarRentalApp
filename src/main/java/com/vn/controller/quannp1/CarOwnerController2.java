@@ -18,6 +18,11 @@ import java.io.IOException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @Controller
 public class CarOwnerController2 {
     @Autowired
@@ -29,7 +34,7 @@ public class CarOwnerController2 {
     public String getFormAddCar(Model model) {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
         return "car/addCar";
     }
 
@@ -41,7 +46,6 @@ public class CarOwnerController2 {
                              @RequestParam("pinsuranceUrl") MultipartFile multipartFile3,
                              @RequestParam("pimages") MultipartFile[] multipartFileImage,
                              RedirectAttributes redirectAttributes) throws IOException {
-
         Car carCheck = carService.findCarByLicensePlate(car.getLicensePlate());
         if (carCheck != null) {
             model.addAttribute("msg", "Car is already exits");
@@ -61,6 +65,9 @@ public class CarOwnerController2 {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getFullName());
         Member member = memberService.findById(detail.getId());
+        model.addAttribute("fullName", detail.getMember().getFullName());
+
+        Member member = memberService.findById(detail.getMember().getId());
         car.setMember(member);
         car.setStatus(CarStatusEnum.Available);
 
@@ -74,7 +81,7 @@ public class CarOwnerController2 {
     @GetMapping("/car/edit/{id}")
     public String getEditCar(@PathVariable("id") Integer id, Model model) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
@@ -83,14 +90,14 @@ public class CarOwnerController2 {
     }
 
     @PostMapping("/car/edit/{id}")
-    public String submitEditCar(@ModelAttribute Car car, @PathVariable("id") Integer id, Model model) {
+    public String submitEditCar(@Valid @ModelAttribute Car car, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
-        model.addAttribute("message", "Edit car successful");
+        redirectAttributes.addFlashAttribute("messEditCar", "Edit car successful");
         model.addAttribute("carStatus", CarStatusEnum.values());
         carService.saveCar(car);
-        return "redirect:/listCar";
+        return "car/editCar";
     }
 
 }

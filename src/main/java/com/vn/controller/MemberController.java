@@ -27,6 +27,29 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
+    @GetMapping("/ChangePassword")
+    public  String resetspassword(Model model){
+        CustomUserDetails detail;
+        detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member member = memberService.findById(detail.getMember().getId());
+
+        model.addAttribute("user", member);
+        return  "/ChangePassword";
+    }
+    @PostMapping("/ChangePassword")
+    public  String resetspassword(@ModelAttribute("user") Member member, Model model){
+        CustomUserDetails detail;
+
+        detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member m = memberService.findById(detail.getId());
+        m.setPassword(member.getPassword());
+
+        memberService.save(m);
+        model.addAttribute("user",m);
+        return  "/editProfile";
+    }
     @GetMapping("/editProfile")
     public String updateProfile(Model model) {
 
@@ -34,7 +57,7 @@ public class MemberController {
 
         detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        Member member = memberService.findByEmail(detail.getMember().getEmail());
-        Member member = memberService.findById(detail.getId());
+        Member member = memberService.findById(detail.getMember().getId());
         member.setEmail(detail.getMember().getEmail());
 
 //        System.out.println("====================/n==============" + member);
@@ -51,7 +74,7 @@ public class MemberController {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Member m = memberService.findById(detail.getId());
+        Member m = memberService.findById(detail.getMember().getId());
         m.setFullName(user.getFullName());
         m.setBirthDay(user.getBirthDay());
         m.setPhone(user.getPhone());

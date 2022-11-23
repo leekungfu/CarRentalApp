@@ -1,6 +1,5 @@
 package com.vn.entities;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Member implements Serializable {
 	@Id
@@ -62,14 +62,7 @@ public class Member implements Serializable {
 		this.drivingLicense = drivingLicense;
 	}
 
-	@Override
-	public String toString() {
-		return "Member{" +
-				"city='" + city + '\'' +
-				", district='" + district + '\'' +
-				", ward='" + ward + '\'' +
-				'}';
-	}
+
 
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	@JsonIgnore
