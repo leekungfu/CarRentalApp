@@ -38,43 +38,38 @@ $(document).ready(function () {
         },
     });
 
-    // $(document).on("click", "#loginButton", function submitForm() {
-    //     if ($("form").valid()) {
-    //         Swal.fire(
-    //             'Well done!',
-    //             'Log in successfully!',
-    //             'success',
-    //             'timer:500000'
-    //         )
-    //     }
-    // });
-
-    $("#loginButton").click(function submitForm() {
-            // event.preventDefault();
-            // const form_data = $(this).serialize();
-            $.ajax({
-                url:"./signup",
-                method:'POST',
-                data:{data},
-                success: function(data){
-                    if(data)
-                    {
-                        Swal.fire(
-                            'Well done!',
-                            'Log in successfully!',
-                            'success',
-                            'timer:50000'
-                        )
-                    }else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                            time: '50000',
-                            footer: '<a href="">Why do I have this issue?</a>'
-                        })
-                    }
-                }
-            });
+    $('#loginForm').submit(function (event) {
+        event.preventDefault();
+        login_submit();
     });
+
+    function login_submit() {
+        let member = {};
+        member["email"] = $('.login-email[name = email]').val();
+        member["password"] = $('.login-password[name = password]').val();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/loginAjax",
+            data: JSON.stringify(member),
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                if (data.message === "OK") {
+                    Swal.fire(
+                        'Good job!',
+                        'Login successfully!',
+                        'success'
+                    )
+                    window.location.href = "/home"
+                } else if (data.message === "FAILED") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Email or password incorrect! Try again please.',
+                    })
+                }
+            }
+        })
+    }
 });

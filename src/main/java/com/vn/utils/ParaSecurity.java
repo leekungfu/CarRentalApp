@@ -5,9 +5,8 @@ public class ParaSecurity {
     public static String[] ignoreSecurityPages = {
             "/forgot_password",
             "/reset_password",
-            "/signup",
-            "/login",
-            "/home_logout",
+            "/signupAjax",
+            "/loginAjax",
             "/home_guest",
             "/about",
             "/images/**",
@@ -21,13 +20,12 @@ public class ParaSecurity {
             "/search/car",
             "/detail_car",
             "/rent_car",
+            "/editProfile"
     };
 
     public static String[] customerPages ={
             "/home/",
             "/home_customer",
-            "/forgot_password",
-            "/reset_password",
             "/customer_profile",
             "/customer_booking",
             "/customer_wallet",
@@ -37,9 +35,7 @@ public class ParaSecurity {
     };
     public static String[] carOwnerPages ={
             "/home/",
-            "/home_owner/",
-            "/forgot_password",
-            "/reset_password",
+            "/home_car_owner",
             "/add_car",
             "/owner_profile",
             "/owner_cars",
@@ -51,7 +47,6 @@ public class ParaSecurity {
             "/about",
             "/booking/*",
             "/car/*",
-            "/home_car_owner",
-            "/booking/status"
+            "/booking/status",
     };
 }
