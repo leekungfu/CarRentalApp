@@ -2,6 +2,7 @@ package com.vn.service.impl;
 
 import com.vn.entities.Member;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
+@Setter
 public class CustomUserDetails implements UserDetails {
     @Getter
     private final Member member;
@@ -18,29 +21,6 @@ public class CustomUserDetails implements UserDetails {
 
     private Double wallet;
 
-    public Double getWallet() {
-        return wallet;
-    }
-
-    public void setWallet(Double wallet) {
-        this.wallet = wallet;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public CustomUserDetails(Member member) {
         this.member = member;

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $.validator.addMethod(
         "emailValidate",
         function (value, element, params) {
@@ -38,43 +37,36 @@ $(document).ready(function () {
         },
     });
 
-    // $(document).on("click", "#loginButton", function submitForm() {
-    //     if ($("form").valid()) {
-    //         Swal.fire(
-    //             'Well done!',
-    //             'Log in successfully!',
-    //             'success',
-    //             'timer:500000'
-    //         )
-    //     }
-    // });
 
-    $("#loginButton").click(function submitForm() {
-            // event.preventDefault();
-            // const form_data = $(this).serialize();
-            $.ajax({
-                url:"./signup",
-                method:'POST',
-                data:{data},
-                success: function(data){
-                    if(data)
-                    {
-                        Swal.fire(
-                            'Well done!',
-                            'Log in successfully!',
-                            'success',
-                            'timer:50000'
-                        )
-                    }else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                            time: '50000',
-                            footer: '<a href="">Why do I have this issue?</a>'
-                        })
-                    }
+    $("#signUpForm").submit(function (event) {
+        event.preventDefault();
+        fire_ajax_submit();
+    });
+
+    function fire_ajax_submit() {
+        let member = {};
+        member["fullName"] = $("#fullName").val();
+        member["email"] = $("#email").val();
+        member["phone"] = $("#phone").val();
+        member["password"] = $("#password").val();
+        member["role"] = $('[name=role]').val();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/signupAjax",
+            data: JSON.stringify(member),
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                if (data.message == "YES")
+                    window.location.href = "/home"
+                else{
+                    //TODO SOMETHING
                 }
-            });
+            },
+        })
+    }
+
+    $("#loginButton").click(function () {
     });
 });

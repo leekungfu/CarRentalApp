@@ -72,15 +72,4 @@ $(document).ready(function () {
 
         },
     });
-
-    $(document).on("click", "#signupButton", function submitForm() {
-        if ($("form").valid()) {
-            Swal.fire(
-                'Well done!',
-                'Log in successfully!',
-                'success',
-                'timer:500000'
-            )
-        }
-    });
 });

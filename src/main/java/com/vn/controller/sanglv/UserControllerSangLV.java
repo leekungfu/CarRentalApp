@@ -1,7 +1,10 @@
 package com.vn.controller.sanglv;
 
+import com.vn.dto.WalletResponseDTO;
+import com.vn.entities.Member;
 import com.vn.entities.MemberTransaction;
 import com.vn.service.MemberService;
+import com.vn.service.MemberTransactionService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.DateTimeUtil;
 import com.vn.utils.MoneyUtil;
@@ -10,18 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
 public class UserControllerSangLV {
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    MemberTransactionService memberTransactionService;
 
     @GetMapping("/my_wallet")
     public String myWalletPage(Model model,
@@ -31,7 +39,8 @@ public class UserControllerSangLV {
                                @RequestParam(value = "date2", required = false, defaultValue = "") String date2) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getFullName());
-        model.addAttribute("wallet", MoneyUtil.genMoney(detail.getWallet()));
+        Member member = memberService.findById(detail.getMember().getId());
+        model.addAttribute("wallet", MoneyUtil.genMoney(member.getWallet()));
 
         model.addAttribute("date1", date1);
         model.addAttribute("date2", date2);
@@ -41,10 +50,10 @@ public class UserControllerSangLV {
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("pageSize", pageSize);
 
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("date").descending());
         Page<MemberTransaction> resultPage;
         if (date1.equals("")) {
-            resultPage = memberService.findByMember(detail.getId(),pageable);
+            resultPage = memberService.findByMember(detail.getId(), pageable);
         } else {
             resultPage = memberService.findByMemberAndDate(
                     detail.getId(),
@@ -60,5 +69,40 @@ public class UserControllerSangLV {
         }
 
         return "wallet";
+    }
+
+    @PostMapping("/top_up")
+    @ResponseBody
+    public ResponseEntity<?> topUp(@RequestBody Long amount) {
+        WalletResponseDTO walletResponseDTO = new WalletResponseDTO();
+
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member member = memberService.findById(detail.getId());
+        if (member.getWallet() == null)
+            member.setWallet(0.0);
+        member.setWallet(member.getWallet() + amount);
+
+
+        MemberTransaction memberTransaction = new MemberTransaction();
+        memberTransaction.setAmount(amount + 0.0);
+        memberTransaction.setDate(LocalDateTime.now());
+        if (amount >0)
+            memberTransaction.setType("TOP UP");
+        else
+            memberTransaction.setType("WITHDRAW");
+        memberTransaction.setMember(member);
+        member.getMemberTransactions().add(memberTransaction);
+
+        memberService.updateWallet(member);
+        memberTransactionService.save(memberTransaction);
+
+        Pageable pageable = PageRequest.of(0, 5, Sort.by("date").descending());
+        Page<MemberTransaction> resultPage = memberService.findByMember(detail.getId(), pageable);
+
+        walletResponseDTO.setTran(resultPage.getContent());
+        walletResponseDTO.setMessage("You have just top up " + amount);
+        walletResponseDTO.setBalance(MoneyUtil.genMoney(member.getWallet()));
+
+        return ResponseEntity.ok(walletResponseDTO);
     }
 }

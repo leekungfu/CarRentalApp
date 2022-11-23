@@ -1,5 +1,6 @@
 package com.vn.controller;
 
+import com.vn.dto.StringMessageDTO;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
@@ -7,20 +8,21 @@ import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.stream.Collectors;
 
 @Controller
 public class GeneralController {
@@ -70,6 +72,31 @@ public class GeneralController {
 
         return "redirect:/home";
     }
+
+
+
+
+
+
+    @PostMapping("/signupAjax")
+    @ResponseBody
+    public ResponseEntity<?> signUpPageAjax(@RequestBody Member member, Errors errors) {
+        Member checkMem = memberService.findByEmail(member.getEmail());
+        if (checkMem == null) {
+            memberService.save(member);
+            CustomUserDetails customUserDetails = new CustomUserDetails(member);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return ResponseEntity.ok(new StringMessageDTO("YES"));
+        }
+        return ResponseEntity.ok(new StringMessageDTO("NO"));
+    }
+
+
+
+
+
+
 
     @GetMapping("/login")
     public String signIn() {

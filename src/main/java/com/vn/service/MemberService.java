@@ -33,4 +33,7 @@ public interface MemberService {
     Page<MemberTransaction> findByMember(Integer memberId, Pageable pageable);
 
     Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable);
+
+    void updateWallet(Member member);
+
 }

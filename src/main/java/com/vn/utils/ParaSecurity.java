@@ -21,6 +21,8 @@ public class ParaSecurity {
             "/search/car",
             "/detail_car",
             "/rent_car",
+            "/editProfile",
+            "/signupAjax"
     };
 
     public static String[] customerPages ={
