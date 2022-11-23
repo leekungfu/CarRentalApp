@@ -30,6 +30,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member updatePassword(Member member) {
+        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         return memberRepository.save(member);
     }
 
