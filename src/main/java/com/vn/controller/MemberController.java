@@ -43,7 +43,7 @@ public class MemberController {
 
         detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Member m = memberService.findById(detail.getId());
+        Member m = memberService.findById(detail.getMember().getId());
         m.setPassword(member.getPassword());
 
         memberService.save(m);
