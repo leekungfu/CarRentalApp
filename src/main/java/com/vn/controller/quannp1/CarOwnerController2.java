@@ -104,7 +104,7 @@ public class CarOwnerController2 {
 
         CarStatusEnum status = car.getStatus();
         if (status.equals(CarStatusEnum.Booked)){
-            model.addAttribute("messEditCar","Can't change status to Booked");
+            model.addAttribute("messBooked","Can't change status to Booked");
             model.addAttribute("car", car);
             model.addAttribute("carStatus", CarStatusEnum.values());
             return "car/editCar";
