@@ -44,7 +44,7 @@ public class CarOwnerController2 {
     public String getFormAddCar(Model model) {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
         return "car/addCar";
     }
 
@@ -79,9 +79,9 @@ public class CarOwnerController2 {
         car.setImages(saveCarImages);
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
-        Member member = memberService.findById(detail.getId());
+        Member member = memberService.findById(detail.getMember().getId());
         car.setMember(member);
         car.setStatus(CarStatusEnum.Available);
 
@@ -130,7 +130,7 @@ public class CarOwnerController2 {
     @GetMapping("/car/edit/{id}")
     public String getEditCar(@PathVariable("id") Integer id, Model model) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
@@ -145,7 +145,7 @@ public class CarOwnerController2 {
         }
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         redirectAttributes.addFlashAttribute("messEditCar", "Edit car successful");
         model.addAttribute("carStatus", CarStatusEnum.values());

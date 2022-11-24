@@ -1,7 +1,5 @@
 var step1 = document.querySelector(".step1");
 var step2 = document.querySelector(".step2");
-var startDate = new Date(document.querySelector("#startDate").value) ;
-var endDate = new Date(document.querySelector("#endDate").value) ;
 
 window.onload = function(){
     initialDisplay();
@@ -9,10 +7,12 @@ window.onload = function(){
     let dateChangeInputs = document.querySelectorAll("input[class*='date-change']");
     dateChangeInputs.forEach(function(e){
         e.onchange = function(){
-            let date = dateCalculate();
-            console.log(date);
-            document.querySelector("#totalDay").innerHTML = date;
-            document.querySelector("#totalPrice").innerHTML = date
+            let startDate = new Date(document.querySelector("#startDate").value) ;
+            let endDate = new Date(document.querySelector("#endDate").value) ;
+            let date = dateCalculate(startDate, endDate);
+            document.querySelector("#totalDay").innerHTML = '' + date;
+            let price = document.querySelector("#pricePerDay").innerHTML;
+            document.querySelector("#totalPrice").innerHTML = '' + date * price;
         };
     });
 }
@@ -57,10 +57,10 @@ function hideDriverInfo(){
     }
 }
 
-function dateCalculate(){
+function dateCalculate(startDate, endDate){
     let diffTime = endDate - startDate;
     let diffDate = Math.floor(diffTime/(24*3600*1000))+1;
-
+    console.log(diffDate);
     return diffDate;
 }
 

@@ -45,7 +45,7 @@ public class CarOwnerController {
                                     @RequestParam("sort") Optional<String> sort) {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
@@ -67,7 +67,7 @@ public class CarOwnerController {
                 pageable = PageRequest.of(currentPage - 1, pageSize);
         }
 
-        Page<Car> resultPage = carService.listCarByMemberId(detail.getId(), pageable);
+        Page<Car> resultPage = carService.listCarByMemberId(detail.getMember().getId(), pageable);
 
         List<Car> carList = resultPage.getContent();
 
@@ -175,7 +175,7 @@ public class CarOwnerController {
     @GetMapping("/confirmDeposit/{id}")
     public String confirmDeposit(Model model, @PathVariable("id") Integer id) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
         car.setStatus(CarStatusEnum.Booked);
@@ -189,7 +189,7 @@ public class CarOwnerController {
     @GetMapping("/confirmPayment/{id}")
     public String confirmPayment(Model model, @PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getFullName());
+        model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
         car.setStatus(CarStatusEnum.Available);

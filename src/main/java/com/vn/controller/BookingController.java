@@ -51,7 +51,7 @@ public class BookingController {
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		model.addAttribute("user", detail.getMember());
 		
-		model.addAttribute("fullName", detail.getFullName());
+		model.addAttribute("fullName", detail.getMember().getFullName());
 		return "booking/booking_process";
 		
 	}
@@ -87,7 +87,7 @@ public class BookingController {
 		}
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<Member> optional = memberService.findUserById(detail.getId());
+		Optional<Member> optional = memberService.findUserById(detail.getMember().getId());
 		if(optional.isEmpty()) {
 			return "redirect:/login";
 		} else {
@@ -96,7 +96,7 @@ public class BookingController {
 		
 		bookingService.addBooking(booking);
 		
-		model.addAttribute("fullName", detail.getFullName());
+		model.addAttribute("fullName", detail.getMember().getFullName());
 		model.addAttribute("booking", booking);
 		return "booking/booking_successful";
 	}
@@ -108,7 +108,7 @@ public class BookingController {
 		model.addAttribute("booking", booking);
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("fullName", detail.getFullName());
+		model.addAttribute("fullName", detail.getMember().getFullName());
 		return "booking/booking_detail";
 	}
 	
@@ -117,10 +117,10 @@ public class BookingController {
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		List<Booking> bookings = bookingService.findAllByMemberId(detail.getId());
+		List<Booking> bookings = bookingService.findAllByMemberId(detail.getMember().getId());
 		model.addAttribute("bookings", bookings);
 		
-		model.addAttribute("fullName", detail.getFullName());
+		model.addAttribute("fullName", detail.getMember().getFullName());
 		
 		return "booking/booking_list";
 	}
