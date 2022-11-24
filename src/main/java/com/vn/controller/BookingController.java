@@ -125,53 +125,53 @@ public class BookingController {
 		return "booking/booking_list";
 	}
 
-    @GetMapping("/booking/status")
-    public String addStatus2(Model model) {
-        model.addAttribute("carStatus", CarStatusEnum.values());
-        model.addAttribute("car", new Car());
-
-        return "car/booking_status";
-    }
-
-    // Confirm deposit
-    @PostMapping("/booking/status")
-    public String checkAddStatus(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
-
-        car.setStatus(CarStatusEnum.Booked);
-        carService.saveCar(car);
-        redirectAttributes.addFlashAttribute("messDeposit", "Confirm Deposit successful");
-        model.addAttribute("carStatus", CarStatusEnum.Booked);
-
-        return "redirect:/car/payment";
-    }
-
-    // Confirm payment
-
-    @GetMapping("/car/payment")
-    public String confirmPayment(Model model) {
-        model.addAttribute("carStatus", CarStatusEnum.Booked);
-        model.addAttribute("car", new Car());
-
-        return "car/confirm_payment";
-    }
-
-    @PostMapping("/car/payment")
-    public String checkConfirmPayment(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
-
-        car.setStatus(CarStatusEnum.Available);
-//        car.getBookings().sort(new Comparator<Booking>() {
-//            @Override
-//            public int compare(Booking o1, Booking o2) {
-//                return o2.getId() - o1.getId();
-//            }
-//        });
-//        Booking booking = car.getBookings().get(0);
-//        booking.setBookingStatus(BookingStatusEnum.Completed);
-
-        carService.saveCar(car);
-        redirectAttributes.addFlashAttribute("messPayment", "Confirm Payment successful");
-        model.addAttribute("carStatus", CarStatusEnum.values());
-
-        return "redirect:/booking/status";
-    }
+//    @GetMapping("/booking/status")
+//    public String addStatus2(Model model) {
+//        model.addAttribute("carStatus", CarStatusEnum.values());
+//        model.addAttribute("car", new Car());
+//
+//        return "car/booking_status";
+//    }
+//
+//    // Confirm deposit
+//    @PostMapping("/booking/status")
+//    public String checkAddStatus(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
+//
+//        car.setStatus(CarStatusEnum.Booked);
+//        carService.saveCar(car);
+//        redirectAttributes.addFlashAttribute("messDeposit", "Confirm Deposit successful");
+//        model.addAttribute("carStatus", CarStatusEnum.Booked);
+//
+//        return "redirect:/car/payment";
+//    }
+//
+//    // Confirm payment
+//
+//    @GetMapping("/car/payment")
+//    public String confirmPayment(Model model) {
+//        model.addAttribute("carStatus", CarStatusEnum.Booked);
+//        model.addAttribute("car", new Car());
+//
+//        return "car/confirm_payment";
+//    }
+//
+//    @PostMapping("/car/payment")
+//    public String checkConfirmPayment(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
+//
+//        car.setStatus(CarStatusEnum.Available);
+////        car.getBookings().sort(new Comparator<Booking>() {
+////            @Override
+////            public int compare(Booking o1, Booking o2) {
+////                return o2.getId() - o1.getId();
+////            }
+////        });
+////        Booking booking = car.getBookings().get(0);
+////        booking.setBookingStatus(BookingStatusEnum.Completed);
+//
+//        carService.saveCar(car);
+//        redirectAttributes.addFlashAttribute("messPayment", "Confirm Payment successful");
+//        model.addAttribute("carStatus", CarStatusEnum.values());
+//
+//        return "redirect:/booking/status";
+//    }
 }
