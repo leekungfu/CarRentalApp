@@ -20,6 +20,9 @@ public class ParaSecurity {
             "/search/car",
             "/detail_car",
             "/rent_car",
+            "/home",
+            "/editProfile",
+            "/ChangePassword"
     };
 
     public static String[] customerPages ={

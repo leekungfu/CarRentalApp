@@ -74,30 +74,6 @@ public class GeneralController {
     }
 
 
-
-
-
-
-    @PostMapping("/signupAjax")
-    @ResponseBody
-    public ResponseEntity<?> signUpPageAjax(@RequestBody Member member, Errors errors) {
-        Member checkMem = memberService.findByEmail(member.getEmail());
-        if (checkMem == null) {
-            memberService.save(member);
-            CustomUserDetails customUserDetails = new CustomUserDetails(member);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(new StringMessageDTO("YES"));
-        }
-        return ResponseEntity.ok(new StringMessageDTO("NO"));
-    }
-
-
-
-
-
-
-
     @GetMapping("/login")
     public String loginPage(){
         return "home/home_guest";
