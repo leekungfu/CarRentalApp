@@ -1,3 +1,6 @@
+*{
+    font-family: "Exo 2";
+}
 .header2 {
     height: 400px;
     background-repeat: no-repeat;
@@ -63,6 +66,10 @@
 }
 .header2 li {
     margin: 0 32px;
+}
+.header_intro{
+    color: white;
+    line-height: 1;
 }
 
 a {

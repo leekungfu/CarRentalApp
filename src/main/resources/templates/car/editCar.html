@@ -126,20 +126,21 @@
                                 <img class="d-block w-100" th:src="@{${car.genImage()[2]}}" alt="Third slide">
                             </div>
                         </div>
-                        <a class="carousel-control-prev" th:href="'#'+ 'car' + ${car.id}" role="button"
-                           data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" th:href="'#' + 'car' + ${car.id}" role="button"
-                           data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
                     </div>
+                    <a class="carousel-control-prev" th:href="'#'+ 'car' + ${car.id}" role="button"
+                       data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" th:href="'#' + 'car' + ${car.id}" role="button"
+                       data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
+                <!--                </div>-->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" style="padding-left: 60px">
                 <div class="row" style="margin-top: 20px"><p class="text_header" th:utext="${car.name}"></p></div>
                 <div class="row" style="margin-top: 15px">
                     <div class="uc20_info_detail_item row">

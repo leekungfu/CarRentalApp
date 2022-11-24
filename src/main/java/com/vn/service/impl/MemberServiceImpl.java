@@ -104,7 +104,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member findById(Integer id) {
-        return memberRepository.getOne(id);
+        return memberRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -117,5 +117,10 @@ public class MemberServiceImpl implements MemberService {
     public Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable) {
         log.info("Find user by id and date & process pagination");
         return memberTransactionRepository.findByMemberAndDate(id, date1, date2, pageable);
+    }
+
+    @Override
+    public void updateWallet(Member member) {
+        memberRepository.save(member);
     }
 }

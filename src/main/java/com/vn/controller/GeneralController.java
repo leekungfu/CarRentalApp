@@ -23,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.stream.Collectors;
 
 @Controller
 public class GeneralController {
@@ -71,6 +72,7 @@ public class GeneralController {
             return ResponseEntity.ok(new StringMessageDTO("FAILED"));
         }
     }
+
 
     @GetMapping("/login")
     public String loginPage(){

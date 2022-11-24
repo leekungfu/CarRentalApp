@@ -7,6 +7,10 @@ public class MoneyUtil {
     public static String genMoney(Double money){
         Locale locale = new Locale("vi", "VN");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
-        return  numberFormat.format(money);
+        try {
+            return  numberFormat.format(money);
+        }catch (Exception e){
+            return numberFormat.format(0);
+        }
     }
 }

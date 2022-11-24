@@ -1,10 +1,12 @@
 package com.vn.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,7 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @ToString
 @Entity
-public class Member {
+public class Member implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -60,7 +62,8 @@ public class Member {
 
 
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<MemberTransaction> memberTransactions;
 
 	@OneToMany(mappedBy = "member")

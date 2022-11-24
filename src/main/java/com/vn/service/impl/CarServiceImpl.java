@@ -78,6 +78,7 @@ public class CarServiceImpl implements CarService {
         }
     @Override
     public Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable) {
+        System.out.println("************************************" + date);
         return carRepository.findByCityAndDate(city, date, pageable);
     }
 }

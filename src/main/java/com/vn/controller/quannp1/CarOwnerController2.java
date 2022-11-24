@@ -6,6 +6,7 @@ import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.CarStatusEnum;
+import com.vn.utils.ImageUtil;
 import com.vn.utils.ValidatedEditCar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,14 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,22 +55,16 @@ public class CarOwnerController2 {
             model.addAttribute("msg", "Car is already exits");
             return "car/addCar";
         }
-        //Lay ten goc cua anh them vao car
-        String registrationPaper = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
-        String cetifiticateInspection = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
-        String insurance = StringUtils.cleanPath(multipartFile3.getOriginalFilename());
-        car.setRegistration(registrationPaper);
-        car.setInspection(cetifiticateInspection);
-        car.setInsuranceUrl(insurance);
-        String[] carImages = new String[3];
-        for (MultipartFile listImages : multipartFileImage) {
-            String images = StringUtils.cleanPath(listImages.getOriginalFilename());
-            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(carImages));
-            arrayList.add(images);
-            carImages = arrayList.toArray(carImages);
+
+        car.setRegistration(ImageUtil.saveImage(multipartFile1));
+        car.setInspection(ImageUtil.saveImage(multipartFile2));
+        car.setInsuranceUrl(ImageUtil.saveImage(multipartFile3));
+
+        StringBuilder carImages = new StringBuilder();
+        for (MultipartFile image : multipartFileImage) {
+            carImages.append(ImageUtil.saveImage(image)).append(",");
         }
-        String saveCarImages = Arrays.toString(carImages);
-        car.setImages(saveCarImages);
+
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getMember().getFullName());
@@ -85,43 +73,8 @@ public class CarOwnerController2 {
         car.setMember(member);
         car.setStatus(CarStatusEnum.Available);
 
-        Car saveCars = carService.saveCar(car);
-        String uploadDir = "./src/main/resources/static/images/" + saveCars.getId();
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-        try (InputStream inputStream = multipartFile1.getInputStream()) {
-            Path filePath = uploadPath.resolve(registrationPaper);
-            System.out.println(filePath.toFile().getAbsolutePath());
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (InputStream inputStream = multipartFile2.getInputStream()) {
-            Path filePath = uploadPath.resolve(cetifiticateInspection);
-            System.out.println(filePath.toFile().getAbsolutePath());
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (InputStream inputStream = multipartFile3.getInputStream()) {
-            Path filePath = uploadPath.resolve(insurance);
-            System.out.println(filePath.toFile().getAbsolutePath());
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (MultipartFile listImages : multipartFileImage) {
-            String images = StringUtils.cleanPath(listImages.getOriginalFilename());
-            try (InputStream inputStream = listImages.getInputStream()) {
-                Path filePath = uploadPath.resolve(images);
-                System.out.println(filePath.toFile().getAbsolutePath());
-                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        car.setImages(carImages.toString());
+        carService.saveCar(car);
         redirectAttributes.addFlashAttribute("message", "Your car add succesfull!");
 
         return "redirect:/listCar";
