@@ -7,10 +7,14 @@ import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.CarStatusEnum;
 import com.vn.utils.ImageUtil;
+import com.vn.utils.ValidatedEditCar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -82,20 +86,34 @@ public class CarOwnerController2 {
         model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
+
+
         model.addAttribute("car", car);
         model.addAttribute("carStatus", CarStatusEnum.values());
         return "car/editCar";
     }
 
     @PostMapping("/car/edit/{id}")
-    public String submitEditCar(@Valid @ModelAttribute Car car, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+    public String submitEditCar(@Validated(value = ValidatedEditCar.class) @ModelAttribute Car car, BindingResult result, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "car/editCar";
+        }
+
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getMember().getFullName());
 
-        redirectAttributes.addFlashAttribute("messEditCar", "Edit car successful");
+        CarStatusEnum status = car.getStatus();
+        if (status.equals(CarStatusEnum.Booked)){
+            model.addAttribute("messEditCar","Can't change status to Booked");
+            model.addAttribute("car", car);
+            model.addAttribute("carStatus", CarStatusEnum.values());
+            return "car/editCar";
+        }
+
+        redirectAttributes.addFlashAttribute("message", "Edit car successful");
         model.addAttribute("carStatus", CarStatusEnum.values());
         carService.saveCar(car);
-        return "car/editCar";
+        return "redirect:/listCar";
     }
 
 }

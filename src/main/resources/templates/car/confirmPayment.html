@@ -107,13 +107,13 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100" th:src="${car.genImage()[0]}" alt="First slide">
+                                <img class="d-block w-100" th:src="@{${car.genImage()[0]}}" alt="First slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" th:src="${car.genImage()[1]}" alt="Second slide">
+                                <img class="d-block w-100" th:src="@{${car.genImage()[1]}}" alt="Second slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" th:src="${car.genImage()[2]}" alt="Third slide">
+                                <img class="d-block w-100" th:src="@{${car.genImage()[2]}}" alt="Third slide">
                             </div>
                         </div>
                         <a class="carousel-control-prev" th:href="'#'+ 'car' + ${car.id}" role="button"
@@ -270,15 +270,15 @@
         </div>
         <div class="container">
             <!--            <ul class="nav nav-pills">-->
-            <ul class="nav nav-tabs nav-justified">
+            <ul class="nav nav-tabs nav-justified" style="padding-bottom: 4px;">
                 <li class="active">
-                    <a data-toggle="tab" href="#basic" style="margin-right: 10px">Basic Information</a>
+                    <a data-toggle="tab" href="#basic" class="tab-editCar" style="text-decoration: none;">Basic Information</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" href="#details" style="margin-right: 10px">Details</a>
+                    <a data-toggle="tab" href="#details" class="tab-editCar" style="text-decoration: none;">Details</a>
                 </li>
                 <li>
-                    <a data-toggle="tab" href="#pricing" style="margin-right: 10px">Pricing</a>
+                    <a data-toggle="tab" href="#pricing" class="tab-editCar" style="text-decoration: none;">Pricing</a>
                 </li>
             </ul>
 
@@ -577,7 +577,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary ">Save</button>
+            <button type="submit" class="btn btn-primary " style="background-color: #CC0041;">Save</button>
         </div>
     </form>
     <p name="complete" class="complete"></p>
