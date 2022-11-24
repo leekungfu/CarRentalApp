@@ -6,9 +6,10 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 import com.vn.utils.CarStatusEnum;
+import com.vn.utils.ValidatedEditCar;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,12 @@ public class Car {
 	private String registration;
 	private String inspection;
 	private String insuranceUrl;
+	@Min(value = 10)
+	@Max(value = 1000000)
+    @NotNull(groups = {ValidatedEditCar.class})
+    @NotBlank
 	private Double mileage;
+	@NotNull
 	private Double fuelConsumption;
 
     @NotEmpty
@@ -44,16 +50,21 @@ public class Car {
     @NotEmpty
     @Nationalized
 	private String district;
+    @NotEmpty
     @Nationalized
 	private String ward;
+    @NotEmpty
     @Nationalized
 	private String street;
 	private String description;
 	private String addFunction;
 	private String images;
-    @NotEmpty
+    @NotNull
+	@Min(value = 100000)
+	@Max(value = 2000000)
 	private Double price;
-    @NotEmpty
+    @NotNull
+	@Min(value = 3000000)
 	private Double deposit;
 	private String term;
 	private String termExtra;
