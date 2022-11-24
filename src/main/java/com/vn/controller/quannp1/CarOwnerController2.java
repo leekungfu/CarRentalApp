@@ -133,6 +133,8 @@ public class CarOwnerController2 {
         model.addAttribute("fullName", detail.getMember().getFullName());
 
         Car car = carService.findCarById(id);
+
+
         model.addAttribute("car", car);
         model.addAttribute("carStatus", CarStatusEnum.values());
         return "car/editCar";
@@ -147,10 +149,18 @@ public class CarOwnerController2 {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getMember().getFullName());
 
-        redirectAttributes.addFlashAttribute("messEditCar", "Edit car successful");
+        CarStatusEnum status = car.getStatus();
+        if (status.equals(CarStatusEnum.Booked)){
+            model.addAttribute("messEditCar","Can't change status to Booked");
+            model.addAttribute("car", car);
+            model.addAttribute("carStatus", CarStatusEnum.values());
+            return "car/editCar";
+        }
+
+        redirectAttributes.addFlashAttribute("message", "Edit car successful");
         model.addAttribute("carStatus", CarStatusEnum.values());
         carService.saveCar(car);
-        return "car/editCar";
+        return "redirect:/listCar";
     }
 
 }
