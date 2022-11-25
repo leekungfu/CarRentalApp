@@ -94,9 +94,9 @@
 <div th:insert="~{/fragment/header::menu2(${fullName})}">
 </div>
 <div style="margin:32px">
-    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/home}" >Home</a>
     <span> > </span>
-    <a th:href="@{/listCar}">My Cars</a>
+    <a th:href="@{/listCar}" >My Cars</a>
     <span> > </span>
     <span>Edit details</span>
 </div>
@@ -107,7 +107,7 @@
 <div class="text-danger" th:utext="${messBooked}" style="margin-left: 30px"></div>
 <div class="list_car_content" th:object="${car}">
     <div class="car_item" style="padding: 20px 20px;">
-            <div class="col-md-6.8" style="padding-right: 20px">
+            <div class="col-md-7" style="padding-right: 20px">
                 <div th:id="'car' + ${car.id}" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -131,13 +131,13 @@
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" th:href="'#' + 'car' + ${car.id}" role="button"
+                <a class="carousel-control-next" th:href="'#' + 'car' + ${car.id}" role="button" style="margin-right: 65px;"
                    data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            <div class="col-md-4" style="margin-left: 10px">
+            <div class="col-md-3.8" >
                 <div class="row" style="margin-top: 20px"><p class="text_header" th:utext="${car.name}"></p></div>
                 <div class="row" style="margin-top: 15px">
                     <div class="uc20_info_detail_item row">
@@ -160,7 +160,7 @@
                 <div class="row" style="margin-top: 15px">
                     <div class="uc20_info_detail_item row">
                         <i class="fa-solid fa-location-dot"></i>
-                        <p style="margin-right: 33px;"><strong>Location:</strong></p>
+                        <p style="margin-right: 30px;"><strong>Location:</strong></p>
                         <p th:utext="${car.address}"></p>
                     </div>
                 </div>
@@ -222,7 +222,6 @@
                 </div>
             </div>
             <div class="col-md-1.2">
-                <div>    </div>
                 <div class="car_action" style="margin-top: 25px;" id="conDeposit">
                     <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#confirmDeposit">
                         Confirm deposit
@@ -409,8 +408,8 @@
                                 <label for="mileage" class="form-group-field">Mileage</label>
                                 <input type="number" class="form-control col-md-3" id="mileage" th:field="*{mileage}">
                                 <!--                                       th:field="${car.mileage}"-->
-                                <p style="color: red" th:if="${#fields.hasErrors('mileage')}" th:errorclass="error"
-                                   th:errors="*{mileage}"></p>
+                                <div style="color: red" th:if="${#fields.hasErrors('mileage')}" th:errorclass="error"
+                                   th:errors="*{mileage}"></div>
                             </div>
                             <div class="form-group">
                                 <label class="form-group-field">Address</label>
@@ -439,10 +438,10 @@
                                        th:errors="${car.ward}"></p>
                                     <div style="margin-bottom: 10px">
                                         <input type="text" name="street" class="form-text form-control col-md-10"
-                                               placeholder="House number, Street" id="street" th:field="${car.street}"/>
+                                               placeholder="House number, Street" id="street" th:field="*{street}"/>
                                     </div>
-                                    <p th:if="${#fields.hasErrors('street')}" th:errorclass="error"
-                                       th:errors="${car.street}"></p>
+                                    <div style="color: red" th:if="${#fields.hasErrors('street')}" th:errorclass="error"
+                                         th:errors="*{street}"></div>
                                 </div>
                             </div>
                         </div>
@@ -460,8 +459,10 @@
                             <div class="form-group">
                                 <label for="description" class="form-group-field">Description:</label>
                                 <textarea class="form-control col-md-10" name="description" id="description" rows="3"
-                                          th:field="${car.description}"
+                                          th:field="*{description}"
                                           placeholder="Description of your vehicle"></textarea>
+                                <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errorclass="error"
+                                     th:errors="*{description}"></div>
                             </div>
                         </div>
                         <label class="form-group-field col-md-12">Additional functions:</label>
