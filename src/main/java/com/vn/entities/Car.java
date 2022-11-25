@@ -36,10 +36,10 @@ public class Car {
 	private String registration;
 	private String inspection;
 	private String insuranceUrl;
-	@Min(value = 10)
-	@Max(value = 1000000)
+	@Min(value = 10,groups = {ValidatedEditCar.class})
+	@Max(value = 1000000,groups = {ValidatedEditCar.class})
     @NotNull(groups = {ValidatedEditCar.class})
-    @NotBlank
+    @NotBlank(groups = {ValidatedEditCar.class})
 	private Double mileage;
 	@NotNull
 	private Double fuelConsumption;
@@ -53,10 +53,11 @@ public class Car {
     @NotEmpty
     @Nationalized
 	private String ward;
-    @NotEmpty
+    @NotBlank(groups = {ValidatedEditCar.class})
     @Nationalized
 	private String street;
-	private String description;
+    @NotBlank(groups = {ValidatedEditCar.class})
+    private String description;
 	private String addFunction;
 	private String images;
     @NotNull
