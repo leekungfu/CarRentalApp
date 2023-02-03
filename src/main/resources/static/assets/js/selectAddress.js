@@ -19,7 +19,7 @@ $(document).ready(function (){
         cities.onchange = function () {
             districts.length = 1;
             wards.length = 1;
-            if (this.value != "") {
+            if (this.value !== "") {
                 const result = data.filter(n => n.Name === this.value);
                 for (const k of result[0].Districts) {
                     districts.options[districts.options.length] = new Option(k.Name, k.Name);
@@ -29,7 +29,7 @@ $(document).ready(function (){
         districts.onchange = function () {
             wards.length = 1;
             const dataCity = data.filter((n) => n.Name === cities.value);
-            if (this.value != "") {
+            if (this.value !== "") {
                 const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards;
                 for (const w of dataWards) {
                     wards.options[wards.options.length] = new Option(w.Name, w.Name);

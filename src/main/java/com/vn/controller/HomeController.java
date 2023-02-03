@@ -1,9 +1,7 @@
 package com.vn.controller;
 
-import com.vn.entities.Member;
 import com.vn.service.impl.CustomUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +13,6 @@ public class HomeController {
         CustomUserDetails detail;
         try {
             detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            int a = detail.getMember().getId();
-            System.out.println(a);
             long countRoleCustomer = detail.getAuthorities().stream().filter(x -> x.getAuthority().contains("CUSTOMER")).count();
             model.addAttribute("fullName", detail.getMember().getFullName());
             if (countRoleCustomer > 0) return "home/home_customer";

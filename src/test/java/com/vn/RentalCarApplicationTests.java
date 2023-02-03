@@ -10,12 +10,4 @@ import java.util.List;
 
 @SpringBootTest
 class RentalCarApplicationTests {
-    @Autowired
-    CarRepository carRepository;
-
-    @Test
-    void contextLoads() {
-
-    }
-
 }

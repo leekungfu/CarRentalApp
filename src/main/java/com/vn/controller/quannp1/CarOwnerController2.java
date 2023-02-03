@@ -67,12 +67,9 @@ public class CarOwnerController2 {
 
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
-
         Member member = memberService.findById(detail.getMember().getId());
         car.setMember(member);
         car.setStatus(CarStatusEnum.Available);
-
         car.setImages(carImages.toString());
         carService.saveCar(car);
         redirectAttributes.addFlashAttribute("message", "Your car add succesfull!");
@@ -84,10 +81,7 @@ public class CarOwnerController2 {
     public String getEditCar(@PathVariable("id") Integer id, Model model) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("fullName", detail.getMember().getFullName());
-
         Car car = carService.findCarById(id);
-
-
         model.addAttribute("car", car);
         model.addAttribute("carStatus", CarStatusEnum.values());
         return "car/editCar";
@@ -100,8 +94,6 @@ public class CarOwnerController2 {
         }
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
-
         CarStatusEnum status = car.getStatus();
         if (status.equals(CarStatusEnum.Booked)){
             model.addAttribute("messBooked","Can't change status to Booked");
@@ -109,7 +101,6 @@ public class CarOwnerController2 {
             model.addAttribute("carStatus", CarStatusEnum.values());
             return "car/editCar";
         }
-
         redirectAttributes.addFlashAttribute("message", "Edit car successful");
         model.addAttribute("carStatus", CarStatusEnum.values());
         carService.saveCar(car);

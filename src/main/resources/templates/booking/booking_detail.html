@@ -12,8 +12,8 @@
 <!-- CSS -->
 <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
       rel="stylesheet">
-<link rel="stylesheet" href="assets/boostrap/css/bootstrap.min.css" />
-<link rel="stylesheet" href="assets/css/font-awesome-pro.css" />
+<link rel="stylesheet" href="/assets/boostrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/assets/css/font-awesome-pro.css" />
 <link rel="stylesheet" href="/assets/css/fragment/header.css">
 <link rel="stylesheet" href="/assets/css/car/car_item.css">
 <link rel="stylesheet" href="/assets/css/car/car_detail.css">
@@ -28,7 +28,7 @@
 
 </head>
 <body>
-	<div th:insert="~{/fragment/header::menu2(${fullName})}">
+	<div th:insert="~{/fragment/header::menu(${fullName})}">
 	</div>
 	
 	<h1 class="text-center mb-5">Booking Details</h1>
@@ -89,9 +89,9 @@
 	</div>
 
 <!--JS-->
-<script src="assets/js/jquery-1.11.1.min.js" type="text/javascript"></script>
-<script src="assets/boostrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/js/search_car.js" type="text/javascript"></script>
+<script src="/assets/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="/assets/boostrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/assets/js/search_car.js" type="text/javascript"></script>
 
 </body>
 </html>

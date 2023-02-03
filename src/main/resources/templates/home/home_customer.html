@@ -37,10 +37,12 @@
 </head>
 
 <body>
-
-<div th:insert="~{/fragment/header::menu2(${fullName})}">
+<!-- BEGIN HEADER-->
+<div th:insert="~{/fragment/header::menu(${fullName})}">
 </div>
+<!-- END HEADER-->
 
+<!-- SEARCH SECTION-->
 <div th:insert="~{/fragment/search::search(null, null, null, null, null)}"></div>
 
 <!--ABOUT_US BEGIN-->

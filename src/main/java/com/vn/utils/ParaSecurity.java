@@ -22,7 +22,7 @@ public class ParaSecurity {
             "/rent_car",
             "/home",
             "/editProfile",
-            "/ChangePassword"
+            "/changePassword"
     };
 
     public static String[] customerPages ={
@@ -30,11 +30,11 @@ public class ParaSecurity {
             "/home_customer",
             "/customer_profile",
             "/customer_booking",
-            "/customer_wallet",
+            "/my_wallet",
             "/logout",
             "/about",
             "/editProfile",
-            "/ChangePassword"
+            "/changePassword"
 
     };
     public static String[] carOwnerPages ={
@@ -43,7 +43,7 @@ public class ParaSecurity {
             "/add_car",
             "/owner_profile",
             "/owner_cars",
-            "/owner_wallet",
+            "/my_wallet",
             "/owner_reports",
             "/logout",
             "/about",
@@ -52,6 +52,6 @@ public class ParaSecurity {
             "/booking/*",
             "/car/*",
             "/booking/status",
-            "/ChangePassword"
+            "/changePassword"
     };
 }

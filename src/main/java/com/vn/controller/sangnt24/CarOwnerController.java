@@ -33,8 +33,6 @@ import java.util.stream.IntStream;
 public class CarOwnerController {
     @Autowired
     private CarService carService;
-    @Autowired
-    private MemberService memberService;
 
     // List Car
     @GetMapping("/listCar")
@@ -55,17 +53,11 @@ public class CarOwnerController {
         model.addAttribute("id", id);
         model.addAttribute("sortType", sortType);
 
-        Pageable pageable;
-        switch (sortType) {
-            case "ascPrice":
-                pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("price").ascending());
-                break;
-            case "descPrice":
-                pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("price").descending());
-                break;
-            default:
-                pageable = PageRequest.of(currentPage - 1, pageSize);
-        }
+        Pageable pageable = switch (sortType) {
+            case "ascPrice" -> PageRequest.of(currentPage - 1, pageSize, Sort.by("price").ascending());
+            case "descPrice" -> PageRequest.of(currentPage - 1, pageSize, Sort.by("price").descending());
+            default -> PageRequest.of(currentPage - 1, pageSize);
+        };
 
         Page<Car> resultPage = carService.listCarByMemberId(detail.getMember().getId(), pageable);
 
@@ -75,7 +67,7 @@ public class CarOwnerController {
         int totalPages = resultPage.getTotalPages();
         model.addAttribute("carList", carList);
         model.addAttribute("resultPage", resultPage);
-        model.addAttribute("totolPage", totalPages);
+        model.addAttribute("totalPage", totalPages);
         model.addAttribute("totalItems", totalItems);
 
         if (totalPages > 0) {
@@ -165,10 +157,10 @@ public class CarOwnerController {
 
     // Delete Car
     @GetMapping("/deleteCar/{id}")
-    public String deleteCarById(Model model, @PathVariable("id") Integer idCar,
+    public String deleteCarById(@PathVariable("id") Integer idCar,
                                 RedirectAttributes redirectAttributes) {
         carService.delete(idCar);
-        redirectAttributes.addFlashAttribute("message", "Delete car sucessfull");
+        redirectAttributes.addFlashAttribute("message", "Delete car successfully");
         return "redirect:/listCar";
     }
 

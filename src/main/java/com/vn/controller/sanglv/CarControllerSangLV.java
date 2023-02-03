@@ -1,6 +1,7 @@
 package com.vn.controller.sanglv;
 
 import com.vn.entities.Car;
+import com.vn.entities.Member;
 import com.vn.service.CarService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.DateTimeUtil;
@@ -33,10 +34,12 @@ public class CarControllerSangLV {
                                 @RequestParam("page") Optional<Integer> page,
                                 @RequestParam("size") Optional<Integer> size,
                                 @RequestParam("sort") Optional<Integer> sort) {
+
+        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("fullName", detail.getMember().getFullName());
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
         int sortType = sort.orElse(0);
-
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("city", city);
@@ -68,9 +71,6 @@ public class CarControllerSangLV {
         if (totalPages > 0) {
             model.addAttribute("pageNumbers", PagingUtil.genPageList(totalPages,currentPage));
         }
-
-        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
         return "car/listCarSearch";
     }
 }

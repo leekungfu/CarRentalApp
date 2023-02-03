@@ -39,4 +39,10 @@ $(document).ready(function () {
             },
         },
     });
+
+    $(document).on("click", "#btnSubmit", function submitForm() {
+        if ($("form").valid()) {
+            $('#changePassword').modal('show');
+        }
+    });
 });
