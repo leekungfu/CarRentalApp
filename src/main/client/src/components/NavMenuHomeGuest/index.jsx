@@ -2,8 +2,10 @@ import {
   AppBar,
   Box,
   Button,
+  ButtonBase,
   Container,
   CssBaseline,
+  IconButton,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -15,7 +17,6 @@ import SignUpForm from "../SignUpForm";
 const pages = ["Home", "About us", <SignUpForm />, <LoginForm />];
 
 const NavBar = () => {
-
   return (
     <Fragment>
       <CssBaseline />
@@ -50,7 +51,7 @@ const NavBar = () => {
               {pages.map((page, index) => (
                 <Button
                   key={index}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ color: "white", display: "block", fontWeight: 500 }}
                 >
                   {page}
                 </Button>

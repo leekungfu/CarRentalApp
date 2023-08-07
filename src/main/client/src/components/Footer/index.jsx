@@ -15,7 +15,9 @@ import {
   Container,
   CssBaseline,
   Grid,
+  IconButton,
   Link,
+  ListItemButton,
   Paper,
   Stack,
   Toolbar,
@@ -30,12 +32,17 @@ const Footer = () => {
         sx={{
           backgroundColor: "#1876d1",
         }}
-        maxWidth="xl"
+        maxWidth="100%"
       >
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Stack spacing={2} alignItems="center">
-              <Box sx={{ pt: 8, pb: 1 }}>
+        <Container
+          sx={{
+            backgroundColor: "#1876d1",
+          }}
+          maxWidth="xl"
+        >
+          <Grid container spacing={1}>
+            <Grid item xs={3}>
+              <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
                   sx={{ color: "white", fontWeight: 600, pb: 5 }}
@@ -43,40 +50,14 @@ const Footer = () => {
                   CAR RENTAL
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: "white", pb: 5 }}>
-                <Link href="#" color="inherit">Search Cars And Rates</Link>
+                  <Link href="#" color="inherit">
+                    Search Cars And Rates
+                  </Link>
                 </Typography>
-                <Typography variant="h6" sx={{ color: "white " }}>
-                  Find us on:
-                </Typography>
-              </Box>
-            </Stack>
-            <Stack direction="row" spacing={2} sx={{ pb: 3, pl: "90px" }}>
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar sx={{ bgcolor: "#ad0b0b", width: 45, height: 45 }}>
-                  <Facebook fontSize="medium" />
-                </Avatar>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar sx={{ bgcolor: "#ad0b0b", width: 45, height: 45 }}>
-                  <Instagram fontSize="medium" />
-                </Avatar>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar sx={{ bgcolor: "#ad0b0b", width: 45, height: 45 }}>
-                  <YouTube fontSize="medium" />
-                </Avatar>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Avatar sx={{ bgcolor: "#ad0b0b", width: 45, height: 45 }}>
-                  <Twitter fontSize="medium" />
-                </Avatar>
-              </Box>
-            </Stack>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Stack spacing={2} alignItems="center">
-              <Box sx={{ pt: 8, pb: 1 }}>
+              </Stack>
+            </Grid>
+            <Grid item xs={3}>
+              <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
                   sx={{ color: "white", fontWeight: 600, pb: 5 }}
@@ -84,21 +65,25 @@ const Footer = () => {
                   CUSTOMER ACCESS
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: "white", pb: 2 }}>
-                  <Link href="#" color="inherit">Manage My Booking</Link>
+                  <Link href="#" color="inherit">
+                    Manage My Booking
+                  </Link>
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: "white ", pb: 2 }}>
-                <Link href="#" color="inherit">My Wallet</Link>
+                  <Link href="#" color="inherit">
+                    My Wallet
+                  </Link>
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: "white ", pb: 2 }}>
-                <Link href="#" color="inherit">My Car</Link>
+                  <Link href="#" color="inherit">
+                    My Car
+                  </Link>
                 </Typography>
-              </Box>
-            </Stack>
-          </Grid>
+              </Stack>
+            </Grid>
 
-          <Grid item xs={2}>
-            <Stack spacing={2} alignItems="center">
-              <Box sx={{ pt: 8, pb: 1 }}>
+            <Grid item xs={2}>
+              <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
                   sx={{ color: "white", fontWeight: 600, pb: 5 }}
@@ -106,15 +91,15 @@ const Footer = () => {
                   JOIN US
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: "white", pb: 2 }}>
-                <Link href="#" color="inherit">New User Sign Up</Link>
+                  <Link href="#" color="inherit">
+                    New User Sign Up
+                  </Link>
                 </Typography>
-              </Box>
-            </Stack>
-          </Grid>
+              </Stack>
+            </Grid>
 
-          <Grid item xs={4}>
-            <Stack spacing={2}>
-              <Box sx={{ pt: 8, pb: 1 }}>
+            <Grid item xs={4}>
+              <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
                   sx={{ color: "white", fontWeight: 600, pb: 5 }}
@@ -149,23 +134,59 @@ const Footer = () => {
                     Support: carrental@support.com
                   </Typography>
                 </Stack>
-              </Box>
+              </Stack>
+            </Grid>
+          </Grid>
+          <Grid>
+            <Stack spacing={1}>
+              <Typography
+                sx={{
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                variant="h6"
+              >
+                Copyright © 2023 All rights reserved
+              </Typography>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", justifyContent: "center", pb: 5 }}
+              >
+                  <IconButton>
+                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                      <Facebook fontSize="medium" />
+                    </Avatar>
+                  </IconButton>
+                  <IconButton>
+                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                      <Instagram fontSize="medium" />
+                    </Avatar>
+                  </IconButton>
+                  <IconButton>
+                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                      <YouTube fontSize="medium" />
+                    </Avatar>
+                  </IconButton>
+                  <IconButton>
+                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                      <Twitter fontSize="medium" />
+                    </Avatar>
+                  </IconButton>
+                {/* <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                  <Instagram fontSize="medium" />
+                </Avatar>
+                <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                  <YouTube fontSize="medium" />
+                </Avatar>
+                <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                  <Twitter fontSize="medium" />
+                </Avatar> */}
+              </Stack>
             </Stack>
           </Grid>
-        </Grid>
-        <Grid>
-          <Typography
-            sx={{
-              color: "white",
-              display: "flex",
-              justifyContent: "center",
-              pb: 10,
-            }}
-            variant="h6"
-          >
-            Copyright © 2023 All rights reserved
-          </Typography>
-        </Grid>
+        </Container>
       </Container>
     </Fragment>
   );

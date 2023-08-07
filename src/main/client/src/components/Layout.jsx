@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Box } from "@mui/material";
-import NavBar from "./NavBar";
-import Footer from "./Footer";
 
 export class Layout extends Component {
   static displayName = Layout.name;
@@ -17,7 +15,6 @@ export class Layout extends Component {
             height: "100%",
           }}
         >
-          <NavBar />
           <Box
             className="app-content"
             sx={{
