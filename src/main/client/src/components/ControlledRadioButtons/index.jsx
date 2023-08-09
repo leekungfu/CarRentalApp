@@ -32,7 +32,7 @@ export default function ControlledRadioButtons() {
           label={
             <Typography noWrap>
               I have read and agree with the {" "}
-              <Link href="#" noWrap>
+              <Link href="#" color="#fca311" noWrap>
                 Terms & Conditions
               </Link>
             </Typography>

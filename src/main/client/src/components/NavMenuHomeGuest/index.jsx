@@ -14,33 +14,31 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LoginForm from "../LoginForm";
 import SignUpForm from "../SignUpForm";
 
-const pages = ["Home", "About us", <SignUpForm />, <LoginForm />];
+const pages = ["HOME", "ABOUT US", <SignUpForm />, <LoginForm />];
 
 const NavBar = () => {
   return (
     <Fragment>
       <CssBaseline />
-      <AppBar position="sticky">
+      <AppBar position="sticky" color="default">
         <Container maxWidth="xl">
           <Toolbar>
-            <DirectionsCarIcon
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
             <Typography
               variant="h5"
               noWrap
-              component="a"
-              href="#"
               sx={{
                 fontFamily: "inherit",
                 fontWeight: 800,
                 letterSpacing: ".1rem",
-                color: "inherit",
                 textDecoration: "none",
               }}
             >
-              RENTAL A CAR TODAY
+              RENTAL A CAR {" "}<span style={{ color: "#fca311" }}>TODAY</span>
             </Typography>
+            <DirectionsCarIcon
+            fontSize="medium"
+              sx={{ display: { xs: "none", md: "flex" }, ml: 1 }}
+            />
             <Box
               sx={{
                 flexGrow: 1,
@@ -51,7 +49,7 @@ const NavBar = () => {
               {pages.map((page, index) => (
                 <Button
                   key={index}
-                  sx={{ color: "white", display: "block", fontWeight: 500 }}
+                  sx={{ display: "block", fontWeight: 600, bgcolor: "rgba(0,0,0,0)", }}
                 >
                   {page}
                 </Button>

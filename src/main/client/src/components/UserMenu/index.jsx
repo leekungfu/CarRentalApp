@@ -25,13 +25,12 @@ export default function UserMenu() {
   };
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+      <Box >
         <Tooltip title="User Menu">
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? 'account-menu' : undefined}
+            aria-controls={open ? 'user-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
@@ -43,7 +42,7 @@ export default function UserMenu() {
       </Box>
       <Menu
         anchorEl={anchorEl}
-        id="account-menu"
+        id="user-menu"
         open={open}
         onClose={handleClose}
         onClick={handleClose}

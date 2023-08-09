@@ -30,13 +30,13 @@ const Footer = () => {
     <Fragment>
       <Container
         sx={{
-          backgroundColor: "#1876d1",
+          backgroundColor: "#f5f5f5",
         }}
         maxWidth="100%"
       >
         <Container
           sx={{
-            backgroundColor: "#1876d1",
+            backgroundColor: "#f5f5f5",
           }}
           maxWidth="xl"
         >
@@ -45,11 +45,11 @@ const Footer = () => {
               <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
-                  sx={{ color: "white", fontWeight: 600, pb: 5 }}
+                  sx={{ fontWeight: 600, pb: 5 }}
                 >
                   CAR RENTAL
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "white", pb: 5 }}>
+                <Typography variant="subtitle1" sx={{ pb: 5 }}>
                   <Link href="#" color="inherit">
                     Search Cars And Rates
                   </Link>
@@ -60,21 +60,21 @@ const Footer = () => {
               <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
-                  sx={{ color: "white", fontWeight: 600, pb: 5 }}
+                  sx={{ fontWeight: 600, pb: 5 }}
                 >
                   CUSTOMER ACCESS
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "white", pb: 2 }}>
+                <Typography variant="subtitle1" sx={{ pb: 2 }}>
                   <Link href="#" color="inherit">
                     Manage My Booking
                   </Link>
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "white ", pb: 2 }}>
+                <Typography variant="subtitle1" sx={{ pb: 2 }}>
                   <Link href="#" color="inherit">
                     My Wallet
                   </Link>
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "white ", pb: 2 }}>
+                <Typography variant="subtitle1" sx={{ pb: 2 }}>
                   <Link href="#" color="inherit">
                     My Car
                   </Link>
@@ -86,11 +86,11 @@ const Footer = () => {
               <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
-                  sx={{ color: "white", fontWeight: 600, pb: 5 }}
+                  sx={{ fontWeight: 600, pb: 5 }}
                 >
                   JOIN US
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: "white", pb: 2 }}>
+                <Typography variant="subtitle1" sx={{ pb: 2 }}>
                   <Link href="#" color="inherit">
                     New User Sign Up
                   </Link>
@@ -102,34 +102,34 @@ const Footer = () => {
               <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography
                   variant="h5"
-                  sx={{ color: "white", fontWeight: 600, pb: 5 }}
+                  sx={{ fontWeight: 600, pb: 5 }}
                 >
                   HAVE A QUESTION?
                 </Typography>
                 <Stack direction="row" spacing={1}>
-                  <Place sx={{ color: "white" }} />
+                  <Place />
                   <Typography
                     noWrap
                     variant="subtitle1"
-                    sx={{ color: "white", pb: 2 }}
+                    sx={{ pb: 2 }}
                   >
                     Location: Alley 193 Trung Kinh - Cau Giay - Ha Noi
                   </Typography>
                 </Stack>
                 <Stack direction="row" spacing={1}>
-                  <Phone sx={{ color: "white" }} />
+                  <Phone />
                   <Typography
                     variant="subtitle1"
-                    sx={{ color: "white ", pb: 2 }}
+                    sx={{ pb: 2 }}
                   >
                     Tel: + 1900 8899
                   </Typography>
                 </Stack>
                 <Stack direction="row" spacing={1}>
-                  <SupportAgent sx={{ color: "white" }} />
+                  <SupportAgent />
                   <Typography
                     variant="subtitle1"
-                    sx={{ color: "white ", pb: 2 }}
+                    sx={{ pb: 2 }}
                   >
                     Support: carrental@support.com
                   </Typography>
@@ -141,7 +141,6 @@ const Footer = () => {
             <Stack spacing={1}>
               <Typography
                 sx={{
-                  color: "white",
                   display: "flex",
                   justifyContent: "center",
                 }}
@@ -155,34 +154,25 @@ const Footer = () => {
                 sx={{ display: "flex", justifyContent: "center", pb: 5 }}
               >
                   <IconButton>
-                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                    <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
                       <Facebook fontSize="medium" />
                     </Avatar>
                   </IconButton>
                   <IconButton>
-                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                    <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
                       <Instagram fontSize="medium" />
                     </Avatar>
                   </IconButton>
                   <IconButton>
-                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                    <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
                       <YouTube fontSize="medium" />
                     </Avatar>
                   </IconButton>
                   <IconButton>
-                    <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
+                    <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
                       <Twitter fontSize="medium" />
                     </Avatar>
                   </IconButton>
-                {/* <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
-                  <Instagram fontSize="medium" />
-                </Avatar>
-                <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
-                  <YouTube fontSize="medium" />
-                </Avatar>
-                <Avatar sx={{ bgcolor: "#d00000", width: 45, height: 45 }}>
-                  <Twitter fontSize="medium" />
-                </Avatar> */}
               </Stack>
             </Stack>
           </Grid>

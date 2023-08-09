@@ -32,6 +32,7 @@ import {
 import Footer from "../../components/Footer";
 import styled from "styled-components";
 import NavBar from "../../components/NavMenuHomeGuest";
+import { useRef } from "react";
 
 const StyledTypography = styled(Typography)`
   color: white;
@@ -48,11 +49,11 @@ const HomeGuest = () => {
           <Container
             maxWidth="100%"
             sx={{
-              backgroundImage: 'url("../car_girl.jpg")',
+              backgroundImage: 'url("../car-10.jpg")',
               backgroundSize: "cover",
               backgroundPosition: "center",
               width: "100%",
-              height: "700px",
+              height: "1000px",
             }}
           >
             <Container maxWidth="md">
@@ -92,8 +93,8 @@ const HomeGuest = () => {
                               today!
                             </Typography>
                             <Button
-                              sx={{ p: 2, width: "70%" }}
-                              variant="contained"
+                              sx={{ p: 2, width: "70%", bgcolor: "#fca311", fontWeight: 600, fontSize: "17px" }}
+                              variant="outlined"
                             >
                               Find A Rental Car Shop Near You
                             </Button>
@@ -116,8 +117,8 @@ const HomeGuest = () => {
                             really low prices!
                           </Typography>
                           <Button
-                            sx={{ p: 2, width: "70%" }}
-                            variant="contained"
+                            sx={{ p: 2, width: "70%", bgcolor: "#fca311", fontWeight: 600, fontSize: "17px" }}
+                            variant="outlined"
                           >
                             Show Your Car For Rent Now
                           </Button>
@@ -144,7 +145,7 @@ const HomeGuest = () => {
                     spacing={2}
                   >
                     <Box>
-                      <Typography sx={{ color: "#1876d1", pb: 2 }} variant="h6">
+                      <Typography sx={{ color: "#fca311", pb: 2 }} variant="h6">
                         Services
                       </Typography>
                       <Typography sx={{ fontWeight: 600 }} variant="h2">
@@ -174,7 +175,7 @@ const HomeGuest = () => {
                           >
                             <Avatar
                               sx={{
-                                bgcolor: "#1876d1",
+                                bgcolor: "#fca311",
                                 width: 56,
                                 height: 56,
                               }}
@@ -211,7 +212,7 @@ const HomeGuest = () => {
                           >
                             <Avatar
                               sx={{
-                                bgcolor: "#1876d1",
+                                bgcolor: "#fca311",
                                 width: 56,
                                 height: 56,
                               }}
@@ -247,7 +248,7 @@ const HomeGuest = () => {
                           >
                             <Avatar
                               sx={{
-                                bgcolor: "#1876d1",
+                                bgcolor: "#fca311",
                                 width: 56,
                                 height: 56,
                               }}
@@ -284,7 +285,7 @@ const HomeGuest = () => {
                           >
                             <Avatar
                               sx={{
-                                bgcolor: "#1876d1",
+                                bgcolor: "#fca311",
                                 width: 56,
                                 height: 56,
                               }}
@@ -328,7 +329,7 @@ const HomeGuest = () => {
                     spacing={2}
                   >
                     <Box>
-                      <Typography sx={{ color: "#1876d1", pb: 2 }} variant="h6">
+                      <Typography sx={{ color: "#fca311", pb: 2 }} variant="h6">
                         Testimonial
                       </Typography>
                       <Typography sx={{ fontWeight: 600 }} variant="h2">
@@ -369,7 +370,7 @@ const HomeGuest = () => {
                             Roger Scott
                           </Typography>
                           <Typography
-                            sx={{ color: "#1876d1" }}
+                            sx={{ color: "#fca311" }}
                             variant="subtitle2"
                           >
                             System Analyst
@@ -400,7 +401,7 @@ const HomeGuest = () => {
                             Roger Scott
                           </Typography>
                           <Typography
-                            sx={{ color: "#1876d1" }}
+                            sx={{ color: "#fca311" }}
                             variant="subtitle2"
                           >
                             System Analyst
@@ -431,7 +432,7 @@ const HomeGuest = () => {
                             Roger Scott
                           </Typography>
                           <Typography
-                            sx={{ color: "#1876d1" }}
+                            sx={{ color: "#fca311" }}
                             variant="subtitle2"
                           >
                             System Analyst
@@ -460,7 +461,7 @@ const HomeGuest = () => {
                     spacing={2}
                   >
                     <Box>
-                      <Typography sx={{ color: "#1876d1", pb: 2 }} variant="h6">
+                      <Typography sx={{ color: "#fca311", pb: 2 }} variant="h6">
                         Location
                       </Typography>
                       <Typography sx={{ fontWeight: 600 }} variant="h2">
@@ -498,7 +499,7 @@ const HomeGuest = () => {
                               Ha Noi
                             </Typography>
                             <Typography
-                              sx={{ color: "#1876d1" }}
+                              sx={{ color: "#fca311" }}
                               variant="subtitle2"
                             >
                               80+ cars
@@ -526,7 +527,7 @@ const HomeGuest = () => {
                               Ho Chi Minh City
                             </Typography>
                             <Typography
-                              sx={{ color: "#1876d1" }}
+                              sx={{ color: "#fca311" }}
                               variant="subtitle2"
                             >
                               100+ cars
@@ -554,7 +555,7 @@ const HomeGuest = () => {
                               Da Nang - Hoi An
                             </Typography>
                             <Typography
-                              sx={{ color: "#1876d1" }}
+                              sx={{ color: "#fca311" }}
                               variant="subtitle2"
                             >
                               90+ cars
@@ -592,7 +593,7 @@ const HomeGuest = () => {
                               Nha Trang
                             </Typography>
                             <Typography
-                              sx={{ color: "#1876d1" }}
+                              sx={{ color: "#fca311" }}
                               variant="subtitle2"
                             >
                               50+ cars
@@ -620,7 +621,7 @@ const HomeGuest = () => {
                               Quang Ninh
                             </Typography>
                             <Typography
-                              sx={{ color: "#1876d1" }}
+                              sx={{ color: "#fca311" }}
                               variant="subtitle2"
                             >
                               70+ cars
@@ -648,7 +649,7 @@ const HomeGuest = () => {
                               Da Lat
                             </Typography>
                             <Typography
-                              sx={{ color: "#1876d1" }}
+                              sx={{ color: "#fca311" }}
                               variant="subtitle2"
                             >
                               80+ cars

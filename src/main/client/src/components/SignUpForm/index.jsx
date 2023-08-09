@@ -50,9 +50,7 @@ const SignUpForm = () => {
 
   return (
     <div>
-      <Button variant="text" sx={{ color: "white" }} onClick={handleOpen}>
-        Sign Up
-      </Button>
+      <Typography variant="subtitle2" sx={{ fontWeight: 600 }} onClick={handleOpen}>SIGN UP</Typography>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component="main" maxWidth="xs">
@@ -178,7 +176,7 @@ const SignUpForm = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 2, color: "white", }}
                 >
                   Sign up
                 </Button>

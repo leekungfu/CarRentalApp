@@ -35,9 +35,7 @@ const LoginForm = () => {
 
   return (
     <div>
-      <Button variant="text" sx={{ color: "white" }} onClick={handleOpen}>
-        Log in
-      </Button>
+      <Typography variant="subtitle2" sx={{ fontWeight: 600 }} onClick={handleOpen}>LOG IN</Typography>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component="main" maxWidth="xs">
@@ -105,18 +103,18 @@ const LoginForm = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 2, mb: 2 }}
+                  sx={{ mt: 2, mb: 2, color: "white" }}
                 >
                   Log in
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link href="#" variant="body2" color="#fca311">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="#" variant="body2" color="#fca311">
                       {"Don't you have an account? Sign Up"}
                     </Link>
                   </Grid>
