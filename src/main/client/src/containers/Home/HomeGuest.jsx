@@ -36,14 +36,13 @@ import { useRef } from "react";
 
 const StyledTypography = styled(Typography)`
   color: white;
-  font-weight: 500;
   text-align: center;
 `;
 
 const HomeGuest = () => {
   return (
     <Box>
-      <NavBar/>
+      <NavBar />
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Container
@@ -57,8 +56,12 @@ const HomeGuest = () => {
             }}
           >
             <Container maxWidth="md">
-              <Stack spacing={1} sx={{ pt: 40 }}>
-                <StyledTypography variant="h2">
+              <Box
+                sx={{
+                  pt: 50,
+                }}
+              >
+                <StyledTypography variant="h2" fontWeight={800}>
                   Fast & Easy Way To Rent A Car
                 </StyledTypography>
                 <StyledTypography variant="h6">
@@ -66,7 +69,7 @@ const HomeGuest = () => {
                   reserve lots of our purpose. Well, you need to rent a car, or
                   you have cars for rent - You're in the right place
                 </StyledTypography>
-              </Stack>
+              </Box>
             </Container>
           </Container>
           <Container maxWidth="lg" sx={{ pb: 10 }}>
@@ -93,7 +96,14 @@ const HomeGuest = () => {
                               today!
                             </Typography>
                             <Button
-                              sx={{ p: 2, width: "70%", bgcolor: "#fca311", fontWeight: 600, fontSize: "17px" }}
+                              sx={{
+                                p: 2,
+                                width: "70%",
+                                bgcolor: "#fca311",
+                                fontWeight: 600,
+                                fontSize: "17px",
+                                color: "white",
+                              }}
                               variant="outlined"
                             >
                               Find A Rental Car Shop Near You
@@ -117,7 +127,14 @@ const HomeGuest = () => {
                             really low prices!
                           </Typography>
                           <Button
-                            sx={{ p: 2, width: "70%", bgcolor: "#fca311", fontWeight: 600, fontSize: "17px" }}
+                            sx={{
+                              p: 2,
+                              width: "70%",
+                              bgcolor: "#fca311",
+                              fontWeight: 600,
+                              fontSize: "17px",
+                              color: "white",
+                            }}
                             variant="outlined"
                           >
                             Show Your Car For Rent Now
@@ -314,136 +331,144 @@ const HomeGuest = () => {
               </Card>
             </Stack>
           </Container>
-          <Container sx={{ backgroundColor: "#f8f9fa", pb: 10 }} maxWidth="lg">
-            <Stack spacing={2} sx={{ color: "white" }}>
-              <Card elevation={0} sx={{ backgroundColor: "#f8f9fa" }}>
-                <CardContent>
-                  <Stack
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      textAlign: "center",
-                      paddingTop: 7,
-                    }}
-                    direction="row"
-                    spacing={2}
-                  >
-                    <Box>
-                      <Typography sx={{ color: "#fca311", pb: 2 }} variant="h6">
-                        Testimonial
-                      </Typography>
-                      <Typography sx={{ fontWeight: 600 }} variant="h2">
-                        What People Say?
-                      </Typography>
-                    </Box>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      textAlign: "center",
-                      paddingY: 10,
-                    }}
-                  >
-                    <Grid items xs={4}>
-                      <Paper elevation={0}>
-                        <Box sx={{ pt: 4, pb: 4 }}>
-                          <Box
-                            sx={{ display: "flex", justifyContent: "center" }}
-                          >
-                            <Avatar
-                              sx={{ width: 80, height: 80 }}
-                              src="../person_3.jpg"
-                            />
+          <Container
+            sx={{ backgroundColor: "#f8f9fa", pb: 10 }}
+            maxWidth="100%"
+          >
+            <Container maxWidth="lg">
+              <Stack spacing={2} sx={{ color: "white" }}>
+                <Card elevation={0} sx={{ backgroundColor: "#f8f9fa" }}>
+                  <CardContent>
+                    <Stack
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        paddingTop: 7,
+                      }}
+                      direction="row"
+                      spacing={2}
+                    >
+                      <Box>
+                        <Typography
+                          sx={{ color: "#fca311", pb: 2 }}
+                          variant="h6"
+                        >
+                          Testimonial
+                        </Typography>
+                        <Typography sx={{ fontWeight: 600 }} variant="h2">
+                          What People Say?
+                        </Typography>
+                      </Box>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        paddingY: 10,
+                      }}
+                    >
+                      <Grid items xs={4}>
+                        <Paper elevation={0}>
+                          <Box sx={{ pt: 4, pb: 4 }}>
+                            <Box
+                              sx={{ display: "flex", justifyContent: "center" }}
+                            >
+                              <Avatar
+                                sx={{ width: 80, height: 80 }}
+                                src="../person_3.jpg"
+                              />
+                            </Box>
+                            <Typography
+                              variant="subtitle1"
+                              sx={{ mx: 6, pt: 3, pb: 5 }}
+                            >
+                              Far far away, behind the word mountains, far from
+                              the countries Vokalia and Consonantia, there live
+                              the blind texts.
+                            </Typography>
+                            <Typography variant="subtitle2">
+                              Roger Scott
+                            </Typography>
+                            <Typography
+                              sx={{ color: "#fca311" }}
+                              variant="subtitle2"
+                            >
+                              System Analyst
+                            </Typography>
                           </Box>
-                          <Typography
-                            variant="subtitle1"
-                            sx={{ mx: 6, pt: 3, pb: 5 }}
-                          >
-                            Far far away, behind the word mountains, far from
-                            the countries Vokalia and Consonantia, there live
-                            the blind texts.
-                          </Typography>
-                          <Typography variant="subtitle2">
-                            Roger Scott
-                          </Typography>
-                          <Typography
-                            sx={{ color: "#fca311" }}
-                            variant="subtitle2"
-                          >
-                            System Analyst
-                          </Typography>
-                        </Box>
-                      </Paper>
-                    </Grid>
-                    <Grid items xs={4}>
-                      <Paper elevation={0}>
-                        <Box sx={{ pt: 4, pb: 4 }}>
-                          <Box
-                            sx={{ display: "flex", justifyContent: "center" }}
-                          >
-                            <Avatar
-                              sx={{ width: 80, height: 80 }}
-                              src="../person_3.jpg"
-                            />
+                        </Paper>
+                      </Grid>
+                      <Grid items xs={4}>
+                        <Paper elevation={0}>
+                          <Box sx={{ pt: 4, pb: 4 }}>
+                            <Box
+                              sx={{ display: "flex", justifyContent: "center" }}
+                            >
+                              <Avatar
+                                sx={{ width: 80, height: 80 }}
+                                src="../person_3.jpg"
+                              />
+                            </Box>
+                            <Typography
+                              variant="subtitle1"
+                              sx={{ mx: 6, pt: 3, pb: 5 }}
+                            >
+                              Far far away, behind the word mountains, far from
+                              the countries Vokalia and Consonantia, there live
+                              the blind texts.
+                            </Typography>
+                            <Typography variant="subtitle2">
+                              Roger Scott
+                            </Typography>
+                            <Typography
+                              sx={{ color: "#fca311" }}
+                              variant="subtitle2"
+                            >
+                              System Analyst
+                            </Typography>
                           </Box>
-                          <Typography
-                            variant="subtitle1"
-                            sx={{ mx: 6, pt: 3, pb: 5 }}
-                          >
-                            Far far away, behind the word mountains, far from
-                            the countries Vokalia and Consonantia, there live
-                            the blind texts.
-                          </Typography>
-                          <Typography variant="subtitle2">
-                            Roger Scott
-                          </Typography>
-                          <Typography
-                            sx={{ color: "#fca311" }}
-                            variant="subtitle2"
-                          >
-                            System Analyst
-                          </Typography>
-                        </Box>
-                      </Paper>
-                    </Grid>
-                    <Grid items xs={4}>
-                      <Paper elevation={0}>
-                        <Box sx={{ pt: 4, pb: 4 }}>
-                          <Box
-                            sx={{ display: "flex", justifyContent: "center" }}
-                          >
-                            <Avatar
-                              sx={{ width: 80, height: 80 }}
-                              src="../person_3.jpg"
-                            />
+                        </Paper>
+                      </Grid>
+                      <Grid items xs={4}>
+                        <Paper elevation={0}>
+                          <Box sx={{ pt: 4, pb: 4 }}>
+                            <Box
+                              sx={{ display: "flex", justifyContent: "center" }}
+                            >
+                              <Avatar
+                                sx={{ width: 80, height: 80 }}
+                                src="../person_3.jpg"
+                              />
+                            </Box>
+                            <Typography
+                              variant="subtitle1"
+                              sx={{ mx: 6, pt: 3, pb: 5 }}
+                            >
+                              Far far away, behind the word mountains, far from
+                              the countries Vokalia and Consonantia, there live
+                              the blind texts.
+                            </Typography>
+                            <Typography variant="subtitle2">
+                              Roger Scott
+                            </Typography>
+                            <Typography
+                              sx={{ color: "#fca311" }}
+                              variant="subtitle2"
+                            >
+                              System Analyst
+                            </Typography>
                           </Box>
-                          <Typography
-                            variant="subtitle1"
-                            sx={{ mx: 6, pt: 3, pb: 5 }}
-                          >
-                            Far far away, behind the word mountains, far from
-                            the countries Vokalia and Consonantia, there live
-                            the blind texts.
-                          </Typography>
-                          <Typography variant="subtitle2">
-                            Roger Scott
-                          </Typography>
-                          <Typography
-                            sx={{ color: "#fca311" }}
-                            variant="subtitle2"
-                          >
-                            System Analyst
-                          </Typography>
-                        </Box>
-                      </Paper>
-                    </Grid>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </Stack>
+                        </Paper>
+                      </Grid>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Stack>
+            </Container>
           </Container>
           <Container maxWidth="lg" sx={{ pb: 10 }}>
             <Stack spacing={2} sx={{ color: "white" }}>

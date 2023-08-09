@@ -176,7 +176,7 @@ const HomeCustomer = (props) => {
             <Typography sx={{ pt: 5, pb: 5, fontWeight: 600 }} variant="h5">
               SEARCH FOR RENT NOW
             </Typography>
-            <Stack direction="row" spacing={2} alignItems="center">
+            <Stack direction="row" spacing={3} alignItems="center">
               <FormControl size="small" sx={{ m: 1, width: "30%" }}>
                 <Select
                   size="small"
@@ -205,12 +205,12 @@ const HomeCustomer = (props) => {
                 ]}
               />
               <Button
-                style={{
+                sx={{
                   minWidth: 100,
-                  border: "solid",
+                  color: "white",
                 }}
                 variant="outlined"
-                size="small"
+                size="medium"
                 onClick={() => grid.current.reload()}
                 endIcon={<Search />}
               >
@@ -226,7 +226,7 @@ const HomeCustomer = (props) => {
             <Stack direction="row" alignItems="center" sx={{ pb: 1 }}>
               <List fontSize="large" />
               <Typography variant="h6">
-                List cars available for rent:
+                List cars available:
               </Typography>
             </Stack>
             <Grid container columnSpacing={2} rowSpacing={3}>
@@ -285,7 +285,10 @@ const HomeCustomer = (props) => {
             <Pagination
               sx={{ display: "flex", justifyContent: "end", mt: 10 }}
               count={10}
+              variant="outlined"
               color="standard"
+              showFirstButton
+              showLastButton
             />
           </CardContent>
         </Card>

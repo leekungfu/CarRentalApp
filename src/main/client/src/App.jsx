@@ -11,6 +11,7 @@ import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import DefaultTheme from "./shared/DefaultTheme";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import HomeOwner from "./containers/Home/HomeOwner";
 
 const ProviderPack = createPack(
   (props) => <ThemeProvider theme={DefaultTheme} {...props} />,
@@ -33,6 +34,7 @@ function App() {
           <Routes>
             <Route path="/homeguest" element={<HomeGuest />} />
             <Route path="/homecustomer" element={<HomeCustomer />} />
+            <Route path="/homeowner" element={<HomeOwner/>} />
           </Routes>
         </Layout>
       </Router>

@@ -16,7 +16,12 @@ const DefaultTheme = createTheme({
           color: "black",
           backgroundColor: "#fca311",
           fontWeight: 600,
+          '&:hover': {
+            backgroundColor: "white",
+            color: "#fca311",
+          },
         },
+        
       },
     },
     MuiInputLabel: {
