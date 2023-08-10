@@ -14,9 +14,45 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LoginForm from "../LoginForm";
 import SignUpForm from "../SignUpForm";
 
-const pages = ["HOME", "ABOUT US", <SignUpForm />, <LoginForm />];
+const pages = [
+  {
+    title: "HOME",
+    link: "#",
+  },
+  {
+    title: "ABOUT US",
+    link: "#",
+  },
+  {
+    title: "SIGN UP",
+    link: "#",
+  },
+  {
+    title: "LOG IN",
+    link: "#"
+  }
+];
 
 const NavBar = () => {
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openSignup, setOpenSignup] = useState(false);
+
+  const handleClickOpen = (page) => {
+    if (page.title === "LOG IN") {
+      setOpenLogin(true);
+    }
+    
+    if (page.title === "SIGN UP") {
+      setOpenSignup(true)
+    }
+  };
+
+  const handleClose = () => {
+    setOpenLogin(false);
+    setOpenSignup(false);
+  };
+
+
   return (
     <Fragment>
       <CssBaseline />
@@ -50,11 +86,14 @@ const NavBar = () => {
                 <Button
                   key={index}
                   sx={{ display: "block", fontWeight: 600, bgcolor: "rgba(0,0,0,0)", }}
+                  onClick={() => handleClickOpen(page)}
                 >
-                  {page}
+                  {page.title}
                 </Button>
               ))}
             </Box>
+            <LoginForm open={openLogin} onClose={handleClose} />
+            <SignUpForm open={openSignup} onClose={handleClose} />
           </Toolbar>
         </Container>
       </AppBar>

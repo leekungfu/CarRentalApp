@@ -11,16 +11,38 @@ import {
 } from "@mui/material";
 import NavMenuCustomer from "../../components/NavMenuCustomer";
 import {
+  Add,
   CarRental,
   CurrencyExchange,
   CurrencyExchangeOutlined,
   HowToReg,
+  List,
   MoneyOff,
   Payment,
   SwipeRight,
 } from "@mui/icons-material";
+import styled from "styled-components";
+import { useState } from "react";
+import AddCar from "../../components/Dialogs/AddCar";
+
+const StyledTypography = styled(Typography)`
+  font-weight: 600;
+`;
+
+
 
 const HomeOwner = () => {
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Box>
@@ -33,7 +55,7 @@ const HomeOwner = () => {
                   Don't miss out of your benefit today!
                 </Typography>
               </Box>
-              <Grid container columnSpacing={2} rowSpacing={5}>
+              <Grid container columnSpacing={10} rowSpacing={10}>
                 <Grid item xs={4}>
                   <Stack
                     direction="row"
@@ -41,9 +63,9 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <CurrencyExchange />
-                    <Typography variant="h6">
+                    <StyledTypography variant="h6">
                       How the insurance works?
-                    </Typography>
+                    </StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     From the minute you hand the keys over till the second you
@@ -58,7 +80,7 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <MoneyOff />
-                    <Typography variant="h6">It's completely free</Typography>
+                    <StyledTypography variant="h6">It's completely free</StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     We offer both owners and renters free sign-ups. It's only
@@ -73,9 +95,9 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <SwipeRight />
-                    <Typography variant="h6">
+                    <StyledTypography variant="h6">
                       You decide the renting price
-                    </Typography>
+                    </StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     When you list cars you decide these price. We can help with
@@ -89,9 +111,9 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <CarRental />
-                    <Typography variant="h6">
+                    <StyledTypography variant="h6">
                       Handling over your vehicle
-                    </Typography>
+                    </StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     You arrange th time and location for the exchange of your
@@ -106,7 +128,7 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <HowToReg />
-                    <Typography variant="h6">You are in charge</Typography>
+                    <StyledTypography variant="h6">You are in charge</StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     All renters are pre-screened by us to ensure safety and get
@@ -121,7 +143,7 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <Payment />
-                    <Typography variant="h6">Set payment</Typography>
+                    <StyledTypography variant="h6">Set payment</StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     We pay you once a month, and you can always view much your
@@ -129,14 +151,43 @@ const HomeOwner = () => {
                   </Typography>
                 </Grid>
               </Grid>
-              <Box sx={{ pt: 10, pb: 3, display: "flex", justifyContent: "center" }}>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
+              <Box
+                sx={{
+                  pt: 10,
+                  pb: 3,
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <StyledTypography variant="h5">
                   Make money on your cars right now
-                </Typography>
+                </StyledTypography>
               </Box>
               <Stack direction="row" spacing={3} justifyContent="center">
-                <Button>Add Car</Button>
-                <Button>List your car</Button>
+                <Button
+                  sx={{
+                    minWidth: 100,
+                    color: "white",
+                  }}
+                  variant="outlined"
+                  endIcon={<Add />}
+                  onClick={handleClickOpen}
+                >
+                  Add Car
+                </Button>
+                <Button
+                  sx={{
+                    minWidth: 100,
+                    color: "white",
+                  }}
+                  variant="outlined"
+                  endIcon={<List />}
+                  
+                >
+                  List your car
+                </Button>
+
+                <AddCar open={open} onClose={handleClose} />
               </Stack>
             </CardContent>
           </Card>

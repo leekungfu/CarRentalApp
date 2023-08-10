@@ -20,10 +20,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-const LoginForm = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+function LoginForm(props) {
+  const { open, onClose } = props;
+  const handleClose = () => onClose();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,7 +34,6 @@ const LoginForm = () => {
 
   return (
     <div>
-      <Typography variant="subtitle2" sx={{ fontWeight: 600 }} onClick={handleOpen}>LOG IN</Typography>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component="main" maxWidth="xs">
@@ -126,6 +124,6 @@ const LoginForm = () => {
       </Dialog>
     </div>
   );
-};
+}
 
 export default LoginForm;
