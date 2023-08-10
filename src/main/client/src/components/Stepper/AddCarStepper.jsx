@@ -33,7 +33,7 @@ const AddCarStepper = () => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Card>
+      <Card elevation={0}>
         <CardContent>
           <Stepper orientation="horizontal" activeStep={activeStep}>
             {steps.map((label, index) => {
@@ -46,7 +46,7 @@ const AddCarStepper = () => {
               );
             })}
           </Stepper>
-          <Paper sx={{ mt: 5 }}>
+          <Paper elevation={0} sx={{ mt: 5 }}>
             {activeStep === 0 && <Basic />}
             {activeStep === 1 && <Basic />}
             {activeStep === 2 && <Basic />}

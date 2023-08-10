@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 
 export default function ControlledRadioButtons() {
-  const [value, setValue] = useState("Customer");
+  const [value, setValue] = useState("");
 
   const handleChange = (event) => {
     setValue(event.target.value);

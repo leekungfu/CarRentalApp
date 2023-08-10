@@ -1,6 +1,7 @@
-import { Dialog, DialogTitle, List } from "@mui/material";
-import PropTypes from 'prop-types';
+import { Card, Dialog, DialogTitle, List } from "@mui/material";
+import PropTypes from "prop-types";
 import AddCarStepper from "../Stepper/AddCarStepper";
+import { Fragment } from "react";
 
 function AddCar(props) {
   const { onClose, open } = props;
@@ -10,18 +11,18 @@ function AddCar(props) {
   };
 
   return (
-    <div>
-      <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Add Car</DialogTitle>
-        <AddCarStepper/>
-      </Dialog>
-    </div>
+    <Fragment>
+        <Dialog onClose={handleClose} open={open}>
+          <DialogTitle>Add Car</DialogTitle>
+          <AddCarStepper />
+        </Dialog>
+    </Fragment>
   );
-};
+}
 
 AddCar.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-}
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+};
 
 export default AddCar;
