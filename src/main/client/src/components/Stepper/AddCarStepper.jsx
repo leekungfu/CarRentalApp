@@ -13,8 +13,16 @@ import {
   Typography,
 } from "@mui/material";
 import Basic from "./Steps/Basic";
+import { Description, DoneAll, Info, LocalAtm } from "@mui/icons-material";
+import Details from "./Steps/Details";
 
 const AddCarStepper = () => {
+  const icons = {
+    1: <Description />,
+    2: <Info />,
+    3: <LocalAtm />,
+    4: <DoneAll />,
+  };
   const steps = ["Basic", "Details", "Pricing", "Finish"];
 
   const [activeStep, setActiveStep] = useState(0);
@@ -35,20 +43,42 @@ const AddCarStepper = () => {
     <Box sx={{ width: "100%" }}>
       <Card elevation={0}>
         <CardContent>
-          <Stepper orientation="horizontal" activeStep={activeStep}>
+          <Stepper
+            sx={{
+              color: "#fca311",
+              "& .MuiStepConnector-root": {
+                backgroundColor: "#f0f0f0",
+              },
+              "& .MuiStepIcon-root.MuiStepIcon-active": {
+                backgroundColor: "#00bcd4",
+              },
+              "& .MuiStepIcon-root.MuiStepIcon-completed": {
+                backgroundColor: "#4caf50",
+              },
+            }}
+            orientation="horizontal"
+            activeStep={activeStep}
+          >
             {steps.map((label, index) => {
               const stepProps = {};
               const labelProps = {};
               return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
+                <Step key={index} {...stepProps}>
+                  <StepLabel
+                    StepIconComponent={() => icons[index + 1]}
+                    {...labelProps}
+                  >
+                    <Typography variant="subtitle1" fontWeight={600}>
+                      {label}
+                    </Typography>
+                  </StepLabel>
                 </Step>
               );
             })}
           </Stepper>
           <Paper elevation={0} sx={{ mt: 5 }}>
             {activeStep === 0 && <Basic />}
-            {activeStep === 1 && <Basic />}
+            {activeStep === 1 && <Details />}
             {activeStep === 2 && <Basic />}
           </Paper>
           {activeStep === steps.length ? (
@@ -69,12 +99,12 @@ const AddCarStepper = () => {
                 <Button
                   disabled={activeStep === 0}
                   onClick={handleBack}
-                  sx={{ mr: 1, color: "white" }}
+                  sx={{ border: "solid 1px", mr: 1, color: "white" }}
                 >
                   Back
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext} sx={{ color: "white" }}>
+                <Button onClick={handleNext} sx={{ border: "solid 1px", color: "white" }}>
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>

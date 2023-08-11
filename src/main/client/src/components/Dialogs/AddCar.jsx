@@ -12,7 +12,7 @@ function AddCar(props) {
 
   return (
     <Fragment>
-        <Dialog onClose={handleClose} open={open}>
+        <Dialog onClose={handleClose} open={open} maxWidth="md" fullWidth>
           <DialogTitle>Add Car</DialogTitle>
           <AddCarStepper />
         </Dialog>

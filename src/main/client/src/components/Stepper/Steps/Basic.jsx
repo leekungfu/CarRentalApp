@@ -19,6 +19,9 @@ import BrandsSelection from "../../Select/BrandsSelection";
 import ModelsSelection from "../../Select/ModelsSelection";
 import ProductionYearSelection from "../../Select/ProductionYearSelection";
 import NumberOfSeatsSelection from "../../Select/NumberOfSeats";
+import RegistrationPaper from "../../UploadFile/RegistrationPaper";
+import Certificate from "../../UploadFile/Certificate";
+import Insurance from "../../UploadFile/Insurance";
 
 const Basic = () => {
   const [gearValue, setGearValue] = useState("");
@@ -35,24 +38,26 @@ const Basic = () => {
   return (
     <Fragment>
       <Paper elevation={0}>
-        <Grid container rowSpacing={1} columnSpacing={1}>
-          <Grid item xs={12}>
-            <Stack direction="row" spacing={2}>
+        <Grid container rowSpacing={2} columnSpacing={2}>
+          <Grid item xs={4}>
+            <Stack direction="column" spacing={2}>
               <OutlinedInput size="small" placeholder="Plate Number" required />
-              <ColorSelection />
-              <BrandsSelection />
+              <ModelsSelection />
             </Stack>
           </Grid>
-          <Grid item xs={12}>
-            <Stack direction="row" spacing={2}>
-              <ModelsSelection />
+          <Grid item xs={4}>
+            <Stack direction="column" spacing={2}>
+              <ColorSelection />
               <ProductionYearSelection />
+            </Stack>
+          </Grid>
+          <Grid item xs={4}>
+            <Stack direction="column" spacing={2}>
+              <BrandsSelection />
               <NumberOfSeatsSelection />
             </Stack>
           </Grid>
-        </Grid>
-        <Grid container sx={{ pt: 3 }}>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <RadioGroup value={gearValue} onChange={handleGearChange}>
               <FormControlLabel
                 control={<Radio value="automatic" color="primary" />}
@@ -64,10 +69,10 @@ const Basic = () => {
               />
             </RadioGroup>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <RadioGroup value={fuelValue} onChange={handleFuelChange}>
               <FormControlLabel
-                control={<Radio  value="gasoline" color="primary" />}
+                control={<Radio value="gasoline" color="primary" />}
                 label="Gasoline"
               />
               <FormControlLabel
@@ -75,6 +80,31 @@ const Basic = () => {
                 label="Diesel"
               />
             </RadioGroup>
+          </Grid>
+          <Grid item xs={4}></Grid>
+          <Grid item xs={4}>
+            <Stack direction="column">
+              <Typography variant="subtitle2" fontWeight={600}>
+                Registration paper
+              </Typography>
+              <RegistrationPaper />
+            </Stack>
+          </Grid>
+          <Grid item xs={4}>
+            <Stack direction="column">
+              <Typography variant="subtitle2" fontWeight={600}>
+                Certificate of inspection
+              </Typography>
+              <Certificate />
+            </Stack>
+          </Grid>
+          <Grid item xs={4}>
+            <Stack direction="column">
+              <Typography variant="subtitle2" fontWeight={600}>
+                Insurance
+              </Typography>
+              <Insurance />
+            </Stack>
           </Grid>
         </Grid>
       </Paper>

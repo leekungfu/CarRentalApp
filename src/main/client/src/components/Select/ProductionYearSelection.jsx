@@ -40,7 +40,7 @@ const ProductionYearSelection = () => {
 
   return (
     <>
-      <FormControl sx={{ width: 210 }}>
+      <FormControl>
         <Select
           displayEmpty
           value={year}
