@@ -15,6 +15,8 @@ import {
 import Basic from "./Steps/Basic";
 import { Description, DoneAll, Info, LocalAtm } from "@mui/icons-material";
 import Details from "./Steps/Details";
+import Pricing from "./Steps/Pricing";
+import Preview from "./Steps/Preview";
 
 const AddCarStepper = () => {
   const icons = {
@@ -23,7 +25,7 @@ const AddCarStepper = () => {
     3: <LocalAtm />,
     4: <DoneAll />,
   };
-  const steps = ["Basic", "Details", "Pricing", "Finish"];
+  const steps = ["Basic", "Details", "Pricing", "Preview"];
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -79,7 +81,8 @@ const AddCarStepper = () => {
           <Paper elevation={0} sx={{ mt: 5 }}>
             {activeStep === 0 && <Basic />}
             {activeStep === 1 && <Details />}
-            {activeStep === 2 && <Basic />}
+            {activeStep === 2 && <Pricing />}
+            {activeStep === 3 && <Preview />}
           </Paper>
           {activeStep === steps.length ? (
             <Fragment>
