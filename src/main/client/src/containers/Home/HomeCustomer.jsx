@@ -17,7 +17,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import NavMenuCustomer from "../../components/NavMenuCustomer";
+import NavMenuCustomer from "../../components/NavMenuUser";
 import { Label, List, Search } from "@mui/icons-material";
 import styled from "styled-components";
 import { useRef, useState } from "react";
@@ -29,6 +29,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { RSUITE_DATE_TIME_PICKER_DISPLAY_FORMAT } from "../../shared/configs/constants";
 import { DateRangePicker } from "rsuite";
 import { useTheme } from "@mui/material/styles";
+import NavMenuUser from "../../components/NavMenuUser";
 
 const StyledDateTimePicker = styled(DateTimePicker)`
   &.custom-date {
@@ -169,7 +170,7 @@ const HomeCustomer = (props) => {
 
   return (
     <Box>
-      <NavMenuCustomer />
+      <NavMenuUser />
       <Container maxWidth="lg" sx={{ pb: 10 }}>
         <Card elevation={0}>
           <CardContent>
@@ -208,6 +209,10 @@ const HomeCustomer = (props) => {
                 sx={{
                   minWidth: 100,
                   color: "white",
+                  borderColor: "#fca311",
+                  '&:hover': {
+                    borderColor: "#fca311",
+                  }
                 }}
                 variant="outlined"
                 size="medium"
@@ -286,7 +291,6 @@ const HomeCustomer = (props) => {
               sx={{ display: "flex", justifyContent: "end", mt: 10 }}
               count={10}
               variant="outlined"
-              color="standard"
               showFirstButton
               showLastButton
             />

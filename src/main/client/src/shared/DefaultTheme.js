@@ -16,12 +16,11 @@ const DefaultTheme = createTheme({
           color: "black",
           backgroundColor: "#fca311",
           fontWeight: 600,
-          '&:hover': {
+          "&:hover": {
             backgroundColor: "white",
             color: "#fca311",
           },
         },
-        
       },
     },
     MuiInputLabel: {
@@ -45,18 +44,44 @@ const DefaultTheme = createTheme({
         },
       },
     },
-    MuiInput: {
-      styleOverrides: {
-        input: {
-          color: "hsl(0, 0%, 20%)",
-        },
-      },
-    },
+
     MuiSelect: {
       styleOverrides: {
         outlined: {
           color: "hsl(0, 0%, 20%)",
           fontSize: "0.88rem",
+        },
+      },
+    },
+
+    MuiLink: {
+      styleOverrides: {
+        underlineHover: {
+          "&:hover": {
+            color: "#fca311",
+          },
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        colorPrimary: {
+          color: "#fca311",
+        },
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: "#fca311",
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          borderColor: "#fca311",
+          color: "#fca311",
         },
       },
     },

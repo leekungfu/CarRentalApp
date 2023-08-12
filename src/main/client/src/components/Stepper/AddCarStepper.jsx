@@ -37,10 +37,6 @@ const AddCarStepper = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
     <Box sx={{ width: "100%" }}>
       <Card elevation={0}>
@@ -86,13 +82,18 @@ const AddCarStepper = () => {
           </Paper>
           {activeStep === steps.length ? (
             <Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
+              <Typography variant="h6" sx={{ display: "flex", justifyContent: "center" }}>
                 All steps are completed!
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleReset} sx={{ color: "white" }}>
-                  Reset
+                <Button
+                  sx={{
+                    color: "white",
+                    border: "solid 1px",
+                  }}
+                >
+                  Back home
                 </Button>
               </Box>
             </Fragment>
@@ -107,7 +108,10 @@ const AddCarStepper = () => {
                   Back
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleNext} sx={{ border: "solid 1px", color: "white" }}>
+                <Button
+                  onClick={handleNext}
+                  sx={{ border: "solid 1px", color: "white" }}
+                >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>

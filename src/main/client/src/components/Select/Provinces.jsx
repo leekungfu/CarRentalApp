@@ -98,11 +98,10 @@ const Provinces = () => {
 
   return (
     <Box>
-      <Grid container rowSpacing={3}>
+      <Grid container columnSpacing={3}>
         <Grid item xs={4}>
-          <FormControl>
+          <FormControl fullWidth>
             <Select
-              sx={{ minWidth: 270 }}
               size="medium"
               displayEmpty
               value={selectedProvince || ""}
@@ -133,9 +132,8 @@ const Provinces = () => {
           </FormControl>
         </Grid>
         <Grid item xs={4}>
-          <FormControl>
+          <FormControl fullWidth>
             <Select
-              sx={{ minWidth: 270 }}
               size="medium"
               displayEmpty
               value={selectedDistrict || ""}
@@ -166,9 +164,8 @@ const Provinces = () => {
           </FormControl>
         </Grid>
         <Grid item xs={4}>
-          <FormControl>
+          <FormControl fullWidth>
             <Select
-              sx={{ minWidth: 270 }}
               size="medium"
               displayEmpty
               value={selectedWard || ""}

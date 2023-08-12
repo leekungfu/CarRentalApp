@@ -33,6 +33,7 @@ import Footer from "../../components/Footer";
 import styled from "styled-components";
 import NavBar from "../../components/NavMenuHomeGuest";
 import { useRef } from "react";
+import ScrollTopArrow from "../../components/ScrollTop";
 
 const StyledTypography = styled(Typography)`
   color: white;
@@ -103,6 +104,10 @@ const HomeGuest = () => {
                                 fontWeight: 600,
                                 fontSize: "17px",
                                 color: "white",
+                                borderColor: "#fca311",
+                                "&:hover": {
+                                  borderColor: "#fca311",
+                                },
                               }}
                               variant="outlined"
                             >
@@ -134,6 +139,10 @@ const HomeGuest = () => {
                               fontWeight: 600,
                               fontSize: "17px",
                               color: "white",
+                              borderColor: "#fca311",
+                              "&:hover": {
+                                borderColor: "#fca311",
+                              },
                             }}
                             variant="outlined"
                           >
@@ -197,7 +206,10 @@ const HomeGuest = () => {
                                 height: 56,
                               }}
                             >
-                              <Savings fontSize="large" />
+                              <Savings
+                                sx={{ color: "white" }}
+                                fontSize="large"
+                              />
                             </Avatar>
                           </Box>
                           <Typography
@@ -234,7 +246,10 @@ const HomeGuest = () => {
                                 height: 56,
                               }}
                             >
-                              <ElectricBolt fontSize="large" />
+                              <ElectricBolt
+                                fontSize="large"
+                                sx={{ color: "white" }}
+                              />
                             </Avatar>
                           </Box>
                           <Typography
@@ -270,7 +285,7 @@ const HomeGuest = () => {
                                 height: 56,
                               }}
                             >
-                              <Gavel fontSize="large" />
+                              <Gavel fontSize="large" sx={{ color: "white" }} />
                             </Avatar>
                           </Box>
                           <Typography
@@ -307,7 +322,10 @@ const HomeGuest = () => {
                                 height: 56,
                               }}
                             >
-                              <SupportAgent fontSize="large" />
+                              <SupportAgent
+                                fontSize="large"
+                                sx={{ color: "white" }}
+                              />
                             </Avatar>
                           </Box>
                           <Typography
@@ -689,6 +707,7 @@ const HomeGuest = () => {
             </Stack>
           </Container>
           <Footer />
+          <ScrollTopArrow />
         </Grid>
       </Grid>
     </Box>

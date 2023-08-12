@@ -100,8 +100,16 @@ function LoginForm(props) {
                 <Button
                   type="submit"
                   fullWidth
-                  variant="contained"
-                  sx={{ mt: 2, mb: 2, color: "white" }}
+                  variant="outlined"
+                  sx={{
+                    mt: 2,
+                    mb: 2,
+                    color: "white",
+                    borderColor: "#fca311",
+                    "&:hover": {
+                      borderColor: "#fca311",
+                    },
+                  }}
                   href="/homecustomer"
                 >
                   Log in

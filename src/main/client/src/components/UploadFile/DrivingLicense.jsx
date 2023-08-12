@@ -20,17 +20,17 @@ const DrivingLicense = () => {
         sx={{ display: "none" }}
       />
       <InputLabel htmlFor="drivingLicense">
-        <Button variant="contained" component="span" sx={{ border: "solid 1px", color: "white", display: "flex", justifyContent: "flex-start" }}>
+        <Button variant="contained" component="span" sx={{ border: "solid 1px", color: "white", }}>
           <CloudUpload sx={{ mr: 1 }} />
           Upload image
         </Button>
       </InputLabel>
       {selectedImage && (
-        <Paper sx={{ mt: 2, p: 1 }}>
+        <Paper sx={{ mt: 2 }} elevation={0}>
           <img
             src={URL.createObjectURL(selectedImage)}
             alt="Uploaded"
-            style={{ maxWidth: "100%", height: "auto" }}
+            style={{ maxWidth: "50%", height: "auto", border: "2px solid #fca311", borderRadius: "20px" }}
           />
         </Paper>
       )}

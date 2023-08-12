@@ -13,16 +13,22 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Button } from '@mui/material';
 import { Person } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 export default function UserMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+
+
   return (
     <React.Fragment>
       <Box >
@@ -72,7 +78,7 @@ export default function UserMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem sx={{ cursor: "pointer" }} component={Link} to="/profiletabs">
           <Typography variant='subtitle1'>My Profile</Typography>
         </MenuItem>
         <MenuItem onClick={handleClose}>

@@ -17,7 +17,7 @@ import UserMenu from "../UserMenu";
 
 const pages = ["HOME", "ABOUT US", <UserMenu />];
 
-const NavMenuCustomer = () => {
+const NavMenuUser = () => {
   return (
     <Fragment>
       <AppBar color="default" position="sticky">
@@ -60,4 +60,4 @@ const NavMenuCustomer = () => {
   );
 };
 
-export default NavMenuCustomer;
+export default NavMenuUser;

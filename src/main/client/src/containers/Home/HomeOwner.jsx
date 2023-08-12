@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import NavMenuCustomer from "../../components/NavMenuCustomer";
+import NavMenuCustomer from "../../components/NavMenuUser";
 import {
   Add,
   CarRental,
@@ -24,15 +24,13 @@ import {
 import styled from "styled-components";
 import { useState } from "react";
 import AddCar from "../../components/Dialogs/AddCar";
+import NavMenuUser from "../../components/NavMenuUser";
 
 const StyledTypography = styled(Typography)`
   font-weight: 600;
 `;
 
-
-
 const HomeOwner = () => {
-
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -46,7 +44,7 @@ const HomeOwner = () => {
   return (
     <>
       <Box>
-        <NavMenuCustomer />
+        <NavMenuUser />
         <Container maxWidth="lg">
           <Card elevation={0}>
             <CardContent>
@@ -80,7 +78,9 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <MoneyOff />
-                    <StyledTypography variant="h6">It's completely free</StyledTypography>
+                    <StyledTypography variant="h6">
+                      It's completely free
+                    </StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     We offer both owners and renters free sign-ups. It's only
@@ -128,7 +128,9 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <HowToReg />
-                    <StyledTypography variant="h6">You are in charge</StyledTypography>
+                    <StyledTypography variant="h6">
+                      You are in charge
+                    </StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     All renters are pre-screened by us to ensure safety and get
@@ -143,7 +145,9 @@ const HomeOwner = () => {
                     sx={{ pb: 2, alignItems: "center" }}
                   >
                     <Payment />
-                    <StyledTypography variant="h6">Set payment</StyledTypography>
+                    <StyledTypography variant="h6">
+                      Set payment
+                    </StyledTypography>
                   </Stack>
                   <Typography variant="subtitle1">
                     We pay you once a month, and you can always view much your
@@ -168,22 +172,30 @@ const HomeOwner = () => {
                   sx={{
                     minWidth: 100,
                     color: "white",
+                    borderColor: "#fca311",
+                    "&:hover": {
+                      borderColor: "#fca311",
+                    },
                   }}
                   variant="outlined"
                   endIcon={<Add />}
                   onClick={handleClickOpen}
                 >
-                  Add Car
+                  ADD CAR
                 </Button>
                 <Button
                   sx={{
                     minWidth: 100,
                     color: "white",
+                    borderColor: "#fca311",
+                    "&:hover": {
+                      borderColor: "#fca311",
+                    },
                   }}
                   variant="outlined"
                   endIcon={<List />}
                 >
-                  List your car
+                  LIST YOUR CAR
                 </Button>
 
                 <AddCar open={open} onClose={handleClose} />

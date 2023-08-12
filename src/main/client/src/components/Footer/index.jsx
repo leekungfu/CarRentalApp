@@ -50,7 +50,7 @@ const Footer = () => {
                   CAR RENTAL
                 </Typography>
                 <Typography variant="subtitle1" sx={{ pb: 5 }}>
-                  <Link href="#" color="inherit">
+                  <Link underline="hover" href="#" color="inherit">
                     Search Cars And Rates
                   </Link>
                 </Typography>
@@ -65,17 +65,17 @@ const Footer = () => {
                   CUSTOMER ACCESS
                 </Typography>
                 <Typography variant="subtitle1" sx={{ pb: 2 }}>
-                  <Link href="#" color="inherit">
+                  <Link underline="hover" href="#" color="inherit">
                     Manage My Booking
                   </Link>
                 </Typography>
                 <Typography variant="subtitle1" sx={{ pb: 2 }}>
-                  <Link href="#" color="inherit">
+                  <Link underline="hover" href="#" color="inherit">
                     My Wallet
                   </Link>
                 </Typography>
                 <Typography variant="subtitle1" sx={{ pb: 2 }}>
-                  <Link href="#" color="inherit">
+                  <Link underline="hover" href="#" color="inherit">
                     My Car
                   </Link>
                 </Typography>
@@ -91,7 +91,7 @@ const Footer = () => {
                   JOIN US
                 </Typography>
                 <Typography variant="subtitle1" sx={{ pb: 2 }}>
-                  <Link href="#" color="inherit">
+                  <Link underline="hover" href="#" color="inherit">
                     New User Sign Up
                   </Link>
                 </Typography>
@@ -155,22 +155,22 @@ const Footer = () => {
               >
                   <IconButton>
                     <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
-                      <Facebook fontSize="medium" />
+                      <Facebook fontSize="medium" sx={{ color: "white" }}/>
                     </Avatar>
                   </IconButton>
                   <IconButton>
                     <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
-                      <Instagram fontSize="medium" />
+                      <Instagram fontSize="medium" sx={{ color: "white" }}/>
                     </Avatar>
                   </IconButton>
                   <IconButton>
                     <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
-                      <YouTube fontSize="medium" />
+                      <YouTube fontSize="medium" sx={{ color: "white" }}/>
                     </Avatar>
                   </IconButton>
                   <IconButton>
                     <Avatar sx={{ bgcolor: "#fca311", width: 45, height: 45 }}>
-                      <Twitter fontSize="medium" />
+                      <Twitter fontSize="medium" sx={{ color: "white" }}/>
                     </Avatar>
                   </IconButton>
               </Stack>
