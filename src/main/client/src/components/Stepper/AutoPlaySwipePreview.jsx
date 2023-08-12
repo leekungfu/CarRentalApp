@@ -9,22 +9,22 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
   {
-    label: "San Francisco – Oakland Bay Bridge, United States",
+    label: "Front Image",
     imgPath:
       "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
   },
   {
-    label: "Bird",
+    label: "Right Image",
     imgPath:
       "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
   },
   {
-    label: "Bali, Indonesia",
+    label: "Left Image",
     imgPath:
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
   },
   {
-    label: "Goč, Serbia",
+    label: "Back Image",
     imgPath:
       "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
   },
@@ -54,13 +54,13 @@ function AutoPlaySwipePreview() {
         elevation={0}
         sx={{
           display: "flex",
+          justifyContent: "center",
           alignItems: "center",
           height: 50,
-          pl: 2,
           bgcolor: "background.default",
         }}
       >
-        <Typography>{images[activeStep].label}</Typography>
+        <Typography variant="h6" fontWeight="bold">{images[activeStep].label}</Typography>
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -93,6 +93,7 @@ function AutoPlaySwipePreview() {
         activeStep={activeStep}
         nextButton={
           <Button
+            sx={{ color: "white" }}
             size="small"
             onClick={handleNext}
             disabled={activeStep === maxSteps - 1}
@@ -106,7 +107,12 @@ function AutoPlaySwipePreview() {
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button
+            sx={{ color: "white" }}
+            size="small"
+            onClick={handleBack}
+            disabled={activeStep === 0}
+          >
             {theme.direction === "rtl" ? (
               <KeyboardArrowRight />
             ) : (

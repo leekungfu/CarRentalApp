@@ -102,6 +102,7 @@ function LoginForm(props) {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 2, mb: 2, color: "white" }}
+                  href="/homecustomer"
                 >
                   Log in
                 </Button>

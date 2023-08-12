@@ -175,6 +175,7 @@ const SignUpForm = (props) => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2, color: "white" }}
+                  href="/homeowner"
                 >
                   Sign up
                 </Button>
