@@ -62,93 +62,6 @@ const provinces = [
   "Kelly Snyder",
 ];
 
-const data = [
-  {
-    src: "https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ",
-    title: "Don Diablo @ Tomorrowland Main Stage 2019 | Official…",
-    channel: "Don Diablo",
-    views: "396k views",
-    createdAt: "a week ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/_Uu12zY01ts/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpX6Jan2rxrCAZxJYDXppTP4MoQA",
-    title: "Queen - Greatest Hits",
-    channel: "Queen Official",
-    views: "40M views",
-    createdAt: "3 years ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ",
-    title: "Don Diablo @ Tomorrowland Main Stage 2019 | Official…",
-    channel: "Don Diablo",
-    views: "396k views",
-    createdAt: "a week ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/_Uu12zY01ts/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpX6Jan2rxrCAZxJYDXppTP4MoQA",
-    title: "Queen - Greatest Hits",
-    channel: "Queen Official",
-    views: "40M views",
-    createdAt: "3 years ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ",
-    title: "Don Diablo @ Tomorrowland Main Stage 2019 | Official…",
-    channel: "Don Diablo",
-    views: "396k views",
-    createdAt: "a week ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/_Uu12zY01ts/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCpX6Jan2rxrCAZxJYDXppTP4MoQA",
-    title: "Queen - Greatest Hits",
-    channel: "Queen Official",
-    views: "40M views",
-    createdAt: "3 years ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-  {
-    src: "https://i.ytimg.com/vi/kkLk2XWMBf8/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLB4GZTFu1Ju2EPPPXnhMZtFVvYBaw",
-    title: "Calvin Harris, Sam Smith - Promises (Official Video)",
-    channel: "Calvin Harris",
-    views: "130M views",
-    createdAt: "10 months ago",
-  },
-];
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -158,7 +71,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const HomeCustomer = (props) => {
+const HomeCustomer = () => {
   const theme = useTheme();
   const grid = useRef(null);
   const [provinceName, setProvinceName] = useState([]);
@@ -166,12 +79,11 @@ const HomeCustomer = (props) => {
     const { target: value } = event;
     setProvinceName(typeof value === "string" ? value.split(",") : value);
   };
-  const { loading = false } = props;
 
   return (
     <Box>
       <NavMenuUser />
-      <Container maxWidth="lg" sx={{ pb: 10 }}>
+      <Container maxWidth="lg">
         <Card elevation={0}>
           <CardContent>
             <Typography sx={{ pt: 5, pb: 5, fontWeight: 600 }} variant="h5">
@@ -210,9 +122,9 @@ const HomeCustomer = (props) => {
                   minWidth: 100,
                   color: "white",
                   borderColor: "#fca311",
-                  '&:hover': {
+                  "&:hover": {
                     borderColor: "#fca311",
-                  }
+                  },
                 }}
                 variant="outlined"
                 size="medium"
@@ -222,78 +134,6 @@ const HomeCustomer = (props) => {
                 Search
               </Button>
             </Stack>
-          </CardContent>
-        </Card>
-      </Container>
-      <Container maxWidth="lg">
-        <Card elevation={0}>
-          <CardContent>
-            <Stack direction="row" alignItems="center" sx={{ pb: 1 }}>
-              <List fontSize="large" />
-              <Typography variant="h6">
-                List cars available:
-              </Typography>
-            </Stack>
-            <Grid container columnSpacing={2} rowSpacing={3}>
-              {(loading ? Array.from(new Array(4)) : data).map(
-                (item, index) => (
-                  <Grid item xs={4} key={index}>
-                    {item ? (
-                      <Box
-                        sx={{
-                          border: "0.5px solid #ccc",
-                          borderRadius: "10px",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <img
-                          style={{ width: "100%", height: 210 }}
-                          alt={item.title}
-                          src={item.src}
-                        />
-                      </Box>
-                    ) : (
-                      <Skeleton
-                        variant="rectangular"
-                        width={210}
-                        height={118}
-                      />
-                    )}
-
-                    {item ? (
-                      <Box sx={{ pr: 2 }}>
-                        <Typography gutterBottom variant="body2">
-                          {item.title}
-                        </Typography>
-                        <Typography
-                          display="block"
-                          variant="caption"
-                          color="text.secondary"
-                        >
-                          {item.channel}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          {`${item.views} • ${item.createdAt}`}
-                        </Typography>
-                      </Box>
-                    ) : (
-                      <Box sx={{ pt: 0.5 }}>
-                        <Skeleton />
-                        <Skeleton width="60%" />
-                      </Box>
-                    )}
-                  </Grid>
-                )
-              )}
-            </Grid>
-
-            <Pagination
-              sx={{ display: "flex", justifyContent: "end", mt: 10 }}
-              count={10}
-              variant="outlined"
-              showFirstButton
-              showLastButton
-            />
           </CardContent>
         </Card>
       </Container>

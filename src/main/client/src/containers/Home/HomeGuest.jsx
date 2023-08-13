@@ -73,7 +73,7 @@ const HomeGuest = () => {
               </Box>
             </Container>
           </Container>
-          <Container maxWidth="lg" sx={{ pb: 10 }}>
+          <Container maxWidth="lg">
             <Stack spacing={2}>
               <Card elevation={5}>
                 <CardContent>
@@ -117,7 +117,6 @@ const HomeGuest = () => {
                         </Grid>
                       </Paper>
                     </Grid>
-
                     <Grid item xs={6}>
                       <Paper sx={{ p: 1, textAlign: "center" }} elevation={0}>
                         <Box sx={{ mx: 2, my: 5, padding: "20px" }}>
@@ -156,7 +155,7 @@ const HomeGuest = () => {
               </Card>
             </Stack>
           </Container>
-          <Container maxWidth="lg" sx={{ pb: 10 }}>
+          <Container maxWidth="lg" sx={{ mb: 10, mt: 10 }}>
             <Stack spacing={2} sx={{ color: "white" }}>
               <Card elevation={0}>
                 <CardContent>
@@ -706,7 +705,6 @@ const HomeGuest = () => {
               </Card>
             </Stack>
           </Container>
-          <Footer />
           <ScrollTopArrow />
         </Grid>
       </Grid>

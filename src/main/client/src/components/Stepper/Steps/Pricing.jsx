@@ -15,10 +15,10 @@ const Pricing = () => {
       <Grid container sx={{ mb: 3 }}>
         <Grid item xs={2}>
           <Stack spacing={2}>
-            <Typography variant="h6" sx={{ pr: 2 }}>
+            <Typography variant="subtitle1" fontWeight="bold">
               Base price:
             </Typography>
-            <Typography variant="h6" sx={{ pr: 2 }}>
+            <Typography variant="subtitle1" fontWeight="bold">
               Deposit:
             </Typography>
           </Stack>
@@ -31,25 +31,25 @@ const Pricing = () => {
         </Grid>
         <Grid item xs={7} sx={{ pl: 5 }}>
           <Stack direction="row" spacing={4}>
-            <Typography variant="h6">Term of use:</Typography>
+            <Typography fontWeight="bold" variant="subtitle1">Term of use:</Typography>
             <Stack>
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Sun roof</Typography>}
+                label={<Typography variant="subtitle1">No smoking</Typography>}
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Child lock</Typography>}
+                label={<Typography variant="subtitle1">No pet</Typography>}
               />
             </Stack>
             <Stack>
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Child seat</Typography>}
+                label={<Typography variant="subtitle1">No food in car</Typography>}
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Child seat</Typography>}
+                label={<Typography variant="subtitle1">Other</Typography>}
               />
             </Stack>
           </Stack>

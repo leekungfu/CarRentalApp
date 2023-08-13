@@ -25,7 +25,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import React, { Fragment, useState } from "react";
-import CustomTabPanels from "./CustomTabPanels";
+import CustomTabPanels from "../../../components/CustomTabPanels/CustomTabPanels";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import DrivingLicense from "../../../components/UploadFile/DrivingLicense";
@@ -71,7 +71,7 @@ const ProfileTabs = () => {
         </Box>
       </Container>
       <Container maxWidth="lg">
-        <Card elevation={5}>
+        <Card elevation={5} sx={{ mb: 10 }}>
           <CardContent>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs value={tab} onChange={handleChange}>

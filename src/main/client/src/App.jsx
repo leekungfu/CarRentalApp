@@ -13,8 +13,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import HomeOwner from "./containers/Home/HomeOwner";
 import AddCar from "./components/Dialogs/AddCar";
-import MyProfile from "./containers/Account";
 import ProfileTabs from "./containers/Account/Profile";
+import MyCars from "./containers/Account/Car";
 
 const ProviderPack = createPack(
   (props) => <ThemeProvider theme={DefaultTheme} {...props} />,
@@ -39,7 +39,11 @@ function App() {
             <Route path="/homecustomer" element={<HomeCustomer />} />
             <Route path="/homeowner" element={<HomeOwner/>} />
             <Route path="/addcar" element={<AddCar/>} />
-            <Route path="/profiletabs" element={<ProfileTabs/>} />
+            <Route path="/profile" element={<ProfileTabs/>} />
+            <Route path="/booking"/>
+            <Route path="/wallet" />
+            <Route path="/cars" element={<MyCars />} />
+            <Route path="/reports" />
           </Routes>
         </Layout>
       </Router>

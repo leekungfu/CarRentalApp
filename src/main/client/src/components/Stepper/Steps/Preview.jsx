@@ -12,16 +12,24 @@ const Preview = () => {
         </Grid>
         <Grid item xs={6}>
           <Typography variant="h6">Mercedes-Benz Pickup Truck 2008</Typography>
-          <Stack direction="row" spacing={1} >
+          <Stack direction="row" spacing={1}>
             <Typography fontWeight={600} variant="subtitle1">
               Rating:
             </Typography>
-            <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
+            <Rating
+              defaultValue={3.5}
+              precision={0.5}
+              readOnly
+            />
           </Stack>
           <Typography variant="subtitle1">Number of rides: 0</Typography>
-            <Typography variant="subtitle1">Price: 1.000.000 VND</Typography>
-            <Typography variant="subtitle1">Location: Phường Ngọc Hà, Thành phố Hà Giang, Tỉnh Hà Giang</Typography>
-            <Typography variant="subtitle1">Status: {" "}<span style={{ color: "#408971" }}>Availabel</span></Typography>
+          <Typography variant="subtitle1">Price: 1.000.000 VND</Typography>
+          <Typography variant="subtitle1">
+            Location: Phường Ngọc Hà, Thành phố Hà Giang, Tỉnh Hà Giang
+          </Typography>
+          <Typography variant="subtitle1">
+            Status: <span style={{ color: "#408971" }}>Availabel</span>
+          </Typography>
         </Grid>
       </Grid>
     </div>

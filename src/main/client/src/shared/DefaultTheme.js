@@ -21,6 +21,14 @@ const DefaultTheme = createTheme({
             color: "#fca311",
           },
         },
+        outlined: {
+          border: "solid 1px",
+          color: "white",
+          borderColor: "#fca311",
+          "&:hover": {
+            borderColor: "#fca311",
+          },
+        },
       },
     },
     MuiInputLabel: {

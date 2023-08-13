@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
+  InputLabel,
 } from "@mui/material";
 import { Fragment, useState } from "react";
 import ColorSelection from "../../Select/ColorSelection";
@@ -39,6 +40,13 @@ const Basic = () => {
     <Fragment>
       <Paper elevation={0}>
         <Grid container rowSpacing={2} columnSpacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="subtitle1" color="red">
+              Note: Please check your information carefully, you'll not able to
+              change the basic details of you car, which is based on the
+              registration information.
+            </Typography>
+          </Grid>
           <Grid item xs={4}>
             <Stack direction="column" spacing={2}>
               <OutlinedInput size="small" placeholder="Plate Number" required />
@@ -59,6 +67,7 @@ const Basic = () => {
           </Grid>
           <Grid item xs={4}>
             <RadioGroup value={gearValue} onChange={handleGearChange}>
+              <InputLabel required>Transmission</InputLabel>
               <FormControlLabel
                 control={<Radio value="automatic" color="primary" />}
                 label="Automatic"
@@ -71,6 +80,7 @@ const Basic = () => {
           </Grid>
           <Grid item xs={4}>
             <RadioGroup value={fuelValue} onChange={handleFuelChange}>
+              <InputLabel required>Fuel</InputLabel>
               <FormControlLabel
                 control={<Radio value="gasoline" color="primary" />}
                 label="Gasoline"
@@ -82,6 +92,9 @@ const Basic = () => {
             </RadioGroup>
           </Grid>
           <Grid item xs={4}></Grid>
+          <Grid item xs={12}>
+          <InputLabel required>Documents</InputLabel>
+          </Grid>
           <Grid item xs={4}>
             <Stack direction="column">
               <Typography variant="subtitle2" fontWeight={600}>

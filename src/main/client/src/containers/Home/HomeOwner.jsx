@@ -25,6 +25,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import AddCar from "../../components/Dialogs/AddCar";
 import NavMenuUser from "../../components/NavMenuUser";
+import Footer from "../../components/Footer";
+import { Fragment } from "react";
 
 const StyledTypography = styled(Typography)`
   font-weight: 600;
@@ -42,8 +44,7 @@ const HomeOwner = () => {
   };
 
   return (
-    <>
-      <Box>
+      <div>
         <NavMenuUser />
         <Container maxWidth="lg">
           <Card elevation={0}>
@@ -183,6 +184,7 @@ const HomeOwner = () => {
                 >
                   ADD CAR
                 </Button>
+                <AddCar open={open} onClose={handleClose} />
                 <Button
                   sx={{
                     minWidth: 100,
@@ -197,14 +199,11 @@ const HomeOwner = () => {
                 >
                   LIST YOUR CAR
                 </Button>
-
-                <AddCar open={open} onClose={handleClose} />
               </Stack>
             </CardContent>
           </Card>
         </Container>
-      </Box>
-    </>
+      </div>
   );
 };
 

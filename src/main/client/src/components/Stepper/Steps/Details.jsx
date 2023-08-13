@@ -15,6 +15,7 @@ import FrontOfCar from "../../UploadFile/FrontOfCar";
 import RightOfCar from "../../UploadFile/RightOfCar";
 import LeftOfCar from "../../UploadFile/LeftOfCar";
 import BackOfCar from "../../UploadFile/BackOfCar";
+import { Album, Bluetooth, Camera, GpsFixed, Living, NoStroller, SolarPower, Usb } from "@mui/icons-material";
 
 const Details = () => {
   return (
@@ -28,79 +29,119 @@ const Details = () => {
           />
           <Provinces />
           <OutlinedInput fullWidth placeholder="Street" />
-          <OutlinedInput fullWidth placeholder="Description of vehicle" />
+          <OutlinedInput multiline fullWidth placeholder="Description of vehicle" />
         </Stack>
         <Grid container sx={{ pt: 2 }}>
           <Grid item xs={4}>
-            <Stack direction="column" spacing={1}>
+            <Stack>
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Bluetooth</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="subtitle1" sx={{ pr: 0.5 }}>Bluetooth</Typography>
+                    <Bluetooth fontSize="inherit" />
+                  </Box>
+                }
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">GPS</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="subtitle1" sx={{ pr: 0.5 }}>GPS</Typography>
+                    <GpsFixed fontSize="inherit"/>
+                  </Box>
+                }
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Camera</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="subtitle1" sx={{ pr: 0.5 }}>Camera</Typography>
+                <Camera fontSize="inherit"/>
+                </Box>
+                }
               />
             </Stack>
           </Grid>
           <Grid item xs={4}>
-            <Stack spacing={1}>
+            <Stack>
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Sun roof</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="subtitle1" sx={{ pr: 0.5 }}>Sun roof</Typography>
+                <SolarPower fontSize="inherit"/>
+                </Box>
+                }
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Child lock</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="subtitle1" sx={{ pr: 0.5 }}>Child lock</Typography>
+                <NoStroller fontSize="inherit"/>
+                </Box>
+                }
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">Child seat</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="subtitle1" sx={{ pr: 0.5 }}>Child seat</Typography>
+                <Living fontSize="inherit"/>
+                </Box>
+                }
               />
             </Stack>
           </Grid>
           <Grid item xs={4}>
-            <Stack spacing={1}>
+            <Stack>
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">DVD</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="subtitle1" sx={{ pr: 0.5 }}>DVD</Typography>
+                <Album fontSize="inherit"/>
+                </Box>
+                }
               />
               <FormControlLabel
                 control={<Checkbox />}
-                label={<Typography variant="subtitle1">USB</Typography>}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="subtitle1" sx={{ pr: 0.5 }}>USB</Typography>
+                <Usb fontSize="inherit"/>
+                </Box>
+                }
               />
             </Stack>
           </Grid>
           <Grid item xs={4} sx={{ pt: 2 }}>
             <Stack spacing={1}>
-            <Typography variant="subtitle2" fontWeight={600}>
+              <Typography variant="subtitle2" fontWeight={600}>
                 Front image
               </Typography>
-              <FrontOfCar/>
+              <FrontOfCar />
               <Typography variant="subtitle2" fontWeight={600}>
                 Right image
               </Typography>
-              <RightOfCar/>
+              <RightOfCar />
             </Stack>
           </Grid>
+          <Grid item xs={2}></Grid>
           <Grid item xs={2}></Grid>
           <Grid item xs={4} sx={{ pt: 2 }}>
             <Stack spacing={1}>
-            <Typography variant="subtitle2" fontWeight={600}>
+              <Typography variant="subtitle2" fontWeight={600}>
                 Left image
               </Typography>
-              <LeftOfCar/>
+              <LeftOfCar />
               <Typography variant="subtitle2" fontWeight={600}>
                 Back image
               </Typography>
-              <BackOfCar/>
+              <BackOfCar />
             </Stack>
           </Grid>
-          <Grid item xs={2}></Grid>
         </Grid>
       </Paper>
     </Box>

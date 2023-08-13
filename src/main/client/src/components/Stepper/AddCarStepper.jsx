@@ -17,8 +17,11 @@ import { Description, DoneAll, Info, LocalAtm } from "@mui/icons-material";
 import Details from "./Steps/Details";
 import Pricing from "./Steps/Pricing";
 import Preview from "./Steps/Preview";
+import PropTypes from "prop-types";
 
-const AddCarStepper = () => {
+const AddCarStepper = (props) => {
+  const { open, onClose } = props;
+
   const icons = {
     1: <Description />,
     2: <Info />,
@@ -35,6 +38,10 @@ const AddCarStepper = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleClose = () => {
+    onClose();
   };
 
   return (
@@ -82,7 +89,10 @@ const AddCarStepper = () => {
           </Paper>
           {activeStep === steps.length ? (
             <Fragment>
-              <Typography variant="h6" sx={{ display: "flex", justifyContent: "center" }}>
+              <Typography
+                variant="h6"
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 All steps are completed!
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -92,6 +102,7 @@ const AddCarStepper = () => {
                     color: "white",
                     border: "solid 1px",
                   }}
+                  onClick={handleClose}
                 >
                   Back home
                 </Button>
@@ -121,6 +132,11 @@ const AddCarStepper = () => {
       </Card>
     </Box>
   );
+};
+
+AddCarStepper.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default AddCarStepper;

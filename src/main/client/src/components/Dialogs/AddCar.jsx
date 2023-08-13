@@ -12,10 +12,19 @@ function AddCar(props) {
 
   return (
     <Fragment>
-        <Dialog onClose={handleClose} open={open} maxWidth="md" fullWidth>
-          <DialogTitle sx={{ fontSize: 25, fontWeight: "bold", display: "flex", justifyContent: "center" }}>ADD CAR STEPS</DialogTitle>
-          <AddCarStepper />
-        </Dialog>
+      <Dialog onClose={handleClose} open={open} maxWidth="md" fullWidth>
+        <DialogTitle
+          sx={{
+            fontSize: 25,
+            fontWeight: "bold",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          ADD CAR STEPS
+        </DialogTitle>
+        <AddCarStepper open={open} onClose={handleClose} />
+      </Dialog>
     </Fragment>
   );
 }
