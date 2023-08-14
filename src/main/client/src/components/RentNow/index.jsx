@@ -12,11 +12,17 @@ import {
   Stepper,
   Typography,
   Paper,
+  Breadcrumbs,
+  Stack,
 } from "@mui/material";
 import {
   Circle,
   Description,
+  DetailsOutlined,
   DoneAll,
+  FormatListBulleted,
+  Home,
+  NavigateNext,
   Payment,
   StickyNote2,
 } from "@mui/icons-material";
@@ -29,6 +35,7 @@ import BookingSummary from "./BookingSteps/BookingSummary";
 import Payments from "./BookingSteps/Payments";
 import Finish from "./BookingSteps/Finish";
 import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 const RentNow = () => {
   const icons = {
@@ -51,7 +58,40 @@ const RentNow = () => {
   return (
     <div>
       <Container maxWidth="lg">
-        <BreadcrumbsMenu />
+        <Container maxWidth="lg" sx={{ mt: 5 }}>
+          <Breadcrumbs
+            separator={<NavigateNext fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Stack direction="row" alignItems="center">
+              <Home sx={{ mr: 0.5 }} fontSize="inherit" />
+              <Typography
+                component={Link}
+                to="/homecustomer"
+                variant="subtitle1"
+                fontWeight="bold"
+                sx={{
+                  color: "#7f7f7f !important",
+                  "&:hover": {
+                    color: "#fca311 !important",
+                  },
+                }}
+              >
+                Home
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center">
+              <FormatListBulleted sx={{ mr: 0.5 }} fontSize="inherit" />
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                Booking Details
+              </Typography>
+            </Stack>
+          </Breadcrumbs>
+        </Container>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h6" fontWeight="bold">
             Booking Details
@@ -153,7 +193,7 @@ const RentNow = () => {
                         color: "white",
                         border: "solid 1px",
                       }}
-                    //   onClick={handleClose}
+                      //   onClick={handleClose}
                     >
                       Back home
                     </Button>

@@ -11,16 +11,17 @@ import {
   Pagination,
   Button,
   Rating,
+  Breadcrumbs,
 } from "@mui/material";
 import React from "react";
-import BreadcrumbsMenu from "../../../components/BreadcrumbsMenu";
 import { useState } from "react";
 import AddCar from "../../../components/Dialogs/AddCar";
-import { Add } from "@mui/icons-material";
+import { Add, Commute, Home, NavigateNext } from "@mui/icons-material";
 import NavMenuUser from "../../../components/NavMenuUser";
 import ViewDetails from "../../../components/Dialogs/ViewDetails";
 import ConfirmDeposit from "../../../components/Modals/ConfirmDeposit";
 import ConfirmPayment from "../../../components/Modals/ConfirmPayment";
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -115,7 +116,40 @@ const MyCars = (props) => {
     <div>
       <NavMenuUser />
       <Container maxWidth="lg" sx={{ pt: 5 }}>
-        <BreadcrumbsMenu />
+      <Container maxWidth="lg" sx={{ mt: 5 }}>
+          <Breadcrumbs
+            separator={<NavigateNext fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Stack direction="row" alignItems="center">
+              <Home sx={{ mr: 0.5 }} fontSize="inherit" />
+              <Typography
+                component={Link}
+                to="/homeowner"
+                variant="subtitle1"
+                fontWeight="bold"
+                sx={{
+                  color: "#7f7f7f !important",
+                  "&:hover": {
+                    color: "#fca311 !important",
+                  },
+                }}
+              >
+                Home
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center">
+              <Commute sx={{ mr: 0.5 }} fontSize="inherit" />
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                My Cars
+              </Typography>
+            </Stack>
+          </Breadcrumbs>
+        </Container>
         <Button
           sx={{
             minWidth: 100,

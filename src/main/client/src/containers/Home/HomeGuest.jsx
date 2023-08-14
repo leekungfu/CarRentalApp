@@ -34,6 +34,9 @@ import styled from "styled-components";
 import NavBar from "../../components/NavMenuHomeGuest";
 import { useRef } from "react";
 import ScrollTopArrow from "../../components/ScrollTop";
+import { Link } from "react-router-dom";
+import LoginForm from "../../components/LoginForm";
+import { useState } from "react";
 
 const StyledTypography = styled(Typography)`
   color: white;
@@ -41,6 +44,16 @@ const StyledTypography = styled(Typography)`
 `;
 
 const HomeGuest = () => {
+  const [openLogin, setOpenLogin] = useState(false);
+
+  const handleClickOpenLogin = () => {
+    setOpenLogin(true);
+  };
+
+  const handleCloseLogin = () => {
+    setOpenLogin(false);
+  };
+
   return (
     <Box>
       <NavBar />
@@ -110,9 +123,14 @@ const HomeGuest = () => {
                                 },
                               }}
                               variant="outlined"
+                              onClick={handleClickOpenLogin}
                             >
                               Find A Rental Car Shop Near You
                             </Button>
+                            <LoginForm
+                              open={openLogin}
+                              onClose={handleCloseLogin}
+                            />
                           </Box>
                         </Grid>
                       </Paper>
@@ -144,6 +162,7 @@ const HomeGuest = () => {
                               },
                             }}
                             variant="outlined"
+                            onClick={handleClickOpenLogin}
                           >
                             Show Your Car For Rent Now
                           </Button>

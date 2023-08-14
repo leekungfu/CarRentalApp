@@ -68,7 +68,7 @@ const ViewDetails = (props) => {
             <Preview />
           </CardContent>
         </Card>
-        <ViewDetailsTabs />
+        <ViewDetailsTabs open={open} onClose={handleClose} />
       </Dialog>
     </Fragment>
   );

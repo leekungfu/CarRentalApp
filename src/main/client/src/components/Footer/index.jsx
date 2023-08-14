@@ -10,22 +10,34 @@ import {
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   Container,
   CssBaseline,
   Grid,
-  IconButton,
   Link,
+  IconButton,
   ListItemButton,
   Paper,
   Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 import { Fragment } from "react";
+import SignUpForm from "../SignUpForm";
 
 const Footer = () => {
+  const [openSignup, setOpenSignup] = useState(false);
+
+  const handleClickOpenSignup = () => {
+    setOpenSignup(true);
+  };
+
+  const handleCloseSignup = () => {
+    setOpenSignup(false);
+  };
   return (
     <div style={{ bottom: 0 }}>
       <Container
@@ -77,11 +89,16 @@ const Footer = () => {
                 <Typography variant="h5" sx={{ fontWeight: 600, pb: 5 }}>
                   JOIN US
                 </Typography>
-                <Typography variant="subtitle1" sx={{ pb: 2 }}>
-                  <Link underline="hover" href="#" color="inherit">
+                <Typography
+                  onClick={handleClickOpenSignup}
+                  variant="subtitle1"
+                  sx={{ pb: 2 }}
+                >
+                  <Link underline="hover" sx={{ cursor: "pointer" }} color="inherit">
                     New User Sign Up
                   </Link>
                 </Typography>
+                <SignUpForm open={openSignup} onClose={handleCloseSignup} />
               </Stack>
             </Grid>
 

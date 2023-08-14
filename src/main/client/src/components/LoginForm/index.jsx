@@ -19,9 +19,11 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function LoginForm(props) {
   const { open, onClose } = props;
+  
   const handleClose = () => onClose();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -134,5 +136,10 @@ function LoginForm(props) {
     </div>
   );
 }
+
+LoginForm.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.bool.isRequired,
+};
 
 export default LoginForm;

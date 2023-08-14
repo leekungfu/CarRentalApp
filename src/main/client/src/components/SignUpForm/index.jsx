@@ -29,6 +29,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ControlledRadioButtons from "../ControlledRadioButtons";
+import PropTypes from "prop-types";
 
 const SignUpForm = (props) => {
   const { open, onClose } = props;
@@ -197,6 +198,11 @@ const SignUpForm = (props) => {
       </Dialog>
     </div>
   );
+};
+
+SignUpForm.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default SignUpForm;

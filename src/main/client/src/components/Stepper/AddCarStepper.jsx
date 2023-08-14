@@ -18,6 +18,7 @@ import Details from "./Steps/Details";
 import Pricing from "./Steps/Pricing";
 import Preview from "./Steps/Preview";
 import PropTypes from "prop-types";
+import { Link, useHistory, useNavigate } from "react-router-dom";
 
 const AddCarStepper = (props) => {
   const { open, onClose } = props;
@@ -40,8 +41,10 @@ const AddCarStepper = (props) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleClose = () => {
-    onClose();
+  const navigate = useNavigate();
+  
+  const handleClickViewCars = () => {
+    navigate("/cars");
   };
 
   return (
@@ -88,26 +91,19 @@ const AddCarStepper = (props) => {
             {activeStep === 3 && <Preview />}
           </Paper>
           {activeStep === steps.length ? (
-            <Fragment>
-              <Typography
-                variant="h6"
-                sx={{ display: "flex", justifyContent: "center" }}
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                sx={{
+                  color: "white",
+                  border: "solid 1px",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                onClick={handleClickViewCars}
               >
-                All steps are completed!
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button
-                  sx={{
-                    color: "white",
-                    border: "solid 1px",
-                  }}
-                  onClick={handleClose}
-                >
-                  Back home
-                </Button>
-              </Box>
-            </Fragment>
+                View your cars
+              </Button>
+            </Box>
           ) : (
             <Fragment>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
