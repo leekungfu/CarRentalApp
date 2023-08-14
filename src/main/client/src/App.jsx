@@ -15,6 +15,7 @@ import HomeOwner from "./containers/Home/HomeOwner";
 import AddCar from "./components/Dialogs/AddCar";
 import ProfileTabs from "./containers/Account/Profile";
 import MyCars from "./containers/Account/Car";
+import RentNow from "./components/RentNow";
 
 const ProviderPack = createPack(
   (props) => <ThemeProvider theme={DefaultTheme} {...props} />,
@@ -44,6 +45,7 @@ function App() {
             <Route path="/wallet" />
             <Route path="/cars" element={<MyCars />} />
             <Route path="/reports" />
+            <Route path="/rentnow" element={<RentNow />} />
           </Routes>
         </Layout>
       </Router>

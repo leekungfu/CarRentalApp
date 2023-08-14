@@ -76,11 +76,17 @@ const ProfileTabs = () => {
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs value={tab} onChange={handleChange}>
                 <Tab
+                  sx={{ fontWeight: "bold" }}
                   icon={<ManageAccounts />}
                   label="Personal Information"
                   {...a11yProps(0)}
                 />
-                <Tab icon={<Key />} label="Security" {...a11yProps(1)} />
+                <Tab
+                  sx={{ fontWeight: "bold" }}
+                  icon={<Key />}
+                  label="Security"
+                  {...a11yProps(1)}
+                />
               </Tabs>
             </Box>
             <CustomTabPanels value={tab} index={0}>

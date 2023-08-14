@@ -4,6 +4,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import "swiper/css";
 import { Navigation, Autoplay } from "swiper/modules";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import styled from "styled-components";
+
+const StyleButton = styled(Button)`
+  background-color: white !important;
+`;
 
 const images = [
   {
@@ -35,6 +41,7 @@ function AutoPlaySwipePreview() {
 
   return (
     <Swiper
+      spaceBetween={0}
       slidesPerView={1}
       loop={true}
       onSwiper={(swiper) => (swiperInstance = swiper)}
@@ -59,13 +66,19 @@ function AutoPlaySwipePreview() {
         </div>
       ))}
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-        <Button onClick={() => swiperInstance.slidePrev()} variant="outlined">
-          Back
-        </Button>
-        <Box sx={{ flex: "0.9 1 auto" }} />
-        <Button onClick={() => swiperInstance.slideNext()} variant="outlined">
-          Next
-        </Button>
+        <StyleButton
+          onClick={() => swiperInstance.slidePrev()}
+          variant="outlined"
+        >
+          <ArrowBack fontSize="small" />
+        </StyleButton>
+        <Box sx={{ flex: "0.7 1 auto" }} />
+        <StyleButton
+          onClick={() => swiperInstance.slideNext()}
+          variant="outlined"
+        >
+          <ArrowForward fontSize="small" />
+        </StyleButton>
       </Box>
     </Swiper>
   );

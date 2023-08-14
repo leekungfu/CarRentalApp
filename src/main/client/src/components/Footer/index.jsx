@@ -36,7 +36,8 @@ const Footer = () => {
       >
         <Container maxWidth="xl">
           <Grid container spacing={1}>
-            <Grid item xs={3}>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={2}>
               <Stack spacing={1} sx={{ pt: 8 }}>
                 <Typography variant="h5" sx={{ fontWeight: 600, pb: 5 }}>
                   CAR RENTAL

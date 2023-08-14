@@ -95,7 +95,6 @@ const Provinces = () => {
     setSelectedWard(event.target.value);
   };
 
-
   return (
     <Box>
       <Grid container columnSpacing={3}>

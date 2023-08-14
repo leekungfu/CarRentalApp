@@ -42,12 +42,23 @@ const ViewDetailsTabs = () => {
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={tab} onChange={handleChange}>
               <Tab
+                sx={{ fontWeight: "bold" }}
                 icon={<Info />}
                 label="Basic Information"
                 {...a11yProps(0)}
               />
-              <Tab icon={<More />} label="Details" {...a11yProps(1)} />
-              <Tab icon={<AttachMoney />} label="Pricing" {...a11yProps(2)} />
+              <Tab
+                sx={{ fontWeight: "bold" }}
+                icon={<More />}
+                label="Details"
+                {...a11yProps(1)}
+              />
+              <Tab
+                sx={{ fontWeight: "bold" }}
+                icon={<AttachMoney />}
+                label="Pricing"
+                {...a11yProps(2)}
+              />
             </Tabs>
           </Box>
           <CustomTabPanels value={tab} index={0}>
@@ -105,7 +116,7 @@ const ViewDetailsTabs = () => {
                   "&:hover": {
                     borderColor: "#fca311",
                   },
-                  width: "16%"
+                  width: "16%",
                 }}
                 variant="outlined"
               >
@@ -119,7 +130,7 @@ const ViewDetailsTabs = () => {
                   "&:hover": {
                     borderColor: "#fca311",
                   },
-                  width: "16%"
+                  width: "16%",
                 }}
                 variant="outlined"
               >
@@ -143,7 +154,7 @@ const ViewDetailsTabs = () => {
                   "&:hover": {
                     borderColor: "#fca311",
                   },
-                  width: "18%"
+                  width: "18%",
                 }}
                 variant="outlined"
               >
@@ -157,7 +168,7 @@ const ViewDetailsTabs = () => {
                   "&:hover": {
                     borderColor: "#fca311",
                   },
-                  width: "18%"
+                  width: "18%",
                 }}
                 variant="outlined"
               >
