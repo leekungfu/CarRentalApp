@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import AutoPlaySwipePreview from "../AutoPlaySwipePreview";
 import { Typography, Grid, Rating, Box, Stack } from "@mui/material";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
+
 
 const StyleTypography = styled(Typography)`
   font-weight: bold;
 `;
 
-const Preview = () => {
+const Preview = (props) => {
+  const { open, onClose } = props;
   const [value, setValue] = useState(3.5);
   return (
     <div>
