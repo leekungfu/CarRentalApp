@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 
 export default function ControlledRadioButtons() {
-  const [value, setValue] = useState("Customer");
+  const [value, setValue] = useState("");
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -32,7 +32,7 @@ export default function ControlledRadioButtons() {
           label={
             <Typography noWrap>
               I have read and agree with the {" "}
-              <Link href="#" noWrap>
+              <Link href="#" color="#fca311" noWrap>
                 Terms & Conditions
               </Link>
             </Typography>

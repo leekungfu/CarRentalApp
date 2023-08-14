@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { Box } from "@mui/material";
-import NavBar from "./NavBar";
 import Footer from "./Footer";
+import NavBar from "./NavMenuHomeGuest";
+import NavMenuUser from "./NavMenuUser";
 
 export class Layout extends Component {
   static displayName = Layout.name;
 
   render() {
+    const { userType } = this.props;
+
     return (
       <>
         <Box
@@ -14,10 +17,9 @@ export class Layout extends Component {
           sx={{
             display: "flex",
             flexDirection: "column",
-            height: "100%",
+            minHeight: "100vh",
           }}
         >
-          <NavBar />
           <Box
             className="app-content"
             sx={{
@@ -28,6 +30,10 @@ export class Layout extends Component {
           >
             {this.props.children}
           </Box>
+          {userType === "homeguest" && <NavBar />}
+          {userType === "homecustomer" && <NavMenuUser />}
+          {userType === "homeowner" && <NavMenuUser />}
+          <Footer/>
         </Box>
       </>
     );

@@ -30,10 +30,9 @@ import {
 import { useState } from "react";
 import ControlledRadioButtons from "../ControlledRadioButtons";
 
-const SignUpForm = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+const SignUpForm = (props) => {
+  const { open, onClose } = props;
+  const handleClose = () => onClose();
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -50,9 +49,6 @@ const SignUpForm = () => {
 
   return (
     <div>
-      <Button variant="text" sx={{ color: "white" }} onClick={handleOpen}>
-        Sign Up
-      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component="main" maxWidth="xs">
@@ -177,14 +173,22 @@ const SignUpForm = () => {
                 <Button
                   type="submit"
                   fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  variant="outlined"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    color: "white",
+                    borderColor: "#fca311",
+                    "&:hover": {
+                      borderColor: "#fca311",
+                    },
+                  }}
+                  href="/homeowner"
                 >
                   Sign up
                 </Button>
                 <Grid container>
-                  <Grid item xs>
-                  </Grid>
+                  <Grid item xs></Grid>
                 </Grid>
               </Box>
             </Box>

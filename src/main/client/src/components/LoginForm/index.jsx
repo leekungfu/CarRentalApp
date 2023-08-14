@@ -20,10 +20,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-const LoginForm = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+function LoginForm(props) {
+  const { open, onClose } = props;
+  const handleClose = () => onClose();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,9 +34,6 @@ const LoginForm = () => {
 
   return (
     <div>
-      <Button variant="text" sx={{ color: "white" }} onClick={handleOpen}>
-        Log in
-      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component="main" maxWidth="xs">
@@ -104,19 +100,28 @@ const LoginForm = () => {
                 <Button
                   type="submit"
                   fullWidth
-                  variant="contained"
-                  sx={{ mt: 2, mb: 2 }}
+                  variant="outlined"
+                  sx={{
+                    mt: 2,
+                    mb: 2,
+                    color: "white",
+                    borderColor: "#fca311",
+                    "&:hover": {
+                      borderColor: "#fca311",
+                    },
+                  }}
+                  href="/homecustomer"
                 >
                   Log in
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link href="#" variant="body2" color="#fca311">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="#" variant="body2" color="#fca311">
                       {"Don't you have an account? Sign Up"}
                     </Link>
                   </Grid>
@@ -128,6 +133,6 @@ const LoginForm = () => {
       </Dialog>
     </div>
   );
-};
+}
 
 export default LoginForm;
