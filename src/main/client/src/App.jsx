@@ -16,6 +16,7 @@ import AddCar from "./components/Dialogs/AddCar";
 import ProfileTabs from "./containers/Account/Profile";
 import MyCars from "./containers/Account/Car";
 import RentNow from "./components/RentNow";
+import MyBookings from "./containers/Account/Booking";
 
 const ProviderPack = createPack(
   (props) => <ThemeProvider theme={DefaultTheme} {...props} />,
@@ -41,7 +42,7 @@ function App() {
             <Route path="/homeowner" element={<HomeOwner/>} />
             <Route path="/addcar" element={<AddCar/>} />
             <Route path="/profile" element={<ProfileTabs/>} />
-            <Route path="/booking"/>
+            <Route path="/booking" element={<MyBookings />} />
             <Route path="/wallet" />
             <Route path="/cars" element={<MyCars />} />
             <Route path="/reports" />

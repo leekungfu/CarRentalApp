@@ -1,7 +1,10 @@
 import {
+  Commute,
+  Home,
   Key,
   Lock,
   ManageAccounts,
+  NavigateNext,
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
@@ -22,7 +25,7 @@ import {
   FormControl,
   InputAdornment,
   IconButton,
-  FormControlLabel,
+  Breadcrumbs,
 } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import CustomTabPanels from "../../../components/CustomTabPanels/CustomTabPanels";
@@ -32,6 +35,7 @@ import DrivingLicense from "../../../components/UploadFile/DrivingLicense";
 import Provinces from "../../../components/Select/Provinces";
 import BreadcrumbMenu from "../../../components/BreadcrumbsMenu";
 import NavMenuCustomer from "../../../components/NavMenuUser";
+import { Link } from "react-router-dom";
 
 function a11yProps(index) {
   return {
@@ -65,11 +69,40 @@ const ProfileTabs = () => {
   return (
     <Fragment>
       <NavMenuCustomer />
-      <Container maxWidth="lg">
-        <Box sx={{ mt: 10, mb: 1 }}>
-          <BreadcrumbMenu />
-        </Box>
-      </Container>
+      <Container maxWidth="lg" sx={{ mt: 5, mb: 5 }}>
+          <Breadcrumbs
+            separator={<NavigateNext fontSize="small" />}
+            aria-label="breadcrumb"
+          >
+            <Stack direction="row" alignItems="center">
+              <Home sx={{ mr: 0.5 }} fontSize="inherit" />
+              <Typography
+                component={Link}
+                to="/homeowner"
+                variant="subtitle1"
+                fontWeight="bold"
+                sx={{
+                  color: "#7f7f7f !important",
+                  "&:hover": {
+                    color: "#fca311 !important",
+                  },
+                }}
+              >
+                Home
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center">
+              <Commute sx={{ mr: 0.5 }} fontSize="inherit" />
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                My Cars
+              </Typography>
+            </Stack>
+          </Breadcrumbs>
+        </Container>
       <Container maxWidth="lg">
         <Card elevation={5} sx={{ mb: 10 }}>
           <CardContent>

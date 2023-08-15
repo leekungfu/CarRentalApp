@@ -53,9 +53,9 @@ function AutoPlaySwipePreview() {
             <Box
               component="img"
               sx={{
-                height: 255,
+                height: "fit-content",
                 display: "block",
-                maxWidth: 400,
+                maxWidth: "92%",
                 overflow: "hidden",
                 width: "100%",
               }}
@@ -72,7 +72,7 @@ function AutoPlaySwipePreview() {
         >
           <ArrowBack fontSize="small" />
         </StyleButton>
-        <Box sx={{ flex: "0.7 1 auto" }} />
+        <Box sx={{ flex: "0.9 1 auto" }} />
         <StyleButton
           onClick={() => swiperInstance.slideNext()}
           variant="outlined"
