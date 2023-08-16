@@ -97,7 +97,7 @@ const MyWallet = (props) => {
   return (
     <div>
       <NavMenuUser />
-      <Container maxWidth="lg" sx={{ pt: 5 }}>
+      <Container maxWidth="lg" sx={{ mt: 5, mb: 10 }}>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Breadcrumbs
             separator={<NavigateNext fontSize="small" />}
@@ -204,17 +204,13 @@ const MyWallet = (props) => {
                     headerAlign: "center",
                 }))}
                 disableRowSelectionOnClick
+                disableColumnFilter
+                disableColumnMenu
+                disableColumnSelector
               />
             </Box>
           </Stack>
         </Container>
-        <Pagination
-          sx={{ display: "flex", justifyContent: "end", mt: 10, mb: 10 }}
-          count={10}
-          variant="outlined"
-          showFirstButton
-          showLastButton
-        />
       </Container>
       <TopUp open={openTopup} onClose={handleClose} />
       <Withdraw open={openWithdraw} onClose={handleClose} />

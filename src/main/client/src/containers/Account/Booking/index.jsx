@@ -24,6 +24,7 @@ import ConfirmDeposit from "../../../components/Modals/ConfirmDeposit";
 import ConfirmPayment from "../../../components/Modals/ConfirmPayment";
 import { Link } from "react-router-dom";
 import AutoPlaySwipePreview from "../../../components/Stepper/AutoPlaySwipePreview";
+import ReturnCar from "../../../components/Modals/ReturnCar";
 
 const data = [
   {
@@ -130,6 +131,16 @@ const MyBookings = (props) => {
 
   const handleClickOpenConfirmPayment = () => {
     setOpenConfirmPayment(true);
+  };
+
+  const [openReturnCar, setOpenReturnCar] = useState(false);
+
+  const handleClickOpenReturnCar = () => {
+    setOpenReturnCar(true);
+  };
+
+  const handleCloseReturnCar = () => {
+    setOpenReturnCar(false);
   };
 
   return (
@@ -291,6 +302,7 @@ const MyBookings = (props) => {
                                 },
                               }}
                               variant="outlined"
+                              onClick={handleClickOpenReturnCar}
                             >
                               Return car
                             </Button>
@@ -323,6 +335,7 @@ const MyBookings = (props) => {
           </CardContent>
         </Card>
       </Container>
+      <ReturnCar open={openReturnCar} onClose={handleCloseReturnCar} />
       <ConfirmPayment open={openConfirmPayment} onClose={handleClose} />
       <ConfirmDeposit open={openConfirmDeposit} onClose={handleClose} />
     </div>

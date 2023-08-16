@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -8,13 +7,13 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
 import { Button } from "@mui/material";
-import { Person } from "@mui/icons-material";
+import { Logout, Person } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Fragment, useState } from "react";
+import LogOut from "../Modals/LogOutt";
+import LogOutt from "../Modals/LogOutt";
 
 const StyledMenuItem = styled(MenuItem)`
   cursor: pointer;
@@ -23,7 +22,7 @@ const StyledMenuItem = styled(MenuItem)`
 `;
 
 export default function UserMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -34,8 +33,18 @@ export default function UserMenu() {
     setAnchorEl(null);
   };
 
+  const [openLogout, setOpenLogout] = useState(false);
+
+  const handleClickOpenLogout = () => {
+    setOpenLogout(true);
+  };
+
+  const handleCloseLogout = () => {
+    setOpenLogout(false);
+  };
+
   return (
-    <React.Fragment>
+    <Fragment>
       <Box>
         <Tooltip title="User Menu">
           <IconButton
@@ -89,7 +98,7 @@ export default function UserMenu() {
         <StyledMenuItem component={Link} to="/cars">
           <Typography variant="subtitle1">My Cars</Typography>
         </StyledMenuItem>
-        <StyledMenuItem component={Link} to="/booking" >
+        <StyledMenuItem component={Link} to="/booking">
           <Typography variant="subtitle1">My Booking</Typography>
         </StyledMenuItem>
         <StyledMenuItem component={Link} to="/wallet">
@@ -99,13 +108,14 @@ export default function UserMenu() {
           <Typography variant="subtitle1">My Feedback</Typography>
         </StyledMenuItem>
         <Divider />
-        <StyledMenuItem component={Link} to="/logout">
+        <StyledMenuItem component={Link} onClick={handleClickOpenLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
           <Typography variant="subtitle1">Logout</Typography>
         </StyledMenuItem>
       </Menu>
-    </React.Fragment>
+      <LogOutt open={openLogout} onClose={handleCloseLogout} />
+    </Fragment>
   );
 }

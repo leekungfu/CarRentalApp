@@ -7,6 +7,7 @@ import {
   CardContent,
   Container,
   Grid,
+  Pagination,
   Paper,
   Rating,
   Stack,
@@ -138,28 +139,167 @@ const MyFeedBack = () => {
           </Grid>
         </Container>
         <Container maxWidth="lg" sx={{ mb: 10 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <Grid container>
-                <Grid item xs={8}>
-                  <Stack spacing={2}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <Person />
-                      <StyledTypography variant="subtitle2">
-                        TienHoang1211
-                      </StyledTypography>
+          <Stack spacing={2}>
+            <Card variant="outlined">
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={8}>
+                    <Stack spacing={2}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Person />
+                        <StyledTypography variant="subtitle2">
+                          TienHoang1211
+                        </StyledTypography>
+                      </Box>
                       <Typography variant="subtitle2">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Maecenas vehicula placerat faucibus. Sed convallis
                         tempus rhoncus. Sed vel dapibus est.
                       </Typography>
-                    </Box>
-                  </Stack>
+                      <Stack direction="row" spacing={2}>
+                        <Box
+                          component="img"
+                          sx={{
+                            height: "fit-content",
+                            display: "block",
+                            maxWidth: "40%",
+                            overflow: "hidden",
+                          }}
+                          src={"../car-3.jpg"}
+                        />
+                        <Box>
+                          <Typography variant="h6">
+                            Mercedes-Benz Pickup Truck 2008
+                          </Typography>
+                          <Typography variant="subtitle1">
+                            From: 13/03/2021 - 15:00
+                          </Typography>
+                          <Typography variant="subtitle1">
+                            To: 13/05/2021 - 15:00
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Stack alignItems="center" spacing={1} sx={{ mt: 4 }}>
+                      <Rating value={value} />
+                      <Typography variant="caption">22/4/2021 12:29</Typography>
+                    </Stack>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}></Grid>
-              </Grid>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            <Card variant="outlined">
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={8}>
+                    <Stack spacing={2}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Person />
+                        <StyledTypography variant="subtitle2">
+                          TienHoang1211
+                        </StyledTypography>
+                      </Box>
+                      <Typography variant="subtitle2">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Maecenas vehicula placerat faucibus. Sed convallis
+                        tempus rhoncus. Sed vel dapibus est.
+                      </Typography>
+                      <Stack direction="row" spacing={2}>
+                        <Box
+                          component="img"
+                          sx={{
+                            height: "fit-content",
+                            display: "block",
+                            maxWidth: "40%",
+                            overflow: "hidden",
+                          }}
+                          src={"../car-9.jpg"}
+                        />
+                        <Box>
+                          <Typography variant="h6">
+                            Mercedes-Benz Pickup Truck 2008
+                          </Typography>
+                          <Typography variant="subtitle1">
+                            From: 13/03/2021 - 15:00
+                          </Typography>
+                          <Typography variant="subtitle1">
+                            To: 13/05/2021 - 15:00
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Stack alignItems="center" spacing={1} sx={{ mt: 4 }}>
+                      <Rating value={value} />
+                      <Typography variant="caption">22/4/2021 12:29</Typography>
+                    </Stack>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+
+            <Card variant="outlined">
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={8}>
+                    <Stack spacing={2}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Person />
+                        <StyledTypography variant="subtitle2">
+                          TienHoang1211
+                        </StyledTypography>
+                      </Box>
+                      <Typography variant="subtitle2">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Maecenas vehicula placerat faucibus. Sed convallis
+                        tempus rhoncus. Sed vel dapibus est.
+                      </Typography>
+                      <Stack direction="row" spacing={2}>
+                        <Box
+                          component="img"
+                          sx={{
+                            height: "fit-content",
+                            display: "block",
+                            maxWidth: "40%",
+                            overflow: "hidden",
+                          }}
+                          src={"../car-10.jpg"}
+                        />
+                        <Box>
+                          <Typography variant="h6">
+                            Mercedes-Benz Pickup Truck 2008
+                          </Typography>
+                          <Typography variant="subtitle1">
+                            From: 13/03/2021 - 15:00
+                          </Typography>
+                          <Typography variant="subtitle1">
+                            To: 13/05/2021 - 15:00
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Stack alignItems="center" spacing={1} sx={{ mt: 4 }}>
+                      <Rating value={value} />
+                      <Typography variant="caption">22/4/2021 12:29</Typography>
+                    </Stack>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Stack>
+          <Pagination
+            sx={{ display: "flex", justifyContent: "end", mt: 10 }}
+            count={10}
+            variant="outlined"
+            showFirstButton
+            showLastButton
+          />
         </Container>
       </Container>
     </div>
