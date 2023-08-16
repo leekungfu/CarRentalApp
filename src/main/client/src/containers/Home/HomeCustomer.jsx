@@ -333,28 +333,25 @@ const HomeCustomer = (props) => {
                             Location: {item.location}
                           </Typography>
                           <Stack direction="row" spacing={3}>
-                            <Button
-                              sx={{
-                                width: "50%",
-                                color: "white",
-                                borderColor: "#fca311",
-                                "&:hover": {
+                            <Link to="/viewcardetails">
+                              <Button
+                                fullWidth
+                                sx={{
+                                  color: "white",
                                   borderColor: "#fca311",
-                                },
-                              }}
-                              variant="outlined"
-                              onClick={handleClickOpenViewDetails}
-                            >
-                              View details
-                            </Button>
-                            <ViewDetails
-                              open={openViewDetails}
-                              onClose={handleClose}
-                            />
+                                  "&:hover": {
+                                    borderColor: "#fca311",
+                                  },
+                                }}
+                                variant="outlined"
+                              >
+                                View details
+                              </Button>
+                            </Link>
                             <Link to="/rentnow">
                               <Button
+                                fullWidth
                                 sx={{
-                                  width: "100%",
                                   color: "#fca311",
                                   borderColor: "#fca311",
                                   bgcolor: "white",

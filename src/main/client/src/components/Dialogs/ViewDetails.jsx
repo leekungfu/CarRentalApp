@@ -28,7 +28,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import CustomTabPanels from "../CustomTabPanels/CustomTabPanels";
 import { Fragment } from "react";
 import styled from "styled-components";
-import ViewDetailsTabs from "../../containers/Account/Car/ViewDetailsTabs";
+import ViewDetailsTabs from "../../containers/Account/Car/EditCarDetails";
 import AutoPlaySwipePreview from "../Stepper/AutoPlaySwipePreview";
 import Preview from "../Stepper/Steps/Preview";
 

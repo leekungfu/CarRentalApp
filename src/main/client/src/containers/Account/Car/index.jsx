@@ -116,7 +116,7 @@ const MyCars = (props) => {
     <div>
       <NavMenuUser />
       <Container maxWidth="lg" sx={{ pt: 5 }}>
-      <Container maxWidth="lg" sx={{ mt: 5 }}>
+        <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Breadcrumbs
             separator={<NavigateNext fontSize="small" />}
             aria-label="breadcrumb"
@@ -263,28 +263,25 @@ const MyCars = (props) => {
                             Location: {item.location}
                           </Typography>
                           <Stack direction="row" spacing={3}>
-                            <Button
-                              sx={{
-                                width: "50%",
-                                color: "white",
-                                borderColor: "#fca311",
-                                "&:hover": {
+                            <Link to="/editcardetails">
+                              <Button
+                                sx={{
+                                  minWidth: "50%",
+                                  color: "white",
                                   borderColor: "#fca311",
-                                },
-                              }}
-                              variant="outlined"
-                              onClick={handleClickOpenViewDetails}
-                            >
-                              View details
-                            </Button>
-                            <ViewDetails
-                              open={openViewDetails}
-                              onClose={handleClose}
-                            />
+                                  "&:hover": {
+                                    borderColor: "#fca311",
+                                  },
+                                }}
+                                variant="outlined"
+                              >
+                                View details
+                              </Button>
+                            </Link>
                             {item.status === "Booked" ? (
                               <Button
                                 sx={{
-                                  width: "50%",
+                                  minWidth: "50%",
                                   color: "white",
                                   borderColor: "#15616d",
                                   backgroundColor: "#15616d !important",
@@ -301,7 +298,7 @@ const MyCars = (props) => {
                               <Button
                                 disabled
                                 sx={{
-                                  width: "50%",
+                                  minWidth: "50%",
                                   color: "white",
                                   bgcolor: "white",
                                   borderColor: "#fca311",
@@ -316,7 +313,7 @@ const MyCars = (props) => {
                             ) : (
                               <Button
                                 sx={{
-                                  width: "50%",
+                                  minWidth: "50%",
                                   color: "white",
                                   borderColor: "#fca311",
                                   "&:hover": {

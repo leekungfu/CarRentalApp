@@ -20,7 +20,7 @@ const DrivingLicense = () => {
         sx={{ display: "none" }}
       />
       <InputLabel htmlFor="drivingLicense">
-        <Button variant="contained" component="span" sx={{ border: "solid 1px", color: "white", }}>
+        <Button variant="outlined" component="span" >
           <CloudUpload sx={{ mr: 1 }} />
           Upload image
         </Button>

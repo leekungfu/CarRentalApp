@@ -225,6 +225,7 @@ const MyBookings = (props) => {
                       </Typography>
                       <Grid item xs={12}>
                         <Stack direction="row" spacing={3} sx={{ mt: 3 }}>
+                          <Link to="/bookingdetails">
                           <Button
                             sx={{
                               minWidth: "23%",
@@ -235,14 +236,10 @@ const MyBookings = (props) => {
                               },
                             }}
                             variant="outlined"
-                            onClick={handleClickOpenViewDetails}
                           >
                             View details
                           </Button>
-                          <ViewDetails
-                            open={openViewDetails}
-                            onClose={handleClose}
-                          />
+                          </Link>
                           {item.status === "Confirmed" ||
                           item.status === "Pending deposit" ? (
                             <Stack direction="row" spacing={3}>

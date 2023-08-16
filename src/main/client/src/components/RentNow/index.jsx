@@ -140,6 +140,7 @@ const RentNow = () => {
             <CardContent>
               <Stepper
                 sx={{
+                  mb: 3,
                   color: "#fca311",
                   "& .MuiStepConnector-root": {
                     backgroundColor: "#f0f0f0",

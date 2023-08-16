@@ -14,7 +14,7 @@ const Preview = (props) => {
   const [value, setValue] = useState(3.5);
   return (
     <div>
-      <Grid container alignItems="center">
+      <Grid container>
         <Grid item xs={6}>
           <AutoPlaySwipePreview />
         </Grid>
@@ -30,7 +30,7 @@ const Preview = (props) => {
             Location: Phường Ngọc Hà, Thành phố Hà Giang, Tỉnh Hà Giang
           </StyleTypography>
           <StyleTypography variant="subtitle1">
-            Status: <span style={{ color: "#38b000" }}>Availabel</span>
+            Status: <span style={{ color: "#38b000", fontWeight: "bold" }}>Availabel</span>
           </StyleTypography>
         </Grid>
       </Grid>

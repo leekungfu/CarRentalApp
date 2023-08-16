@@ -95,8 +95,8 @@ export default function UserMenu() {
         <StyledMenuItem component={Link} to="/wallet">
           <Typography variant="subtitle1">My Wallet</Typography>
         </StyledMenuItem>
-        <StyledMenuItem component={Link} to="/report">
-          <Typography variant="subtitle1">My Reports</Typography>
+        <StyledMenuItem component={Link} to="/feedback">
+          <Typography variant="subtitle1">My Feedback</Typography>
         </StyledMenuItem>
         <Divider />
         <StyledMenuItem component={Link} to="/logout">

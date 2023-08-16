@@ -17,6 +17,11 @@ import ProfileTabs from "./containers/Account/Profile";
 import MyCars from "./containers/Account/Car";
 import RentNow from "./components/RentNow";
 import MyBookings from "./containers/Account/Booking";
+import EditCarDetails from "./containers/Account/Car/EditCarDetails";
+import ViewCarDetails from "./containers/Account/Car/ViewCarDetails";
+import BookingDetails from "./containers/Account/Booking/BookingDetails";
+import MyWallet from "./containers/Account/Wallet";
+import MyFeedBack from "./containers/Account/FeedBack";
 
 const ProviderPack = createPack(
   (props) => <ThemeProvider theme={DefaultTheme} {...props} />,
@@ -43,10 +48,13 @@ function App() {
             <Route path="/addcar" element={<AddCar/>} />
             <Route path="/profile" element={<ProfileTabs/>} />
             <Route path="/booking" element={<MyBookings />} />
-            <Route path="/wallet" />
+            <Route path="/wallet" element={<MyWallet />} />
             <Route path="/cars" element={<MyCars />} />
-            <Route path="/reports" />
+            <Route path="/feedback" element={<MyFeedBack />} />
             <Route path="/rentnow" element={<RentNow />} />
+            <Route path="/editcardetails" element={<EditCarDetails />} />
+            <Route path="/viewcardetails" element={<ViewCarDetails />} />
+            <Route path="/bookingdetails" element={<BookingDetails />} />
           </Routes>
         </Layout>
       </Router>
