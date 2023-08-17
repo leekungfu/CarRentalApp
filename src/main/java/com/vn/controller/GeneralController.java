@@ -22,27 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
 @Controller
+@RequestMapping
 public class GeneralController {
-
     @Autowired
     private MemberService memberService;
-
     @Autowired
     private Utility utility;
 
-
-    @GetMapping("/about")
-    public String aboutPage() {
-        return "home/about";
-    }
-
-    @GetMapping("/signupAjax")
-    public String signUp() {
-        return "home/home_guest";
-
-    }
-
-    @PostMapping("/signupAjax")
+    @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<?> signUpPageAjax(@RequestBody Member member) {
         Member checkMem = memberService.findByEmail(member.getEmail());
@@ -58,7 +45,7 @@ public class GeneralController {
         return ResponseEntity.ok(new StringMessageDTO("NO"));
     }
 
-    @PostMapping("/loginAjax")
+    @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<?> loginPageAjax(@RequestBody Member member, HttpServletRequest request) {
         try {
@@ -67,12 +54,6 @@ public class GeneralController {
         } catch (Exception exception) {
             return ResponseEntity.ok(new StringMessageDTO("FAILED"));
         }
-    }
-
-
-    @GetMapping("/login")
-    public String loginPage(){
-        return "home/home_guest";
     }
 
     @GetMapping("/forgot_password")

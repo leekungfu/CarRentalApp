@@ -54,6 +54,8 @@ const SignUpForm = (props) => {
     navigate("/homeowner");
   };
 
+  
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
