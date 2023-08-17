@@ -22,8 +22,8 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/home_guest")
+    @GetMapping("/")
     public String homeGuestPage() {
-        return "home/home_guest";
+        return "index";
     }
 }

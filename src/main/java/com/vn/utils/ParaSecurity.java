@@ -22,7 +22,11 @@ public class ParaSecurity {
             "/rent_car",
             "/home",
             "/editProfile",
-            "/changePassword"
+            "/changePassword",
+            "/",
+            "/homecustomer",
+            "/booking",
+            "/feedback",
     };
 
     public static String[] customerPages ={
