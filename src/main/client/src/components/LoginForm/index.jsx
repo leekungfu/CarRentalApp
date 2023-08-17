@@ -12,18 +12,28 @@ import {
   FormControlLabel,
   Checkbox,
   Grid,
-  Link,
   InputLabel,
   OutlinedInput,
   IconButton,
   InputAdornment,
+  Stack,
 } from "@mui/material";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
+import SignUpForm from "../SignUpForm";
 
 function LoginForm(props) {
   const { open, onClose } = props;
-  
+
+  const navigate = useNavigate();
+  const handleClickLogin = () => {
+    navigate("/homecustomer");
+  };
+  const handleClickForgot = () => {
+    navigate("/reset");
+  };
+
   const handleClose = () => onClose();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -32,6 +42,15 @@ function LoginForm(props) {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const [openSignupForm, setOpenSignupForm] = useState(false);
+
+  const handleClickOpenSignupForm = () => {
+    setOpenSignupForm(true);
+  };
+  const handleCloseSignupForm = () => {
+    setOpenSignupForm(false);
   };
 
   return (
@@ -112,26 +131,33 @@ function LoginForm(props) {
                       borderColor: "#fca311",
                     },
                   }}
-                  href="/homecustomer"
+                  onClick={handleClickLogin}
                 >
                   Log in
                 </Button>
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2" color="#fca311">
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href="#" variant="body2" color="#fca311">
-                      {"Don't you have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid>
+                <Stack>
+                  <Button
+                    fullWidth
+                    variant="text"
+                    sx={{ bgcolor: "white", fontWeight: "regular" }}
+                    onClick={handleClickForgot}
+                  >
+                    Forgot password?
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="text"
+                    sx={{ bgcolor: "white", fontWeight: "regular" }}
+                    onClick={handleClickOpenSignupForm}
+                  >
+                    {"Don't you have an account? Sign Up"}
+                  </Button>
+                </Stack>
               </Box>
             </Box>
           </Container>
         </DialogContent>
+        <SignUpForm open={openSignupForm} onClose={handleCloseSignupForm} />
       </Dialog>
     </div>
   );
@@ -139,7 +165,7 @@ function LoginForm(props) {
 
 LoginForm.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

@@ -30,6 +30,7 @@ import {
 import { useState } from "react";
 import ControlledRadioButtons from "../ControlledRadioButtons";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = (props) => {
   const { open, onClose } = props;
@@ -46,6 +47,11 @@ const SignUpForm = (props) => {
     setShowConfirmPassword((show) => !show);
   const handleMouseDownConfirmPassword = (event) => {
     event.preventDefault();
+  };
+
+  const navigate = useNavigate();
+  const handleClickSignup = () => {
+    navigate("/homeowner");
   };
 
   return (
@@ -184,7 +190,7 @@ const SignUpForm = (props) => {
                       borderColor: "#fca311",
                     },
                   }}
-                  href="/homeowner"
+                  onClick={handleClickSignup}
                 >
                   Sign up
                 </Button>

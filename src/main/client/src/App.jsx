@@ -22,6 +22,8 @@ import ViewCarDetails from "./containers/Account/Car/ViewCarDetails";
 import BookingDetails from "./containers/Account/Booking/BookingDetails";
 import MyWallet from "./containers/Account/Wallet";
 import MyFeedBack from "./containers/Account/FeedBack";
+import ResetPass from "./containers/Account/Reset/ResetPass";
+import ConfirmReset from "./containers/Account/Reset/ConfirmReset";
 
 const ProviderPack = createPack(
   (props) => <ThemeProvider theme={DefaultTheme} {...props} />,
@@ -55,6 +57,8 @@ function App() {
             <Route path="/editcardetails" element={<EditCarDetails />} />
             <Route path="/viewcardetails" element={<ViewCarDetails />} />
             <Route path="/bookingdetails" element={<BookingDetails />} />
+            <Route path="/reset" element={<ResetPass />} />
+            <Route path="/confirmreset" element={<ConfirmReset />} />
           </Routes>
         </Layout>
       </Router>

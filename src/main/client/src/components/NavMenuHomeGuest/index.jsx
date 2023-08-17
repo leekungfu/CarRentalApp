@@ -29,8 +29,8 @@ const pages = [
   },
   {
     title: "LOG IN",
-    link: "#"
-  }
+    link: "#",
+  },
 ];
 
 const NavBar = () => {
@@ -41,9 +41,9 @@ const NavBar = () => {
     if (page.title === "LOG IN") {
       setOpenLogin(true);
     }
-    
+
     if (page.title === "SIGN UP") {
-      setOpenSignup(true)
+      setOpenSignup(true);
     }
   };
 
@@ -51,7 +51,6 @@ const NavBar = () => {
     setOpenLogin(false);
     setOpenSignup(false);
   };
-
 
   return (
     <Fragment>
@@ -69,10 +68,10 @@ const NavBar = () => {
                 textDecoration: "none",
               }}
             >
-              RENTAL A CAR {" "}<span style={{ color: "#fca311" }}>TODAY</span>
+              RENTAL A CAR <span style={{ color: "#fca311" }}>TODAY</span>
             </Typography>
             <DirectionsCarIcon
-            fontSize="medium"
+              fontSize="medium"
               sx={{ display: { xs: "none", md: "flex" }, ml: 1 }}
             />
             <Box
@@ -85,7 +84,14 @@ const NavBar = () => {
               {pages.map((page, index) => (
                 <Button
                   key={index}
-                  sx={{ display: "block", fontWeight: 600, bgcolor: "rgba(0,0,0,0)", }}
+                  sx={{
+                    display: "block",
+                    fontWeight: 600,
+                    bgcolor: "rgba(0,0,0,0)",
+                    "&:hover": {
+                      bgcolor: "rgba(0,0,0,0)",
+                    },
+                  }}
                   onClick={() => handleClickOpen(page)}
                 >
                   {page.title}
