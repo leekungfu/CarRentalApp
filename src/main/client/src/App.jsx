@@ -47,7 +47,7 @@ function App() {
             <Route index={true} element={<HomeGuest />} />
             <Route path="/homecustomer" element={<HomeCustomer />} />
             <Route path="/homeowner" element={<HomeOwner/>} />
-            <Route path="/addcar" element={<AddCar/>} />
+            <Route path="/addcar" element={<AddCar />} />
             <Route path="/profile" element={<ProfileTabs/>} />
             <Route path="/booking" element={<MyBookings />} />
             <Route path="/wallet" element={<MyWallet />} />

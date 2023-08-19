@@ -8,6 +8,7 @@ import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @Controller
 @RequestMapping
@@ -47,6 +49,7 @@ public class GeneralController {
 
     @PostMapping("/login")
     @ResponseBody
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> loginPageAjax(@RequestBody Member member, HttpServletRequest request) {
         try {
             request.login(member.getEmail(), member.getPassword());
@@ -54,6 +57,15 @@ public class GeneralController {
         } catch (Exception exception) {
             return ResponseEntity.ok(new StringMessageDTO("FAILED"));
         }
+    }
+
+
+    @GetMapping("/members")
+    @ResponseBody
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<HttpStatus> getList(){
+        List<Member> members = memberService.findAll();
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/forgot_password")
