@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
 public class CustomUserDetails implements UserDetails {
-    @Getter
     private final Member member;
 
     public CustomUserDetails(Member member) {

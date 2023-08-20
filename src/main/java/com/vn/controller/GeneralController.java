@@ -1,6 +1,7 @@
 package com.vn.controller;
 
-import com.vn.dto.StringMessageDTO;
+import com.vn.dto.MessageResult;
+import com.vn.dto.MessageResult;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
@@ -10,61 +11,86 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping
+@CrossOrigin(origins = "http://localhost:3000")
 public class GeneralController {
+    private final AuthenticationManager authenticationManager;
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
     @Autowired
     private MemberService memberService;
     @Autowired
     private Utility utility;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public GeneralController(AuthenticationManager authen) {
+        authenticationManager = authen;
+    }
 
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<?> signUpPageAjax(@RequestBody Member member) {
-        Member checkMem = memberService.findByEmail(member.getEmail());
+    public ResponseEntity<MessageResult> signup(@RequestParam String email, @RequestParam String password, @RequestParam String phone, @RequestParam String fullName, @RequestParam String role) {
+        Member checkMem = memberService.findByEmail(email);
         if (checkMem == null) {
+            Member member = new Member();
+            member.setEmail(email);
+            member.setPassword(bCryptPasswordEncoder.encode(password));
+            member.setPhone(phone);
+            member.setFullName(fullName);
+            member.setRole(role);
             memberService.save(member);
 
-            // Auto login after user signed up successfully
             CustomUserDetails customUserDetails = new CustomUserDetails(member);
             Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(new StringMessageDTO("YES"));
+
+            return ResponseEntity.ok(new MessageResult("OK"));
         }
-        return ResponseEntity.ok(new StringMessageDTO("NO"));
+        return ResponseEntity.ok(new MessageResult("FAILED"));
     }
 
     @PostMapping("/login")
     @ResponseBody
-    @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<?> loginPageAjax(@RequestBody Member member, HttpServletRequest request) {
+    public ResponseEntity<MessageResult> login(@RequestParam String email, @RequestParam String password) {
         try {
-            request.login(member.getEmail(), member.getPassword());
-            return ResponseEntity.ok(new StringMessageDTO("OK"));
-        } catch (Exception exception) {
-            return ResponseEntity.ok(new StringMessageDTO("FAILED"));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String role = userDetails.getAuthorities().stream().map(Objects::toString).collect(Collectors.joining(","));
+            System.out.println(userDetails);
+
+            return ResponseEntity.ok(new MessageResult("OK," + role));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new MessageResult("FAILED"));
         }
     }
 
-
-    @GetMapping("/members")
+    @PostMapping("/logout")
     @ResponseBody
-    @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<HttpStatus> getList(){
-        List<Member> members = memberService.findAll();
+    public ResponseEntity<HttpStatus> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.logout(request, response, authentication);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -75,9 +101,7 @@ public class GeneralController {
     }
 
     @PostMapping("/forgot_password")
-    public String forgotPassProcessing(@ModelAttribute("member") Member member,
-                                       Model model,
-                                       HttpServletRequest request) {
+    public String forgotPassProcessing(@ModelAttribute("member") Member member, Model model, HttpServletRequest request) {
         // Find existed email in database to confirm sending the reset password request
         String email = request.getParameter("email");
         // Random token chain, which will be used to determine ex

@@ -3,7 +3,9 @@ package com.vn.config;
 import com.vn.service.impl.CustomUserDetailsServiceImpl;
 import com.vn.utils.ParaSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("remember-me", "JSESSIONID")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/home_guest")
+                .logoutSuccessUrl("/")
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers(ParaSecurity.ignoreSecurityPages)
@@ -56,6 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(ParaSecurity.carOwnerPages).hasRole("ROLE_OWNER")
                 .anyRequest()
                 .authenticated();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 

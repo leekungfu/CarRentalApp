@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StringMessageDTO {
+public class MessageResult {
     public String message;
 }
