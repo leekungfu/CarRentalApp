@@ -21,8 +21,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 
-@Controller
-public class MemberController {
+@RestController
+@RequestMapping
+@CrossOrigin(origins = "http://localhost:3000")
+public class ProfileController {
     @Autowired
     private MemberService memberService;
 
@@ -53,7 +55,8 @@ public class MemberController {
         return "account/editProfile";
     }
 
-    @PostMapping("/editProfile")
+    @PostMapping("/personalInfo")
+    @ResponseBody
     public String editProfileProcess(@ModelAttribute("member") Member member, Model model
             , @RequestParam("drivingLicense") MultipartFile drivingLicense) throws IOException {
         String drivingLicenses = StringUtils.cleanPath(drivingLicense.getOriginalFilename());

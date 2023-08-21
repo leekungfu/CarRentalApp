@@ -40,17 +40,9 @@ public class GeneralController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/memberInfo")
-    @ResponseBody
-    public ResponseEntity<Member> infor(){
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Member member = userDetails.getMember();
-        return  ResponseEntity.ok(member);
-    }
-
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<MessageResult> signup(@RequestParam String email, @RequestParam String password, @RequestParam String phone, @RequestParam String fullName, @RequestParam String role) {
+    public ResponseEntity<?> signup(@RequestParam String email, @RequestParam String password, @RequestParam String phone, @RequestParam String fullName, @RequestParam String role) {
         Member checkMem = memberService.findByEmail(email);
         if (checkMem == null) {
             Member member = new Member();
@@ -59,25 +51,30 @@ public class GeneralController {
             member.setPhone(phone);
             member.setFullName(fullName);
             member.setRole(role);
+
             memberService.save(member);
 
-            return ResponseEntity.ok(new MessageResult("OK"));
+            setAuthen(member);
+
+            return ResponseEntity.ok(member);
         }
         return ResponseEntity.ok(new MessageResult("FAILED"));
+    }
+
+    private CustomUserDetails setAuthen(Member member) {
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return (CustomUserDetails) authentication.getPrincipal();
     }
 
     @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
-        Member member = memberService.findByEmail(email);
-        if (member != null) {
-            CustomUserDetails customUserDetails = new CustomUserDetails(member);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-            String role = userDetails.getMember().getRole();
-
-            return ResponseEntity.ok(role);
+        Member result = memberService.findByEmail(email);
+        if (result != null) {
+            Member member = setAuthen(result).getMember();
+            return ResponseEntity.ok(member);
         }
         return ResponseEntity.ok(new MessageResult("FAILED"));
     }
