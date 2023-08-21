@@ -1,7 +1,6 @@
 package com.vn.controller;
 
 import com.vn.dto.MessageResult;
-import com.vn.dto.MessageResult;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
@@ -27,16 +26,13 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping
 @CrossOrigin(origins = "http://localhost:3000")
 public class GeneralController {
-    private final AuthenticationManager authenticationManager;
-    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
     @Autowired
     private MemberService memberService;
     @Autowired
@@ -44,8 +40,12 @@ public class GeneralController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public GeneralController(AuthenticationManager authen) {
-        authenticationManager = authen;
+    @GetMapping("/memberInfo")
+    @ResponseBody
+    public ResponseEntity<Member> infor(){
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member member = userDetails.getMember();
+        return  ResponseEntity.ok(member);
     }
 
     @PostMapping("/signup")
@@ -61,10 +61,6 @@ public class GeneralController {
             member.setRole(role);
             memberService.save(member);
 
-            CustomUserDetails customUserDetails = new CustomUserDetails(member);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
             return ResponseEntity.ok(new MessageResult("OK"));
         }
         return ResponseEntity.ok(new MessageResult("FAILED"));
@@ -72,18 +68,18 @@ public class GeneralController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<MessageResult> login(@RequestParam String email, @RequestParam String password) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+        Member member = memberService.findByEmail(email);
+        if (member != null) {
+            CustomUserDetails customUserDetails = new CustomUserDetails(member);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String role = userDetails.getAuthorities().stream().map(Objects::toString).collect(Collectors.joining(","));
-            System.out.println(userDetails);
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            String role = userDetails.getMember().getRole();
 
-            return ResponseEntity.ok(new MessageResult("OK," + role));
-        } catch (Exception e) {
-            return ResponseEntity.ok(new MessageResult("FAILED"));
+            return ResponseEntity.ok(role);
         }
+        return ResponseEntity.ok(new MessageResult("FAILED"));
     }
 
     @PostMapping("/logout")

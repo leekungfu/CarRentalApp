@@ -58,25 +58,9 @@ public class Member implements Serializable {
 	@OneToMany(mappedBy = "member")
 	private List<Booking> bookings;
 
-	public Member(String fullName, LocalDate birthDay, String nationalID, String email, String phone, String city, String district, String ward, String street, String drivingLicense) {
-		this.fullName = fullName;
-		this.birthDay = birthDay;
-		this.nationalID = nationalID;
-		this.email = email;
-		this.phone = phone;
-		this.city = city;
-		this.district = district;
-		this.ward = ward;
-		this.street = street;
-		this.drivingLicense = drivingLicense;
-	}
-
-
-
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<MemberTransaction> memberTransactions;
-
 	@OneToMany(mappedBy = "member")
 	private List<Car> cars;
 }
