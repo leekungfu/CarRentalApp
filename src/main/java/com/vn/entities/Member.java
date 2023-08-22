@@ -18,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @ToString
 @Entity
+@Table(name = "member")
 public class Member implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

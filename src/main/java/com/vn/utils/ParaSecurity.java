@@ -48,7 +48,8 @@ public class ParaSecurity {
             "/booking/*",
             "/car/*",
             "/booking/status",
-            "/changePassword"
+            "/changePassword",
+            "/personalInfo"
     };
 
     public static String[] customerPages ={
