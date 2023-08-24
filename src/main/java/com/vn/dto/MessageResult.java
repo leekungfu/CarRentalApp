@@ -11,5 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageResult {
+    public boolean isSuccess;
     public String message;
 }

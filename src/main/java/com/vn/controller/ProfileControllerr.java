@@ -30,7 +30,7 @@ public class ProfileControllerr {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/changePassword")
+
     public String resetPassword(Model model) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member m = memberService.findByEmail(detail.getUsername());
@@ -39,7 +39,6 @@ public class ProfileControllerr {
         return "account/changePassword";
     }
 
-    @PostMapping("/changePassword")
     public String resetPassword(@ModelAttribute("user") Member member) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member m = memberService.findByEmail(detail.getUsername());

@@ -34,6 +34,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @RestController
 @RequestMapping
@@ -64,7 +65,7 @@ public class GeneralController {
 
             return ResponseEntity.ok(member);
         }
-        return ResponseEntity.ok(new MessageResult("FAILED"));
+        return ResponseEntity.ok(new MessageResult(false, "Sign up failed! Let's try again."));
     }
 
     private CustomUserDetails setAuthen(Member member) {
@@ -82,7 +83,7 @@ public class GeneralController {
             Member member = setAuthen(result).getMember();
             return ResponseEntity.ok(member);
         }
-        return ResponseEntity.ok(new MessageResult("FAILED"));
+        return ResponseEntity.ok(new MessageResult(false, "Login failed! Please try again."));
     }
 
     @PostMapping("/logout")
@@ -127,16 +128,25 @@ public class GeneralController {
             m.setDrivingLicense(uploadPath.resolve(drivingLicense.getOriginalFilename()).toString());
             memberService.updateMember(m);
 
-            return ResponseEntity.ok(new MessageResult("OK"));
+            return ResponseEntity.ok(new MessageResult(true, "Update successful!"));
         }
-        return ResponseEntity.ok(new MessageResult("FAILED"));
+        return ResponseEntity.ok(new MessageResult(false, "Update failed! Check your information again please."));
 
     }
 
-    @GetMapping("/forgot_password")
-    public String forgotPassForm() {
+    @PostMapping("/updatePassword")
+    @ResponseBody
+    public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String password) {
+        Member result = memberService.findByEmail(email);
 
-        return "account/forgot_password";
+        if (result != null) {
+            Member memberUpdate = setAuthen(result).getMember();
+            memberUpdate.setPassword(bCryptPasswordEncoder.encode(password));
+            memberService.updateMember(memberUpdate);
+            return ResponseEntity.ok(new MessageResult(true, "Change password successful!"));
+        } else {
+            return ResponseEntity.ok(new MessageResult(false, "Change password failed! Try again please"));
+        }
     }
 
     @PostMapping("/forgot_password")
