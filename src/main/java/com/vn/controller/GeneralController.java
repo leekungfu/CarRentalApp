@@ -1,7 +1,10 @@
 package com.vn.controller;
 
+import com.vn.config.PasswordEncoder;
+import com.vn.dto.LoginDto;
 import com.vn.dto.MemberDto;
 import com.vn.dto.MessageResult;
+import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,18 +50,20 @@ public class GeneralController {
     private Utility utility;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<?> signup(@RequestParam String email, @RequestParam String password, @RequestParam String phone, @RequestParam String fullName, @RequestParam String role) {
-        Member checkMem = memberService.findByEmail(email);
+    public ResponseEntity<?> signup(@ModelAttribute SignupDto dto) {
+        Member checkMem = memberService.findByEmail(dto.getEmail());
         if (checkMem == null) {
             Member member = new Member();
-            member.setEmail(email);
-            member.setPassword(bCryptPasswordEncoder.encode(password));
-            member.setPhone(phone);
-            member.setFullName(fullName);
-            member.setRole(role);
+            member.setEmail(dto.getEmail());
+            member.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+            member.setPhone(dto.getPhone());
+            member.setFullName(dto.getFullName());
+            member.setRole(dto.getRole());
 
             memberService.save(member);
 
@@ -77,13 +83,19 @@ public class GeneralController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
-        Member result = memberService.findByEmail(email);
+    public ResponseEntity<?> login(@ModelAttribute LoginDto dto) {
+        Member result = memberService.findByEmail(dto.getEmail());
         if (result != null) {
-            Member member = setAuthen(result).getMember();
-            return ResponseEntity.ok(member);
+            String storedPassword = result.getPassword();
+            String dtoPassword = dto.getPassword();
+
+            if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
+                Member member = setAuthen(result).getMember();
+                return ResponseEntity.ok(member);
+            }
+            return ResponseEntity.ok(new MessageResult(false, "Wrong password! Please try again"));
         }
-        return ResponseEntity.ok(new MessageResult(false, "Login failed! Please try again."));
+        return ResponseEntity.ok(new MessageResult(false, "Email is not exist! Please try again."));
     }
 
     @PostMapping("/logout")
