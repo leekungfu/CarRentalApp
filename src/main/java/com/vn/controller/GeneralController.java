@@ -60,23 +60,22 @@ public class GeneralController {
         if (checkMem == null) {
             Member member = new Member();
             member.setEmail(dto.getEmail());
-            member.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+            member.setPassword(dto.getPassword());
             member.setPhone(dto.getPhone());
             member.setFullName(dto.getFullName());
             member.setRole(dto.getRole());
 
+            // save method including encode password
             memberService.save(member);
-
             setAuthen(member);
-
-            return ResponseEntity.ok(member);
+            return ResponseEntity.ok(new MessageResult(true, "Sign up successful!", member));
         }
-        return ResponseEntity.ok(new MessageResult(false, "Sign up failed! Let's try again."));
+        return ResponseEntity.ok(new MessageResult(false, "Sign up failed! Let's try again.", null));
     }
 
     private CustomUserDetails setAuthen(Member member) {
         CustomUserDetails customUserDetails = new CustomUserDetails(member);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, customUserDetails.getPassword(), customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return (CustomUserDetails) authentication.getPrincipal();
     }
@@ -88,14 +87,13 @@ public class GeneralController {
         if (result != null) {
             String storedPassword = result.getPassword();
             String dtoPassword = dto.getPassword();
-
             if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
                 Member member = setAuthen(result).getMember();
-                return ResponseEntity.ok(member);
+                return ResponseEntity.ok(new MessageResult(true, "Login successful!", member));
             }
-            return ResponseEntity.ok(new MessageResult(false, "Wrong password! Please try again"));
+            return ResponseEntity.ok(new MessageResult(false, "Wrong password! Please try again", null));
         }
-        return ResponseEntity.ok(new MessageResult(false, "Email is not exist! Please try again."));
+        return ResponseEntity.ok(new MessageResult(false, "Email is not exist! Please try again.", null));
     }
 
     @PostMapping("/logout")
@@ -140,9 +138,9 @@ public class GeneralController {
             m.setDrivingLicense(uploadPath.resolve(drivingLicense.getOriginalFilename()).toString());
             memberService.updateMember(m);
 
-            return ResponseEntity.ok(new MessageResult(true, "Update successful!"));
+            return ResponseEntity.ok(new MessageResult(true, "Update successful!", m));
         }
-        return ResponseEntity.ok(new MessageResult(false, "Update failed! Check your information again please."));
+        return ResponseEntity.ok(new MessageResult(false, "Update failed! Check your information again please.", null));
 
     }
 
@@ -155,9 +153,9 @@ public class GeneralController {
             Member memberUpdate = setAuthen(result).getMember();
             memberUpdate.setPassword(bCryptPasswordEncoder.encode(password));
             memberService.updateMember(memberUpdate);
-            return ResponseEntity.ok(new MessageResult(true, "Change password successful!"));
+            return ResponseEntity.ok(new MessageResult(true, "Change password successful!", memberUpdate));
         } else {
-            return ResponseEntity.ok(new MessageResult(false, "Change password failed! Try again please"));
+            return ResponseEntity.ok(new MessageResult(false, "Change password failed! Try again please", null));
         }
     }
 
