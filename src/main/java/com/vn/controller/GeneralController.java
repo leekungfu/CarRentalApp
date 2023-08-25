@@ -160,27 +160,25 @@ public class GeneralController {
     }
 
     @PostMapping("/forgot_password")
-    public String forgotPassProcessing(@ModelAttribute("member") Member member, Model model, HttpServletRequest request) {
-        // Find existed email in database to confirm sending the reset password request
-        String email = request.getParameter("email");
+    @ResponseBody
+    public ResponseEntity<?> forgotPassProcessing(@RequestParam String email, HttpServletRequest request) {
         // Random token chain, which will be used to determine ex
+        Member result = memberService.findByEmail(email);
+        if (result == null) {
+            return ResponseEntity.ok(new MessageResult(false, "Email is not exist!", null));
+        }
         String token = RandomString.make(30);
-
         try {
             // Set value for user found by the given email and persist change to the DB
             memberService.updateResetPasswordToken(token, email);
-
             // Send the reset link with unique token which will expired immediately user reset password success
             String resetPassLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
             utility.sendEmail(email, resetPassLink);
 
-        } catch (UsernameNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-        } catch (UnsupportedEncodingException | MessagingException e) {
-            model.addAttribute("error", "Something wrong while sending email!");
+        } catch (UsernameNotFoundException | UnsupportedEncodingException | MessagingException e) {
+            return ResponseEntity.ok(new MessageResult(false, e.getMessage(), null));
         }
-
-        return "account/forgot_password";
+        return ResponseEntity.ok(new MessageResult(true, "Sent!", result));
     }
 
     @GetMapping("/reset_password")
