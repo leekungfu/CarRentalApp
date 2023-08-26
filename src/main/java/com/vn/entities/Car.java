@@ -43,7 +43,6 @@ public class Car {
 	private Double mileage;
 	@NotNull
 	private Double fuelConsumption;
-
     @NotEmpty
     @Nationalized
 	private String city;
