@@ -13,9 +13,9 @@ import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
-    Car findCarByLicensePlate(String licensePlate);
+    Car findCarByPlateNumber(String plateNumber);
 
-    Page<Car> findByCity(String city, Pageable pageable);
+    Page<Car> findByProvince(String city, Pageable pageable);
 
     void deleteById(Integer id);
 
@@ -26,7 +26,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 
     Car findCarById(Integer id);
 
-    @Query(value = "SELECT c FROM Car c LEFT JOIN c.bookings b WHERE c.city = :city AND (b.endDate < :date OR b.endDate IS NULL)")
-    Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable);
+    @Query(value = "SELECT c FROM Car c LEFT JOIN c.bookings b WHERE c.province = :city AND (b.endDate < :date OR b.endDate IS NULL)")
+    Page<Car> findByProvinceAndDate(String city, LocalDate date, Pageable pageable);
 
 }

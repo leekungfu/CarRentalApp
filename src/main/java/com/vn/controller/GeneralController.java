@@ -116,7 +116,7 @@ public class GeneralController {
             m.setBirthDay(LocalDate.parse(dto.getBirthDay()));
             m.setPhone(dto.getPhone());
             m.setNationalID(dto.getNationalID());
-            m.setCity(dto.getCity());
+            m.setProvince(dto.getProvince());
             m.setDistrict(dto.getDistrict());
             m.setWard(dto.getWard());
             m.setStreet(dto.getStreet());

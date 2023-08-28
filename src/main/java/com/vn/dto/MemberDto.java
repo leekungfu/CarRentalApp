@@ -26,7 +26,7 @@ public class MemberDto {
     private String birthDay;
     private String phone;
     private String nationalID;
-    private String city;
+    private String province;
     private String district;
     private String ward;
     private String street;

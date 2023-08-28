@@ -20,8 +20,8 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 
-    public Car findCarByLicensePlate(String licensePlate) {
-        return carRepository.findCarByLicensePlate(licensePlate);
+    public Car findCarByLicensePlate(String plateNumber) {
+        return carRepository.findCarByPlateNumber(plateNumber);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Page<Car> findByCity(String city, Pageable pageable) {
-        return carRepository.findByCity(city, pageable);
+    public Page<Car> findByCity(String province, Pageable pageable) {
+        return carRepository.findByProvince(province, pageable);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class CarServiceImpl implements CarService {
         return carRepository.findCarById(id);
         }
     @Override
-    public Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable) {
+    public Page<Car> findByCityAndDate(String province, LocalDate date, Pageable pageable) {
         System.out.println("************************************" + date);
-        return carRepository.findByCityAndDate(city, date, pageable);
+        return carRepository.findByProvinceAndDate(province, date, pageable);
     }
 }

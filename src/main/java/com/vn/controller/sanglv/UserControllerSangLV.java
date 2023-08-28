@@ -3,6 +3,7 @@ package com.vn.controller.sanglv;
 import com.vn.dto.WalletResponseDTO;
 import com.vn.entities.Member;
 import com.vn.entities.MemberTransaction;
+import com.vn.enums.Type;
 import com.vn.service.MemberService;
 import com.vn.service.MemberTransactionService;
 import com.vn.service.impl.CustomUserDetails;
@@ -88,9 +89,9 @@ public class UserControllerSangLV {
         memberTransaction.setAmount(amount + 0.0);
         memberTransaction.setDate(LocalDateTime.now());
         if (amount >0)
-            memberTransaction.setType("TOP UP");
+            memberTransaction.setType(Type.TOP_UP);
         else
-            memberTransaction.setType("WITHDRAW");
+            memberTransaction.setType(Type.WITHDRAW);
         memberTransaction.setMember(member);
         member.getMemberTransactions().add(memberTransaction);
 

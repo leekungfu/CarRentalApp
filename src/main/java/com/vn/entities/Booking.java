@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
-import com.vn.utils.BookingStatusEnum;
+import com.vn.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,18 +22,14 @@ public class Booking {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private Integer paymentMethod;
-
 	@Enumerated(EnumType.STRING)
-	private BookingStatusEnum bookingStatus;
-	
+	private BookingStatus bookingStatus;
 	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;
-	
 	@ManyToOne
 	@JoinColumn(name = "car_id")
 	private Car car;
-	
 	@OneToOne(mappedBy = "booking")
 	private Feedback feedback;
 }
