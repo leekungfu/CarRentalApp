@@ -15,6 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "car")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +28,10 @@ public class Car {
     private Integer numberOfSeat;
     private String transmissionType;
     private String fuelType;
-    private String registrationPaper;
-    private String certificate;
-    private String insurance;
+    @ElementCollection
+    @CollectionTable(name = "car_documents", joinColumns = @JoinColumn(name = "car_id"))
+    @Column(name = "document")
+    private List<String> documents;
     private Double mileage;
     private Double fuelConsumption;
     private String province;
@@ -37,11 +39,20 @@ public class Car {
     private String ward;
     private String street;
     private String description;
-    private String additionalFunctions;
-    private String[] images;
+    @ElementCollection
+    @CollectionTable(name = "car_additional_functions", joinColumns = @JoinColumn(name = "car_id"))
+    @Column(name = "additional_function")
+    private List<String> additionalFunctions;
+    @ElementCollection
+    @CollectionTable(name = "car_images", joinColumns = @JoinColumn(name = "car_id"))
+    @Column(name = "image")
+    private List<String> images;
     private Double price;
     private Double deposit;
-    private String[] terms;
+    @ElementCollection
+    @CollectionTable(name = "car_terms", joinColumns = @JoinColumn(name = "car_id"))
+    @Column(name = "term")
+    private List<String> terms;
     private Double rating;
     @Enumerated(EnumType.STRING)
     private CarStatus status;

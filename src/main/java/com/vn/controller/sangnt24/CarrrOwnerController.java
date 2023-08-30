@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
-public class CarOwnerController {
+public class CarrrOwnerController {
     @Autowired
     private CarService carService;
 

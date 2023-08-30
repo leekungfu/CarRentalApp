@@ -51,15 +51,23 @@ public class ParaSecurity {
             "/changePassword",
             "/personalInfo",
             "/updatePassword",
+            "/addCar",
     };
 
     public static String[] customerPages ={
             "/home/",
+            "/changePassword",
+            "/personalInfo",
+            "/updatePassword",
+            "/addCar",
 
 
     };
     public static String[] carOwnerPages ={
             "/home/",
-
+            "/changePassword",
+            "/personalInfo",
+            "/updatePassword",
+            "/addCar",
     };
 }

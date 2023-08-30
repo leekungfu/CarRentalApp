@@ -32,13 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http   	.csrf().disable()
+        http
+                .csrf().disable()
                 .cors()
                 .and()
                 .rememberMe()
                 .userDetailsService(userDetailsService)
                 .rememberMeParameter("remember-me")
-                .tokenValiditySeconds(2*12*60*60)
+                .tokenValiditySeconds(2 * 12 * 60 * 60)
                 .key("abc")
                 .rememberMeCookieName("remember-me")
                 .and()
@@ -50,15 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers(ParaSecurity.ignoreSecurityPages)
-                .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .antMatchers(ParaSecurity.customerPages).hasRole("ROLE_CUSTOMER")
-                .antMatchers(ParaSecurity.carOwnerPages).hasRole("ROLE_OWNER")
-                .anyRequest()
-                .authenticated();
+                .antMatchers(ParaSecurity.ignoreSecurityPages).permitAll()
+                .antMatchers(ParaSecurity.customerPages).hasAuthority("customer")
+                .antMatchers(ParaSecurity.carOwnerPages).hasAuthority("owner")
+                .anyRequest().authenticated();
     }
+
 
     @Bean
     @Override

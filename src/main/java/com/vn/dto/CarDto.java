@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -14,16 +15,16 @@ import java.util.StringTokenizer;
 
 @Getter
 @Setter
-public class CarDTO {
+public class CarDto {
     private String plateNumber;
     private String color;
-    private Integer brand;
+    private String brand;
     private String model;
     private String productionYear;
     private String numberOfSeat;
     private String transmissionType;
     private String fuelType;
-    private String[] documents;
+    private List<MultipartFile> documents;
     private Double mileage;
     private Double fuelConsumption;
     private String province;
@@ -31,10 +32,11 @@ public class CarDTO {
     private String ward;
     private String street;
     private String description;
-    private String[] additionalFunctions;
-    private String[] images;
-    private String basePrice;
-    private String deposit;
-    private String[] terms;
+    private List<String> additionalFunctions;
+    private List<MultipartFile> images;
+    private Double basePrice;
+    private Double deposit;
+    private List<String> terms;
     private Double rating;
+    private String status;
 }
