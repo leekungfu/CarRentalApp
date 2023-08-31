@@ -34,7 +34,7 @@ public class CarrrOwnerController {
                                     @RequestParam("sort") Optional<String> sort) {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
+        model.addAttribute("fullName", detail.member().getFullName());
 
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
@@ -50,7 +50,7 @@ public class CarrrOwnerController {
             default -> PageRequest.of(currentPage - 1, pageSize);
         };
 
-        Page<Car> resultPage = carService.listCarByMemberId(detail.getMember().getId(), pageable);
+        Page<Car> resultPage = carService.listCarByMemberId(detail.member().getId(), pageable);
 
         List<Car> carList = resultPage.getContent();
 
@@ -94,7 +94,7 @@ public class CarrrOwnerController {
     @GetMapping("/confirmDeposit/{id}")
     public String confirmDeposit(Model model, @PathVariable("id") Integer id) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
+        model.addAttribute("fullName", detail.member().getFullName());
 
         Car car = carService.findCarById(id);
         car.setStatus(CarStatus.BOOKED);
@@ -108,7 +108,7 @@ public class CarrrOwnerController {
     @GetMapping("/confirmPayment/{id}")
     public String confirmPayment(Model model, @PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
+        model.addAttribute("fullName", detail.member().getFullName());
 
         Car car = carService.findCarById(id);
         car.setStatus(CarStatus.AVAILABLE);

@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
     Member findByEmailAndFullName(String email, String fullName);
+    Member findByUsername(String username);
 
     @Query("SELECT m FROM Member m WHERE m.email=?1")
      Member findByEmail(String email);

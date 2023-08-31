@@ -1,6 +1,5 @@
 package com.vn.controller;
 
-import com.vn.config.PasswordEncoder;
 import com.vn.dto.LoginDto;
 import com.vn.dto.MemberDto;
 import com.vn.dto.MessageResult;
@@ -8,6 +7,7 @@ import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
+import com.vn.utils.ImageUtil;
 import com.vn.utils.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +37,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 @RestController
 @RequestMapping
@@ -88,7 +86,7 @@ public class GeneralController {
             String storedPassword = result.getPassword();
             String dtoPassword = dto.getPassword();
             if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
-                Member member = setAuthen(result).getMember();
+                Member member = setAuthen(result).member();
                 return ResponseEntity.ok(new MessageResult(true, "Login successful!", member));
             }
             return ResponseEntity.ok(new MessageResult(false, "Wrong password! Please try again", null));
@@ -111,7 +109,7 @@ public class GeneralController {
         Member result = memberService.findByEmail(dto.getEmail());
 
         if (result != null) {
-            Member m = setAuthen(result).getMember();
+            Member m = setAuthen(result).member();
             m.setFullName(dto.getFullName());
             m.setBirthDay(LocalDate.parse(dto.getBirthDay()));
             m.setPhone(dto.getPhone());
@@ -120,22 +118,7 @@ public class GeneralController {
             m.setDistrict(dto.getDistrict());
             m.setWard(dto.getWard());
             m.setStreet(dto.getStreet());
-
-            String uploadDir = "./src/main/resources/static/images/";
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-            try (InputStream inputStream = drivingLicense.getInputStream()) {
-                Path path = uploadPath.resolve(file);
-                System.out.println(path.toFile().getAbsolutePath());
-                Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
-
-            } catch (IOException e) {
-                throw new IOException("Can not save file " + file);
-            }
-
-            m.setDrivingLicense(uploadPath.resolve(drivingLicense.getOriginalFilename()).toString());
+            m.setDrivingLicense(ImageUtil.saveImage(drivingLicense));
             memberService.updateMember(m);
 
             return ResponseEntity.ok(new MessageResult(true, "Update successful!", m));
@@ -150,7 +133,7 @@ public class GeneralController {
         Member result = memberService.findByEmail(email);
 
         if (result != null) {
-            Member memberUpdate = setAuthen(result).getMember();
+            Member memberUpdate = setAuthen(result).member();
             memberUpdate.setPassword(bCryptPasswordEncoder.encode(password));
             memberService.updateMember(memberUpdate);
             return ResponseEntity.ok(new MessageResult(true, "Change password successful!", memberUpdate));

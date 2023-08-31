@@ -1,7 +1,6 @@
 package com.vn.controller.sanglv;
 
 import com.vn.entities.Car;
-import com.vn.entities.Member;
 import com.vn.service.CarService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.DateTimeUtil;
@@ -36,7 +35,7 @@ public class CarControllerSangLV {
                                 @RequestParam("sort") Optional<Integer> sort) {
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
+        model.addAttribute("fullName", detail.member().getFullName());
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
         int sortType = sort.orElse(0);

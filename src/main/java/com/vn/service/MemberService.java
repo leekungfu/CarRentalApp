@@ -20,8 +20,6 @@ public interface MemberService {
 
     Integer save(Member member);
 
-    Member findUserByEmailAndFullName(String email, String fullName);
-
     void updateResetPasswordToken(String token, String email);
     Member findByResetPasswordToken(String token);
     void updatePassword(Member member, String newPassword);

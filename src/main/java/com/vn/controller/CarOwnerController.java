@@ -13,17 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,7 +51,7 @@ public class CarOwnerController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        Member member = customUserDetails.getMember();
+        Member member = customUserDetails.member();
 
         Car car = new Car();
         car.setPlateNumber(dto.getPlateNumber());
@@ -90,7 +86,7 @@ public class CarOwnerController {
     @GetMapping("/car/edit/{id}")
     public String getEditCar(@PathVariable("id") Integer id, Model model) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
+        model.addAttribute("fullName", detail.member().getFullName());
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
         model.addAttribute("carStatus", CarStatus.values());

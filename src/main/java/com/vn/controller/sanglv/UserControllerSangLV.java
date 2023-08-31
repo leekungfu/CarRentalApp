@@ -16,8 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +39,8 @@ public class UserControllerSangLV {
                                @RequestParam(value = "date1", required = false, defaultValue = "") String date1,
                                @RequestParam(value = "date2", required = false, defaultValue = "") String date2) {
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.getMember().getFullName());
-        model.addAttribute("wallet", MoneyUtil.genMoney(detail.getMember().getWallet()));
+        model.addAttribute("fullName", detail.member().getFullName());
+        model.addAttribute("wallet", MoneyUtil.genMoney(detail.member().getWallet()));
 
         model.addAttribute("date1", date1);
         model.addAttribute("date2", date2);
@@ -55,10 +53,10 @@ public class UserControllerSangLV {
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("date").descending());
         Page<MemberTransaction> resultPage;
         if (date1.equals("")) {
-            resultPage = memberService.findByMember(detail.getMember().getId(),pageable);
+            resultPage = memberService.findByMember(detail.member().getId(),pageable);
         } else {
             resultPage = memberService.findByMemberAndDate(
-                    detail.getMember().getId(),
+                    detail.member().getId(),
                     DateTimeUtil.getDateTime(date1 + " 00:00"),
                     DateTimeUtil.getDateTime(date2 + " 23:59"),
                     pageable);
@@ -79,7 +77,7 @@ public class UserControllerSangLV {
         WalletResponseDTO walletResponseDTO = new WalletResponseDTO();
 
         CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Member member = memberService.findById(detail.getMember().getId());
+        Member member = memberService.findById(detail.member().getId());
         if (member.getWallet() == null)
             member.setWallet(0.0);
         member.setWallet(member.getWallet() + amount);
@@ -99,7 +97,7 @@ public class UserControllerSangLV {
         memberTransactionService.save(memberTransaction);
 
         Pageable pageable = PageRequest.of(0, 5, Sort.by("date").descending());
-        Page<MemberTransaction> resultPage = memberService.findByMember(detail.getMember().getId(), pageable);
+        Page<MemberTransaction> resultPage = memberService.findByMember(detail.member().getId(), pageable);
 
         walletResponseDTO.setTran(resultPage.getContent());
         walletResponseDTO.setMessage("You have just top up " + amount);
