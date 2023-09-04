@@ -15,4 +15,12 @@ public class MessageResult {
     public boolean isSuccess;
     public String message;
     public Member member;
+    public String token;
+    public MessageResult(boolean isSuccess, String message, Member member) {
+        this.isSuccess = isSuccess;
+        this.message = message;
+        this.member = member;
+    }
+
+
 }

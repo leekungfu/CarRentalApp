@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vn.enums.Role;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,7 +44,8 @@ public class Member implements Serializable {
 	private String street;
 	private String drivingLicense;
 	private Double wallet;
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	@Column(length = 30)
 	private String resetPasswordToken;
 	@OneToMany(mappedBy = "member")

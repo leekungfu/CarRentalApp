@@ -1,59 +1,55 @@
 package com.vn.controller;
 
+import com.vn.config.JwtTokenService;
 import com.vn.dto.LoginDto;
 import com.vn.dto.MemberDto;
 import com.vn.dto.MessageResult;
 import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
+import com.vn.enums.Role;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.ImageUtil;
 import com.vn.utils.Utility;
+import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.mail.MessagingException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class GeneralController {
-    @Autowired
-    private MemberService memberService;
-    @Autowired
-    private Utility utility;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final MemberService memberService;
+    private final Utility utility;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenService jwtTokenService;
 
     @PostMapping("/signup")
     @ResponseBody
-    public ResponseEntity<?> signup(@ModelAttribute SignupDto dto) {
+    public ResponseEntity<?> signup(@ModelAttribute @NotNull SignupDto dto) {
         Member checkMem = memberService.findByEmail(dto.getEmail());
         if (checkMem == null) {
             Member member = new Member();
@@ -61,87 +57,83 @@ public class GeneralController {
             member.setPassword(dto.getPassword());
             member.setPhone(dto.getPhone());
             member.setFullName(dto.getFullName());
-            member.setRole(dto.getRole());
+            member.setRole(Role.valueOf(dto.getRole()));
 
             // save method including encode password
             memberService.save(member);
-            setAuthen(member);
+            setAuth(member);
             return ResponseEntity.ok(new MessageResult(true, "Sign up successful!", member));
         }
         return ResponseEntity.ok(new MessageResult(false, "Sign up failed! Let's try again.", null));
     }
-
-    private CustomUserDetails setAuthen(Member member) {
+    private void setAuth(Member member) {
         CustomUserDetails customUserDetails = new CustomUserDetails(member);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, customUserDetails.getPassword(), customUserDetails.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return (CustomUserDetails) authentication.getPrincipal();
+        authentication.getPrincipal();
     }
-
+    private @Nullable CustomUserDetails getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            return (CustomUserDetails) authentication.getPrincipal();
+        }
+        return null;
+    }
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<?> login(@ModelAttribute LoginDto dto) {
+    public ResponseEntity<?> login(@ModelAttribute @NotNull LoginDto dto, HttpServletRequest request) throws ServletException {
         Member result = memberService.findByEmail(dto.getEmail());
         if (result != null) {
             String storedPassword = result.getPassword();
             String dtoPassword = dto.getPassword();
             if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
-                Member member = setAuthen(result).member();
-                return ResponseEntity.ok(new MessageResult(true, "Login successful!", member));
+                request.login(dto.getEmail(), dto.getPassword());
+                String token = jwtTokenService.generateToken(dto.getEmail());
+                return ResponseEntity.ok(new MessageResult(true, "Login successful!", result, token));
             }
             return ResponseEntity.ok(new MessageResult(false, "Wrong password! Please try again", null));
         }
         return ResponseEntity.ok(new MessageResult(false, "Email is not exist! Please try again.", null));
     }
-
     @PostMapping("/logout")
     @ResponseBody
-    public ResponseEntity<HttpStatus> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(request, response, authentication);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(new MessageResult(true,"None", null));
     }
-
     @PostMapping("/personalInfo")
     @ResponseBody
-    public ResponseEntity<?> updateInfo(@ModelAttribute MemberDto dto, @RequestParam("drivingLicense") MultipartFile drivingLicense) throws IOException {
-        String file = StringUtils.cleanPath(drivingLicense.getOriginalFilename());
+    public ResponseEntity<?> updateInfo(@ModelAttribute @NotNull MemberDto dto, @RequestParam("drivingLicense") @NotNull MultipartFile drivingLicense) throws IOException {
         Member result = memberService.findByEmail(dto.getEmail());
-
         if (result != null) {
-            Member m = setAuthen(result).member();
-            m.setFullName(dto.getFullName());
-            m.setBirthDay(LocalDate.parse(dto.getBirthDay()));
-            m.setPhone(dto.getPhone());
-            m.setNationalID(dto.getNationalID());
-            m.setProvince(dto.getProvince());
-            m.setDistrict(dto.getDistrict());
-            m.setWard(dto.getWard());
-            m.setStreet(dto.getStreet());
-            m.setDrivingLicense(ImageUtil.saveImage(drivingLicense));
-            memberService.updateMember(m);
-
-            return ResponseEntity.ok(new MessageResult(true, "Update successful!", m));
+            result.setFullName(dto.getFullName());
+            result.setBirthDay(LocalDate.parse(dto.getBirthDay()));
+            result.setPhone(dto.getPhone());
+            result.setNationalID(dto.getNationalID());
+            result.setProvince(dto.getProvince());
+            result.setDistrict(dto.getDistrict());
+            result.setWard(dto.getWard());
+            result.setStreet(dto.getStreet());
+            result.setDrivingLicense(ImageUtil.saveImage(drivingLicense));
+            memberService.updateMember(result);
+            return ResponseEntity.ok(new MessageResult(true, "Update successful!", result));
         }
         return ResponseEntity.ok(new MessageResult(false, "Update failed! Check your information again please.", null));
 
     }
-
     @PostMapping("/updatePassword")
     @ResponseBody
     public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String password) {
         Member result = memberService.findByEmail(email);
-
         if (result != null) {
-            Member memberUpdate = setAuthen(result).member();
-            memberUpdate.setPassword(bCryptPasswordEncoder.encode(password));
-            memberService.updateMember(memberUpdate);
-            return ResponseEntity.ok(new MessageResult(true, "Change password successful!", memberUpdate));
+            result.setPassword(bCryptPasswordEncoder.encode(password));
+            memberService.updateMember(result);
+            return ResponseEntity.ok(new MessageResult(true, "Change password successful!", result));
         } else {
             return ResponseEntity.ok(new MessageResult(false, "Change password failed! Try again please", null));
         }
     }
-
     @PostMapping("/forgot_password")
     @ResponseBody
     public ResponseEntity<?> forgotPassProcessing(@RequestParam String email, HttpServletRequest request) {

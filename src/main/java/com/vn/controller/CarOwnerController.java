@@ -9,6 +9,7 @@ import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.ImageUtil;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,33 +27,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/owner")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CarOwnerController {
     @Autowired
     private CarService carService;
     @Autowired
     private MemberService memberService;
-
     @PostMapping("/addCar")
     @ResponseBody
-    public ResponseEntity<?> addCarForm(@ModelAttribute CarDto dto
-    ) {
+    public ResponseEntity<?> addCarForm(@ModelAttribute @NotNull CarDto dto) {
         Car result = carService.findCarByLicensePlate(dto.getPlateNumber());
         if (result != null) {
             return ResponseEntity.ok(new MessageResult(false, "Car is existed! Try another please.", null));
         }
-
         List<MultipartFile> documentFiles = dto.getDocuments();
         List<MultipartFile> imageFiles = dto.getImages();
 
         List<String> documents = ImageUtil.saveImages(documentFiles);
         List<String> images = ImageUtil.saveImages(imageFiles);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        Member member = customUserDetails.member();
-
+        Member member = memberService.findByEmail(dto.getMember().getEmail());
         Car car = new Car();
         car.setPlateNumber(dto.getPlateNumber());
         car.setColor(dto.getColor());

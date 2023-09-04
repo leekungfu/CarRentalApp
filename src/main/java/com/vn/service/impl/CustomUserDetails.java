@@ -1,6 +1,7 @@
 package com.vn.service.impl;
 
 import com.vn.entities.Member;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,9 +12,9 @@ import java.util.List;
 
 public record CustomUserDetails(Member member) implements UserDetails {
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public @NotNull Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getRole().name());
         authorities.add(authority);
         return authorities;
     }

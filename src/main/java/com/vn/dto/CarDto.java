@@ -1,6 +1,7 @@
 package com.vn.dto;
 
 import com.vn.entities.Car;
+import com.vn.entities.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -39,4 +40,5 @@ public class CarDto {
     private List<String> terms;
     private Double rating;
     private String status;
+    private Member member;
 }
