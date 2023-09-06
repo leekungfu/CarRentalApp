@@ -8,14 +8,14 @@ public class ParaSecurity {
             "/api/signup",
             "/api/login",
             "/images/**",
+//            "/api/**"
     };
 
     public static String[] customerPages ={
             "/logout",
             "/api/personalInfo",
             "/api/updatePassword",
-
-
+            "/api/**"
     };
     public static String[] carOwnerPages ={
             "/logout",
