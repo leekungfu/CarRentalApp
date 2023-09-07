@@ -9,6 +9,7 @@ import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.ImageUtil;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +30,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequestMapping("/api/owner")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class CarOwnerController {
-    @Autowired
-    private CarService carService;
-    @Autowired
-    private MemberService memberService;
+    private final CarService carService;
     @PostMapping("/addCar")
     @ResponseBody
     public ResponseEntity<?> addCarForm(@ModelAttribute @NotNull CarDto dto) {
@@ -46,8 +45,8 @@ public class CarOwnerController {
 
         List<String> documents = ImageUtil.saveImages(documentFiles);
         List<String> images = ImageUtil.saveImages(imageFiles);
-
-        Member member = memberService.findByEmail(dto.getMember().getEmail());
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member member = customUserDetails.member();
         Car car = new Car();
         car.setPlateNumber(dto.getPlateNumber());
         car.setColor(dto.getColor());
@@ -77,35 +76,20 @@ public class CarOwnerController {
         carService.saveCar(car);
         return ResponseEntity.ok(new MessageResult(true, "Save car successful!", member));
     }
-
-    @GetMapping("/car/edit/{id}")
-    public String getEditCar(@PathVariable("id") Integer id, Model model) {
-        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("fullName", detail.member().getFullName());
-        Car car = carService.findCarById(id);
-        model.addAttribute("car", car);
-        model.addAttribute("carStatus", CarStatus.values());
-        return "car/editCar";
-    }
-
-    @PostMapping("/car/edit/{id}")
-    public String submitEditCar(@ModelAttribute Car car, BindingResult result, @PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            return "car/editCar";
-        }
-
-        CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        CarStatus status = car.getStatus();
-        if (status.equals(CarStatus.BOOKED)) {
-            model.addAttribute("messBooked", "Can't change status to Booked");
-            model.addAttribute("car", car);
-            model.addAttribute("carStatus", CarStatus.values());
-            return "car/editCar";
-        }
-        redirectAttributes.addFlashAttribute("message", "Edit car successful");
-        model.addAttribute("carStatus", CarStatus.values());
-        carService.saveCar(car);
-        return "redirect:/listCar";
-    }
+//    @PostMapping("/car/edit/{id}")
+//    @ResponseBody
+//    public ResponseEntity<?> editCar(@ModelAttribute CarDto dto) {
+//        CarStatus status = car.getStatus();
+//        if (status.equals(CarStatus.Booked)) {
+//            model.addAttribute("messBooked", "Can't change status to Booked");
+//            model.addAttribute("car", car);
+//            model.addAttribute("carStatus", CarStatus.values());
+//            return "car/editCar";
+//        }
+//        redirectAttributes.addFlashAttribute("message", "Edit car successful");
+//        model.addAttribute("carStatus", CarStatus.values());
+//        carService.saveCar(car);
+//        return "redirect:/listCar";
+//    }
 
 }

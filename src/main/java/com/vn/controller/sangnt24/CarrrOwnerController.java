@@ -97,9 +97,9 @@ public class CarrrOwnerController {
         model.addAttribute("fullName", detail.member().getFullName());
 
         Car car = carService.findCarById(id);
-        car.setStatus(CarStatus.BOOKED);
+        car.setStatus(CarStatus.Booked);
         model.addAttribute("car", car);
-        model.addAttribute("carStatus", CarStatus.BOOKED);
+        model.addAttribute("carStatus", CarStatus.Booked);
         model.addAttribute("messageConfirmDeposit", "Change car status and deposit successfully");
         carService.saveCar(car);
         return "/car/confirmPayment";
@@ -111,7 +111,7 @@ public class CarrrOwnerController {
         model.addAttribute("fullName", detail.member().getFullName());
 
         Car car = carService.findCarById(id);
-        car.setStatus(CarStatus.AVAILABLE);
+        car.setStatus(CarStatus.Available);
 //        car.getBookings().sort(new Comparator<Booking>() {
 //            @Override
 //            public int compare(Booking o1, Booking o2) {

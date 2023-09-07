@@ -1,5 +1,6 @@
 package com.vn.utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class ImageUtil {
 
-    public static List<String> saveImages(List<MultipartFile> files) {
+    public static @NotNull List<String> saveImages(List<MultipartFile> files) {
         List<String> imagePaths = new ArrayList<>();
 
         try {
@@ -29,7 +30,7 @@ public class ImageUtil {
         return imagePaths;
     }
 
-    public static String saveImage(MultipartFile multipartFile) {
+    public static @NotNull String saveImage(MultipartFile multipartFile) {
         try {
             String originName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             String newName = System.currentTimeMillis() + originName;

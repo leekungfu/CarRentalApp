@@ -1,5 +1,5 @@
 package com.vn.enums;
 
 public enum CarStatus {
-    AVAILABLE, BOOKED, STOPPED
+    Available, Booked, Stopped
 }

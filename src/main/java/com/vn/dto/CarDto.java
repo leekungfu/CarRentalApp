@@ -40,5 +40,4 @@ public class CarDto {
     private List<String> terms;
     private Double rating;
     private String status;
-    private Member member;
 }

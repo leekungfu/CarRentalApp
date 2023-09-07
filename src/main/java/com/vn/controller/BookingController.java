@@ -65,7 +65,7 @@ public class BookingController {
 		Booking booking = new Booking();
 		
 		Car car = (Car) httpSession.getAttribute("carModel");
-		car.setStatus(CarStatus.BOOKED);
+		car.setStatus(CarStatus.Booked);
 		carService.update(car);
 		
 		booking.setCar(car);

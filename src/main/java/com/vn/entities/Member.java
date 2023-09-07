@@ -8,8 +8,11 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vn.enums.Role;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -49,10 +52,16 @@ public class Member implements Serializable {
 	@Column(length = 30)
 	private String resetPasswordToken;
 	@OneToMany(mappedBy = "member")
+	@Fetch(FetchMode.JOIN)
+//	@JsonIgnore
+	@JsonManagedReference
 	private List<Booking> bookings;
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<MemberTransaction> memberTransactions;
 	@OneToMany(mappedBy = "member")
+	@Fetch(FetchMode.JOIN)
+//	@JsonIgnore
+	@JsonManagedReference
 	private List<Car> cars;
 }

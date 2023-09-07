@@ -24,9 +24,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsServiceImpl userDetailsService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtRequestFilter jwtRequestFilter;
+
     @Override
     protected void configure(@NotNull HttpSecurity http) throws Exception {
         http
@@ -34,45 +35,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/login").permitAll()
                 .antMatchers(ParaSecurity.ignoreSecurityPages).permitAll()
                 .antMatchers(ParaSecurity.customerPages).hasRole("CUSTOMER")
-                .antMatchers("/api/personalInfo", "/api/owner/addCar", "/api/logout").hasRole("OWNER")
+                .antMatchers(ParaSecurity.carOwnerPages).hasRole("OWNER")
                 .anyRequest().authenticated()
                 .and()
-                .rememberMe()
                 .userDetailsService(userDetailsService)
-                .rememberMeParameter("remember-me")
-                .tokenValiditySeconds(2 * 12 * 60 * 60)
-                .key("abc")
-                .rememberMeCookieName("remember-me")
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("remember-me", "JSESSIONID")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .logoutSuccessUrl("/")
-                .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
     @Autowired
     public void configureGlobal(@NotNull AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
-    /**
-     * Authenticate for user log in with their email and encrypt password, then check encrypt password at the form log in with encrypt password in the DB
-     * If password is match, redirect user to home page
-     */
+
     @Override
     protected void configure(@NotNull AuthenticationManagerBuilder auth) throws Exception {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
