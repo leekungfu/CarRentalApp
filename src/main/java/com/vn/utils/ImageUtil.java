@@ -3,7 +3,6 @@ package com.vn.utils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,9 +12,8 @@ import java.util.List;
 
 public class ImageUtil {
 
-    public static @NotNull List<String> saveImages(List<MultipartFile> files) {
+    public static @NotNull List<String> saveImages(MultipartFile[] files) {
         List<String> imagePaths = new ArrayList<>();
-
         try {
             for (MultipartFile file : files
             ) {
