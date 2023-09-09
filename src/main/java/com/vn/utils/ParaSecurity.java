@@ -7,7 +7,9 @@ public class ParaSecurity {
             "/reset_password",
             "/api/signup",
             "/api/login",
-            "/api/logout"
+            "/api/logout",
+//            "/api/owner/files",
+//            "/api/owner/files/{id}",
     };
 
     public static String[] customerPages ={
@@ -17,6 +19,6 @@ public class ParaSecurity {
     public static String[] carOwnerPages ={
             "/api/personalInfo",
             "/api/updatePassword",
-            "/api/owner/addCar",
+            "/api/owner/**"
     };
 }

@@ -23,45 +23,44 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "member")
 public class Member implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	@Column(columnDefinition = "NVARCHAR(50)")
-	private String fullName;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate birthDay;
-	private String nationalID;
-	@Column(unique = true)
-	@NotEmpty(message = "Please enter your email")
-	private String email;
-	@NotEmpty(message = "Please enter your password")
-	private String password;
-	@NotNull
-	private String phone;
-	@Column(columnDefinition = "NVARCHAR(50)")
-	private String province;
-	@Column(columnDefinition = "NVARCHAR(50)")
-	private String district;
-	@Column(columnDefinition = "NVARCHAR(50)")
-	private String ward;
-	private String street;
-	private String drivingLicense;
-	private Double wallet;
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	@Column(length = 30)
-	private String resetPasswordToken;
-	@OneToMany(mappedBy = "member")
-	@Fetch(FetchMode.JOIN)
-//	@JsonIgnore
-	@JsonManagedReference
-	private List<Booking> bookings;
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<MemberTransaction> memberTransactions;
-	@OneToMany(mappedBy = "member")
-	@Fetch(FetchMode.JOIN)
-//	@JsonIgnore
-	@JsonManagedReference
-	private List<Car> cars;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(columnDefinition = "NVARCHAR(50)")
+    private String fullName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthDay;
+    private String nationalID;
+    @Column(unique = true)
+    @NotEmpty(message = "Please enter your email")
+    private String email;
+    @NotEmpty(message = "Please enter your password")
+    private String password;
+    @NotNull
+    private String phone;
+    @Column(columnDefinition = "NVARCHAR(50)")
+    private String province;
+    @Column(columnDefinition = "NVARCHAR(50)")
+    private String district;
+    @Column(columnDefinition = "NVARCHAR(50)")
+    private String ward;
+    private String street;
+    private String drivingLicense;
+    private Double wallet;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @Column(length = 30)
+    private String resetPasswordToken;
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+//	@Fetch(FetchMode.JOIN)
+    @JsonIgnore
+    private List<Booking> bookings;
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<MemberTransaction> memberTransactions;
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+//	@Fetch(FetchMode.JOIN)
+    @JsonIgnore
+    @JsonManagedReference
+    private List<Car> cars;
 }

@@ -19,6 +19,7 @@ public interface CarService {
     Page<Car> findByCity(String city, Pageable pageable);
 
     Car findById(Integer id);
+    List<Car> findCarsBelongToUser(Integer id);
 
     Page<Car> listCarByMemberId(Integer id,Pageable pageable);
 

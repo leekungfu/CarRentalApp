@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
@@ -73,9 +75,8 @@ public class Car {
     @JoinColumn(name = "member_id")
     @JsonBackReference
     private Member member;
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
 	@JsonIgnore
-    @JsonManagedReference
-    private List<Files> files  = new ArrayList<>();
+    private List<Files> files;
 }

@@ -1,7 +1,6 @@
 package com.vn.controller;
 
-import com.vn.dto.CarDto;
-import com.vn.dto.MessageResult;
+import com.vn.dto.*;
 import com.vn.entities.Car;
 import com.vn.entities.Files;
 import com.vn.entities.Member;
@@ -11,7 +10,6 @@ import com.vn.service.FilesStorageService;
 import com.vn.service.impl.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/owner")
@@ -36,45 +32,34 @@ public class CarOwnerController {
     private final CarService carService;
     private final FilesStorageService filesStorageService;
 
+    @GetMapping("/cars")
+    @ResponseBody
+    public ResponseEntity<ResponseCarsBelongToUser> getCarsBelongToUser() {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member member = customUserDetails.member();
+        List<Car> cars = carService.findCarsBelongToUser(member.getId());
+        List<List<Files>> filesBelongToCar = new ArrayList<>();
+        for (Car car :
+                cars) {
+            Integer carId = car.getId();
+            List<Files> files = filesStorageService.findFilesByCarId(carId);
+            filesBelongToCar.add(files);
+        }
+        return ResponseEntity.ok(new ResponseCarsBelongToUser(true, "Get cars successful!", member, cars, filesBelongToCar));
+    }
+
     @PostMapping("/addCar")
     @ResponseBody
-    public ResponseEntity<?> addCarForm(@ModelAttribute @NotNull CarDto dto,
-                                        @RequestParam("documents") MultipartFile[] documents,
-                                        @RequestParam("images") MultipartFile[] images) throws IOException {
+    public ResponseEntity<ResponseCarResult> addCarForm(@ModelAttribute @NotNull CarDto dto,
+                                                        @RequestParam("documents") MultipartFile[] documents,
+                                                        @RequestParam("images") MultipartFile[] images) throws IOException {
         Car result = carService.findCarByLicensePlate(dto.getPlateNumber());
         if (result != null) {
-            return ResponseEntity.ok(new MessageResult(false, "Car is existed! Try another please.", null));
+            return ResponseEntity.ok(new ResponseCarResult(false, "Car is existed! Try another please.", null, null));
         }
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
         Car car = new Car();
-        Files files = new Files();
-
-        List<String> documentFiles = new ArrayList<>();
-        for (MultipartFile document : documents) {
-            filesStorageService.save(document);
-            filesStorageService.store(document);
-            documentFiles.add(document.getOriginalFilename());
-
-
-            // Create a new Files object for each document and set its properties
-            Files documentFile = new Files();
-            documentFile.setName(document.getOriginalFilename());
-            documentFile.setUrl("URL_FOR_DOCUMENT"); // Replace with the actual URL
-            documentFile.setCar(car); // Assuming you have a 'car' object already
-
-            // Add the document file to the 'files' list in 'car'
-            car.getFiles().add(documentFile);
-        }
-
-        List<String> imageFiles = new ArrayList<>();
-        for (MultipartFile image : images) {
-            filesStorageService.save(image);
-            filesStorageService.store(image);
-            imageFiles.add(image.getOriginalFilename());
-
-
-        }
 
         car.setPlateNumber(dto.getPlateNumber());
         car.setColor(dto.getColor());
@@ -99,29 +84,52 @@ public class CarOwnerController {
         car.setStatus(CarStatus.valueOf(dto.getStatus()));
         car.setMember(member);
 
-        files.setCar(car);
         carService.saveCar(car);
-        return ResponseEntity.ok(new MessageResult(true, "Save car successful!", member));
+
+        List<String> documentFiles = new ArrayList<>();
+        for (MultipartFile document : documents) {
+//            filesStorageService.save(document);
+            filesStorageService.store(document, car);
+            documentFiles.add(document.getOriginalFilename());
+        }
+
+        List<String> imageFiles = new ArrayList<>();
+        for (MultipartFile image : images) {
+//            filesStorageService.save(image);
+            filesStorageService.store(image, car);
+            imageFiles.add(image.getOriginalFilename());
+        }
+
+        return ResponseEntity.ok(new ResponseCarResult(true, "Save car successful!", car, filesStorageService.findFilesByCarId(car.getId())));
     }
 
     @GetMapping("/files")
-    public ResponseEntity<List<Files>> getListFiles() {
-        List<Files> fileInfo = filesStorageService.loadAll().map(path -> {
-            String filename = path.getFileName().toString();
-            String url = MvcUriComponentsBuilder
-                    .fromMethodName(CarOwnerController.class, "getFile", path.getFileName().toString()).build().toString();
+    public ResponseEntity<List<ResponseFile>> getListFiles() {
+        List<ResponseFile> files = filesStorageService.getAllFiles().map(dbFile -> {
+            String fileDownloadUri = ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/files/")
+                    .path(String.valueOf(dbFile.getId()))
+                    .toUriString();
 
-            return new Files(filename, url);
-        }).collect(Collectors.toList());
+            return new ResponseFile(
+                    dbFile.getName(),
+                    fileDownloadUri,
+                    dbFile.getType(),
+                    dbFile.getData().length,
+                    dbFile.getBase64Data());
+        }).toList();
 
-        return ResponseEntity.status(HttpStatus.OK).body(fileInfo);
+        return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
-    @GetMapping("/files/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = filesStorageService.load(filename);
+    @GetMapping("/files/{id}")
+    public ResponseEntity<byte[]> getFile(@PathVariable Integer id) {
+        Optional<Files> files = filesStorageService.getFile(id);
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + files.get().getName() + "\"")
+                .body(files.get().getData());
     }
 
 //    @PostMapping("/car/edit/{id}")

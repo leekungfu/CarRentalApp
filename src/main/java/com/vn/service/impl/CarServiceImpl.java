@@ -45,6 +45,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> findCarsBelongToUser(Integer id) {
+        return carRepository.findCarsByMemberId(id);
+    }
+
+    @Override
     public Page<Car> listCarByMemberId(Integer id, Pageable pageable) {
         return carRepository.findByMemberId(id,pageable);
     }

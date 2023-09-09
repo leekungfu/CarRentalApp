@@ -1,8 +1,10 @@
 package com.vn.service.impl;
 
+import com.vn.entities.Car;
 import com.vn.repository.FileDBRepository;
 import com.vn.service.FilesStorageService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -41,16 +46,21 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public com.vn.entities.Files store(MultipartFile multipartFile) throws IOException {
+    public com.vn.entities.Files store(@NotNull MultipartFile multipartFile, Car car) throws IOException {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        com.vn.entities.Files FileDB = new com.vn.entities.Files(fileName, multipartFile.getContentType(), multipartFile.getBytes());
+        com.vn.entities.Files fileDB = new com.vn.entities.Files();
+        fileDB.setName(fileName);
+        fileDB.setType(multipartFile.getContentType());
+        fileDB.setData(multipartFile.getBytes());
+        fileDB.setBase64Data(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+        fileDB.setCar(car);
 
-        return fileDBRepository.save(FileDB);
+        return fileDBRepository.save(fileDB);
     }
 
     @Override
-    public com.vn.entities.Files getFile(String id) {
-        return fileDBRepository.findById(id).get();
+    public Optional<com.vn.entities.Files> getFile(Integer id) {
+        return fileDBRepository.findById(id);
     }
 
     @Override
@@ -87,4 +97,10 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             throw new RuntimeException("Could not load the files!");
         }
     }
+
+    @Override
+    public List<com.vn.entities.Files> findFilesByCarId(Integer carId) {
+        return fileDBRepository.findFilesByCarId(carId);
+    }
+
 }

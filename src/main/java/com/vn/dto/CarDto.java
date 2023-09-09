@@ -1,6 +1,7 @@
 package com.vn.dto;
 
 import com.vn.entities.Car;
+import com.vn.entities.Files;
 import com.vn.entities.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +26,6 @@ public class CarDto {
     private String numberOfSeat;
     private String transmissionType;
     private String fuelType;
-    private List<MultipartFile> documents;
     private Double mileage;
     private Double fuelConsumption;
     private String province;
@@ -34,7 +34,7 @@ public class CarDto {
     private String street;
     private String description;
     private List<String> additionalFunctions;
-    private List<MultipartFile> images;
+    private List<Files> files;
     private Double basePrice;
     private Double deposit;
     private List<String> terms;

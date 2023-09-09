@@ -10,13 +10,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class MessageResult {
+public class ResponseMemberResult {
     public boolean isSuccess;
     public String message;
     public Member member;
     public String token;
-    public MessageResult(boolean isSuccess, String message, Member member) {
+    public ResponseMemberResult(boolean isSuccess, String message, Member member) {
         this.isSuccess = isSuccess;
         this.message = message;
         this.member = member;

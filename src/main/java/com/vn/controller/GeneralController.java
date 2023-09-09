@@ -3,7 +3,7 @@ package com.vn.controller;
 import com.vn.config.JwtTokenService;
 import com.vn.dto.LoginDto;
 import com.vn.dto.MemberDto;
-import com.vn.dto.MessageResult;
+import com.vn.dto.ResponseMemberResult;
 import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
 import com.vn.enums.Role;
@@ -16,7 +16,6 @@ import net.bytebuddy.utility.RandomString;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -60,9 +59,9 @@ public class GeneralController {
             // save method including encode password
             memberService.save(member);
             setAuth(member);
-            return ResponseEntity.ok(new MessageResult(true, "Sign up successful!", member, token));
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Sign up successful!", member, token));
         }
-        return ResponseEntity.ok(new MessageResult(false, "Sign up failed! Email is taken.", null, null));
+        return ResponseEntity.ok(new ResponseMemberResult(false, "Sign up failed! Email is taken.", null, null));
     }
 
     private void setAuth(Member member) {
@@ -82,11 +81,11 @@ public class GeneralController {
             if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
                 request.login(dto.getEmail(), dto.getPassword());
                 String token = jwtTokenService.generateToken(dto.getEmail());
-                return ResponseEntity.ok(new MessageResult(true, "Login successful!", result, token));
+                return ResponseEntity.ok(new ResponseMemberResult(true, "Login successful!", result, token));
             }
-            return ResponseEntity.ok(new MessageResult(false, "Wrong password! Please try again", null));
+            return ResponseEntity.ok(new ResponseMemberResult(false, "Wrong password! Please try again", null));
         }
-        return ResponseEntity.ok(new MessageResult(false, "Email is not exist! Please try again.", null));
+        return ResponseEntity.ok(new ResponseMemberResult(false, "Email is not exist! Please try again.", null));
     }
 
     @PostMapping("/logout")
@@ -94,7 +93,7 @@ public class GeneralController {
     public ResponseEntity<?> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(request, response, authentication);
-        return ResponseEntity.ok(new MessageResult(true, "None", null));
+        return ResponseEntity.ok(new ResponseMemberResult(true, "None", null));
     }
 
     @PostMapping("/personalInfo")
@@ -114,9 +113,9 @@ public class GeneralController {
             result.setStreet(dto.getStreet());
             result.setDrivingLicense(ImageUtil.saveImage(drivingLicense));
             memberService.updateMember(result);
-            return ResponseEntity.ok(new MessageResult(true, "Update successful!", result));
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Update successful!", result));
         }
-        return ResponseEntity.ok(new MessageResult(false, "Update failed! Check your information again please.", null));
+        return ResponseEntity.ok(new ResponseMemberResult(false, "Update failed! Check your information again please.", null));
 
     }
 
@@ -127,9 +126,9 @@ public class GeneralController {
         if (result != null) {
             result.setPassword(bCryptPasswordEncoder.encode(password));
             memberService.updateMember(result);
-            return ResponseEntity.ok(new MessageResult(true, "Change password successful!", result));
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Change password successful!", result));
         } else {
-            return ResponseEntity.ok(new MessageResult(false, "Change password failed! Try again please", null));
+            return ResponseEntity.ok(new ResponseMemberResult(false, "Change password failed! Try again please", null));
         }
     }
 
@@ -139,7 +138,7 @@ public class GeneralController {
         // Random token chain, which will be used to determine ex
         Member result = memberService.findByEmail(email);
         if (result == null) {
-            return ResponseEntity.ok(new MessageResult(false, "Email is not exist!", null));
+            return ResponseEntity.ok(new ResponseMemberResult(false, "Email is not exist!", null));
         }
         String token = RandomString.make(30);
         try {
@@ -150,9 +149,9 @@ public class GeneralController {
             utility.sendEmail(email, resetPassLink);
 
         } catch (UsernameNotFoundException | UnsupportedEncodingException | MessagingException e) {
-            return ResponseEntity.ok(new MessageResult(false, e.getMessage(), null));
+            return ResponseEntity.ok(new ResponseMemberResult(false, e.getMessage(), null));
         }
-        return ResponseEntity.ok(new MessageResult(true, "Sent!", result));
+        return ResponseEntity.ok(new ResponseMemberResult(true, "Sent!", result));
     }
 
     @GetMapping("/reset_password")
