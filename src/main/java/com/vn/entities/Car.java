@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Getter
 @Setter
@@ -34,12 +36,6 @@ public class Car {
     private Integer numberOfSeat;
     private String transmissionType;
     private String fuelType;
-//    @ElementCollection
-//    @JsonIgnore
-////    @Fetch(FetchMode.JOIN)
-//    @CollectionTable(name = "car_documents", joinColumns = @JoinColumn(name = "car_id"))
-//    @Column(name = "document")
-//    private List<String> documents;
     private Double mileage;
     private Double fuelConsumption;
     private String province;
@@ -48,20 +44,14 @@ public class Car {
     private String street;
     private String description;
     @ElementCollection
-    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
     @CollectionTable(name = "car_additional_functions", joinColumns = @JoinColumn(name = "car_id"))
     @Column(name = "additional_function")
     private List<String> additionalFunctions;
-//    @ElementCollection
-//    @JsonIgnore
-////    @Fetch(FetchMode.JOIN)
-//    @CollectionTable(name = "car_images", joinColumns = @JoinColumn(name = "car_id"))
-//    @Column(name = "image")
-//    private List<String> images;
     private Double price;
     private Double deposit;
     @ElementCollection
-    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
     @CollectionTable(name = "car_terms", joinColumns = @JoinColumn(name = "car_id"))
     @Column(name = "term")
     private List<String> terms;
@@ -75,8 +65,7 @@ public class Car {
     @JoinColumn(name = "member_id")
     @JsonBackReference
     private Member member;
-    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
-//    @Fetch(FetchMode.JOIN)
-	@JsonIgnore
+    @OneToMany(mappedBy = "car")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Files> files;
 }

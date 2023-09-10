@@ -1,5 +1,6 @@
 package com.vn.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vn.dto.*;
 import com.vn.entities.Car;
 import com.vn.entities.Files;
@@ -38,14 +39,7 @@ public class CarOwnerController {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
         List<Car> cars = carService.findCarsBelongToUser(member.getId());
-        List<List<Files>> filesBelongToCar = new ArrayList<>();
-        for (Car car :
-                cars) {
-            Integer carId = car.getId();
-            List<Files> files = filesStorageService.findFilesByCarId(carId);
-            filesBelongToCar.add(files);
-        }
-        return ResponseEntity.ok(new ResponseCarsBelongToUser(true, "Get cars successful!", member, cars, filesBelongToCar));
+        return ResponseEntity.ok(new ResponseCarsBelongToUser(true, "Get cars successful!", member, cars));
     }
 
     @PostMapping("/addCar")
@@ -55,7 +49,7 @@ public class CarOwnerController {
                                                         @RequestParam("images") MultipartFile[] images) throws IOException {
         Car result = carService.findCarByLicensePlate(dto.getPlateNumber());
         if (result != null) {
-            return ResponseEntity.ok(new ResponseCarResult(false, "Car is existed! Try another please.", null, null));
+            return ResponseEntity.ok(new ResponseCarResult(false, "Car is existed! Try another please.", null));
         }
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
@@ -86,21 +80,15 @@ public class CarOwnerController {
 
         carService.saveCar(car);
 
-        List<String> documentFiles = new ArrayList<>();
         for (MultipartFile document : documents) {
-//            filesStorageService.save(document);
             filesStorageService.store(document, car);
-            documentFiles.add(document.getOriginalFilename());
         }
 
-        List<String> imageFiles = new ArrayList<>();
         for (MultipartFile image : images) {
-//            filesStorageService.save(image);
             filesStorageService.store(image, car);
-            imageFiles.add(image.getOriginalFilename());
         }
 
-        return ResponseEntity.ok(new ResponseCarResult(true, "Save car successful!", car, filesStorageService.findFilesByCarId(car.getId())));
+        return ResponseEntity.ok(new ResponseCarResult(true, "Save car successful!", car));
     }
 
     @GetMapping("/files")

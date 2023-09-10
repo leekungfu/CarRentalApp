@@ -12,12 +12,10 @@ public class ResponseCarResult {
     private Boolean isSuccess;
     private String message;
     private Car car;
-    private List<Files> files;
 
-    public ResponseCarResult(Boolean isSuccess, String message, Car car, List<Files> file) {
+    public ResponseCarResult(Boolean isSuccess, String message, Car car) {
         this.isSuccess = isSuccess;
         this.message = message;
         this.car = car;
-        this.files = file;
     }
 }

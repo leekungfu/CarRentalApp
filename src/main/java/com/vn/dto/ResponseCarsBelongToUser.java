@@ -16,5 +16,4 @@ public class ResponseCarsBelongToUser {
     private String message;
     private Member member;
     private List<Car> cars;
-    private List<List<Files>> files;
 }
