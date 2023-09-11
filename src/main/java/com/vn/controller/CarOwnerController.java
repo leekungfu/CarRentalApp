@@ -77,7 +77,6 @@ public class CarOwnerController {
         car.setRating(dto.getRating());
         car.setStatus(CarStatus.valueOf(dto.getStatus()));
         car.setMember(member);
-
         carService.saveCar(car);
 
         for (MultipartFile document : documents) {

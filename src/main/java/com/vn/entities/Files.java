@@ -28,25 +28,6 @@ public class Files {
     @JsonIgnore
     @JoinColumn(name = "car_id")
     private Car car;
-
-    public Files(String name, String url) {
-        this.name = name;
-        this.url = url;
-    }
-
-    public Files(String name, String type, byte[] data) {
-            this.name = name;
-            this.type = type;
-            this.data = data;
-
-    }
-
-    public Files(String name, String type, byte[] data, Car car) {
-        this.name = name;
-        this.type = type;
-        this.data = data;
-        this.car = car;
-    }
     public String getBase64Data() {
         if (data != null) {
             return Base64.getEncoder().encodeToString(data);
