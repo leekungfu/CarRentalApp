@@ -26,7 +26,7 @@ public interface CarService {
 
     Car findByIdCar(Integer id);
 
-    Car update(Car content);
+    Car update(Car car);
 
     boolean delete(Integer id);
 

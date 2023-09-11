@@ -119,20 +119,32 @@ public class CarOwnerController {
                 .body(files.get().getData());
     }
 
-//    @PostMapping("/car/edit/{id}")
-//    @ResponseBody
-//    public ResponseEntity<?> editCar(@ModelAttribute CarDto dto) {
-//        CarStatus status = car.getStatus();
-//        if (status.equals(CarStatus.Booked)) {
-//            model.addAttribute("messBooked", "Can't change status to Booked");
-//            model.addAttribute("car", car);
-//            model.addAttribute("carStatus", CarStatus.values());
-//            return "car/editCar";
-//        }
-//        redirectAttributes.addFlashAttribute("message", "Edit car successful");
-//        model.addAttribute("carStatus", CarStatus.values());
-//        carService.saveCar(car);
-//        return "redirect:/listCar";
-//    }
+    @PostMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute @NotNull CarDto dto, @RequestParam("files") MultipartFile[] files, @PathVariable Integer id) throws IOException {
+        Car result = carService.findById(id);
+        if (result == null) {
+            return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null));
+        }
+        result.setMileage(dto.getMileage());
+        result.setFuelConsumption(dto.getFuelConsumption());
+        result.setProvince(dto.getProvince());
+        result.setDistrict(dto.getDistrict());
+        result.setWard(dto.getWard());
+        result.setStreet(dto.getStreet());
+        result.setDescription(dto.getDescription());
+        result.setAdditionalFunctions(dto.getAdditionalFunctions());
+        result.setPrice(dto.getBasePrice());
+        result.setDeposit(dto.getDeposit());
+        result.setTerms(dto.getTerms());
+        result.setStatus(CarStatus.valueOf(dto.getStatus()));
+        carService.update(result);
+
+        for (MultipartFile document : files) {
+            filesStorageService.store(document, result);
+        }
+
+        return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result));
+    }
 
 }
