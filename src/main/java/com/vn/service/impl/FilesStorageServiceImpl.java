@@ -4,7 +4,6 @@ import com.vn.entities.Car;
 import com.vn.repository.FileDBRepository;
 import com.vn.service.FilesStorageService;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 public class FilesStorageServiceImpl implements FilesStorageService {
     private final FileDBRepository fileDBRepository;
     private final Path root = Paths.get("uploads");
+
     @Override
     public void init() {
         try {
@@ -46,16 +47,25 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public com.vn.entities.Files store(@NotNull MultipartFile multipartFile, Car car) throws IOException {
+    public void store(@NotNull MultipartFile multipartFile, Car car) throws IOException {
+        com.vn.entities.Files result = fileDBRepository.findByName(multipartFile.getOriginalFilename());
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        com.vn.entities.Files fileDB = new com.vn.entities.Files();
-        fileDB.setName(fileName);
-        fileDB.setType(multipartFile.getContentType());
-        fileDB.setData(multipartFile.getBytes());
-        fileDB.setBase64Data(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
-        fileDB.setCar(car);
-
-        return fileDBRepository.save(fileDB);
+        if (result != null) {
+            result.setName(fileName);
+            result.setType(multipartFile.getContentType());
+            result.setData(multipartFile.getBytes());
+            result.setBase64Data(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+            result.setCar(car);
+            fileDBRepository.save(result);
+        } else {
+            com.vn.entities.Files files = new com.vn.entities.Files();
+            files.setName(fileName);
+            files.setType(multipartFile.getContentType());
+            files.setData(multipartFile.getBytes());
+            files.setBase64Data(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+            files.setCar(car);
+            fileDBRepository.save(files);
+        }
     }
 
     @Override

@@ -18,7 +18,7 @@ public interface FilesStorageService {
     void save(MultipartFile file);
 //    Files store(MultipartFile multipartFile) throws IOException;
 
-    Files store(MultipartFile multipartFile, Car car) throws IOException;
+    void store(MultipartFile multipartFile, Car car) throws IOException;
 
     Optional<Files> getFile(Integer id);
     Stream<Files> getAllFiles();

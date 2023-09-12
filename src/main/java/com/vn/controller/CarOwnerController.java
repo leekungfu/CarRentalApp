@@ -1,6 +1,5 @@
 package com.vn.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vn.dto.*;
 import com.vn.entities.Car;
 import com.vn.entities.Files;
@@ -10,7 +9,6 @@ import com.vn.service.CarService;
 import com.vn.service.FilesStorageService;
 import com.vn.service.impl.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +42,7 @@ public class CarOwnerController {
 
     @PostMapping("/addCar")
     @ResponseBody
-    public ResponseEntity<ResponseCarResult> addCarForm(@ModelAttribute @NotNull CarDto dto,
+    public ResponseEntity<ResponseCarResult> addCarForm(@ModelAttribute CarDto dto,
                                                         @RequestParam("documents") MultipartFile[] documents,
                                                         @RequestParam("images") MultipartFile[] images) throws IOException {
         Car result = carService.findCarByLicensePlate(dto.getPlateNumber());
@@ -121,7 +119,9 @@ public class CarOwnerController {
 
     @PostMapping("/update/{id}")
     @ResponseBody
-    public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute @NotNull CarDto dto, @RequestParam("files") MultipartFile[] files, @PathVariable Integer id) throws IOException {
+    public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute CarDto dto,
+                                                           @RequestParam("images") MultipartFile[] files,
+                                                           @PathVariable Integer id) throws IOException {
         Car result = carService.findById(id);
         if (result == null) {
             return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null));
@@ -137,7 +137,6 @@ public class CarOwnerController {
         result.setPrice(dto.getBasePrice());
         result.setDeposit(dto.getDeposit());
         result.setTerms(dto.getTerms());
-        result.setStatus(CarStatus.valueOf(dto.getStatus()));
         carService.update(result);
 
         for (MultipartFile document : files) {

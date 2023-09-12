@@ -1,20 +1,9 @@
 package com.vn.dto;
 
-import com.vn.entities.Car;
 import com.vn.entities.Files;
-import com.vn.entities.Member;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.StringTokenizer;
-
 @Getter
 @Setter
 public class CarDto {

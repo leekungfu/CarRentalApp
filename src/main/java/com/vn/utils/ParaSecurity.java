@@ -19,6 +19,6 @@ public class ParaSecurity {
     public static String[] carOwnerPages ={
             "/api/personalInfo",
             "/api/updatePassword",
-            "/api/owner/**"
+            "/api/owner/**",
     };
 }
