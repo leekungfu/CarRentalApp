@@ -42,9 +42,7 @@ public class CarOwnerController {
 
     @PostMapping("/addCar")
     @ResponseBody
-    public ResponseEntity<ResponseCarResult> addCarForm(@ModelAttribute CarDto dto,
-                                                        @RequestParam("documents") MultipartFile[] documents,
-                                                        @RequestParam("images") MultipartFile[] images) throws IOException {
+    public ResponseEntity<ResponseCarResult> addCarForm(@ModelAttribute CarDto dto, @RequestParam("documents") MultipartFile[] documents, @RequestParam("images") MultipartFile[] images) throws IOException {
         Car result = carService.findCarByLicensePlate(dto.getPlateNumber());
         if (result != null) {
             return ResponseEntity.ok(new ResponseCarResult(false, "Car is existed! Try another please.", null));
@@ -91,18 +89,9 @@ public class CarOwnerController {
     @GetMapping("/files")
     public ResponseEntity<List<ResponseFile>> getListFiles() {
         List<ResponseFile> files = filesStorageService.getAllFiles().map(dbFile -> {
-            String fileDownloadUri = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/files/")
-                    .path(String.valueOf(dbFile.getId()))
-                    .toUriString();
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/").path(String.valueOf(dbFile.getId())).toUriString();
 
-            return new ResponseFile(
-                    dbFile.getName(),
-                    fileDownloadUri,
-                    dbFile.getType(),
-                    dbFile.getData().length,
-                    dbFile.getBase64Data());
+            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length, dbFile.getBase64Data());
         }).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -112,16 +101,12 @@ public class CarOwnerController {
     public ResponseEntity<byte[]> getFile(@PathVariable Integer id) {
         Optional<Files> files = filesStorageService.getFile(id);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + files.get().getName() + "\"")
-                .body(files.get().getData());
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + files.get().getName() + "\"").body(files.get().getData());
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/updateDetails/{id}")
     @ResponseBody
-    public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute CarDto dto,
-                                                           @RequestParam("images") MultipartFile[] files,
-                                                           @PathVariable Integer id) throws IOException {
+    public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute CarDto dto, @RequestParam("images") MultipartFile[] files, @PathVariable Integer id) throws IOException {
         Car result = carService.findById(id);
         if (result == null) {
             return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null));
@@ -145,5 +130,18 @@ public class CarOwnerController {
 
         return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result));
     }
+    @PostMapping("/updatePricing/{id}")
+    @ResponseBody
+    public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute CarDto dto, @PathVariable Integer id) {
+        Car result = carService.findById(id);
+        if (result == null) {
+            return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null));
+        }
+        result.setPrice(dto.getBasePrice());
+        result.setDeposit(dto.getDeposit());
+        result.setTerms(dto.getTerms());
+        carService.update(result);
 
+        return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result));
+    }
 }
