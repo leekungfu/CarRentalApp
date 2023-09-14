@@ -30,7 +30,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class CarOwnerController {
     private final CarService carService;
     private final FilesStorageService filesStorageService;
-
     @GetMapping("/cars")
     @ResponseBody
     public ResponseEntity<ResponseCarsBelongToUser> getCarsBelongToUser() {
@@ -39,18 +38,16 @@ public class CarOwnerController {
         List<Car> cars = carService.findCarsBelongToUser(member.getId());
         return ResponseEntity.ok(new ResponseCarsBelongToUser(true, "Get cars successful!", member, cars));
     }
-
     @PostMapping("/addCar")
     @ResponseBody
     public ResponseEntity<ResponseCarResult> addCarForm(@ModelAttribute CarDto dto, @RequestParam("documents") MultipartFile[] documents, @RequestParam("images") MultipartFile[] images) throws IOException {
         Car result = carService.findCarByLicensePlate(dto.getPlateNumber());
         if (result != null) {
-            return ResponseEntity.ok(new ResponseCarResult(false, "Car is existed! Try another please.", null));
+            return ResponseEntity.ok(new ResponseCarResult(false, "Car is existed! Try another please.", null, null));
         }
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
         Car car = new Car();
-
         car.setPlateNumber(dto.getPlateNumber());
         car.setColor(dto.getColor());
         car.setBrand(dto.getBrand());
@@ -74,42 +71,20 @@ public class CarOwnerController {
         car.setStatus(CarStatus.valueOf(dto.getStatus()));
         car.setMember(member);
         carService.saveCar(car);
-
         for (MultipartFile document : documents) {
             filesStorageService.store(document, car);
         }
-
         for (MultipartFile image : images) {
             filesStorageService.store(image, car);
         }
-
-        return ResponseEntity.ok(new ResponseCarResult(true, "Save car successful!", car));
+        return ResponseEntity.ok(new ResponseCarResult(true, "Save car successful!", car, filesStorageService.findFilesByCarId(car.getId())));
     }
-
-    @GetMapping("/files")
-    public ResponseEntity<List<ResponseFile>> getListFiles() {
-        List<ResponseFile> files = filesStorageService.getAllFiles().map(dbFile -> {
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/files/").path(String.valueOf(dbFile.getId())).toUriString();
-
-            return new ResponseFile(dbFile.getName(), fileDownloadUri, dbFile.getType(), dbFile.getData().length, dbFile.getBase64Data());
-        }).toList();
-
-        return ResponseEntity.status(HttpStatus.OK).body(files);
-    }
-
-    @GetMapping("/files/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable Integer id) {
-        Optional<Files> files = filesStorageService.getFile(id);
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + files.get().getName() + "\"").body(files.get().getData());
-    }
-
     @PostMapping("/updateDetails/{id}")
     @ResponseBody
     public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute CarDto dto, @RequestParam("images") MultipartFile[] files, @PathVariable Integer id) throws IOException {
         Car result = carService.findById(id);
         if (result == null) {
-            return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null));
+            return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null, null));
         }
         result.setMileage(dto.getMileage());
         result.setFuelConsumption(dto.getFuelConsumption());
@@ -119,29 +94,23 @@ public class CarOwnerController {
         result.setStreet(dto.getStreet());
         result.setDescription(dto.getDescription());
         result.setAdditionalFunctions(dto.getAdditionalFunctions());
-        result.setPrice(dto.getBasePrice());
-        result.setDeposit(dto.getDeposit());
-        result.setTerms(dto.getTerms());
         carService.update(result);
-
         for (MultipartFile document : files) {
             filesStorageService.store(document, result);
         }
-
-        return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result));
+        return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result, filesStorageService.findFilesByCarId(result.getId())));
     }
     @PostMapping("/updatePricing/{id}")
     @ResponseBody
     public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute CarDto dto, @PathVariable Integer id) {
         Car result = carService.findById(id);
         if (result == null) {
-            return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null));
+            return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null, null));
         }
         result.setPrice(dto.getBasePrice());
         result.setDeposit(dto.getDeposit());
         result.setTerms(dto.getTerms());
         carService.update(result);
-
-        return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result));
+        return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result, filesStorageService.findFilesByCarId(result.getId())));
     }
 }

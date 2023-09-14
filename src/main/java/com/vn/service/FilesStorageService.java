@@ -14,17 +14,6 @@ import java.util.stream.Stream;
 
 @Service
 public interface FilesStorageService {
-    void init();
-    void save(MultipartFile file);
-//    Files store(MultipartFile multipartFile) throws IOException;
-
     void store(MultipartFile multipartFile, Car car) throws IOException;
-
-    Optional<Files> getFile(Integer id);
-    Stream<Files> getAllFiles();
-    Resource load(String filename);
-    void deleteAll();
-    Stream<Path> loadAll();
-
     List<Files> findFilesByCarId(Integer carId);
 }

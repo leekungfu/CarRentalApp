@@ -9,11 +9,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
     Car findCarByPlateNumber(String plateNumber);
+    @Query(value = "SELECT c FROM Car c " +
+            "LEFT JOIN c.bookings b " +
+            "WHERE c.province = :province " +
+            "AND (b.endDate < :fromTime OR b.endDate IS NULL)")
+    List<Car> findByProvince(String province, LocalDateTime fromTime);
 
     Page<Car> findByProvince(String city, Pageable pageable);
 

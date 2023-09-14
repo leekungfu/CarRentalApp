@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,4 +35,5 @@ public interface CarService {
 
     public Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable);
 
+    List<Car> searchCar(String province, LocalDateTime fromTime);
 }

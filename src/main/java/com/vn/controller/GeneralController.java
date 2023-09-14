@@ -42,6 +42,13 @@ public class GeneralController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenService jwtTokenService;
 
+    @GetMapping("/currentUser")
+    @ResponseBody
+    public ResponseEntity<?> getCurrentUser() {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member member = memberService.findByEmail(customUserDetails.getUsername());
+        return ResponseEntity.ok(member);
+    }
     @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<?> signup(@ModelAttribute @NotNull SignupDto dto) {

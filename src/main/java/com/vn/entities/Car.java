@@ -38,10 +38,15 @@ public class Car {
     private String fuelType;
     private Double mileage;
     private Double fuelConsumption;
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String province;
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String district;
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String ward;
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String street;
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String description;
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)

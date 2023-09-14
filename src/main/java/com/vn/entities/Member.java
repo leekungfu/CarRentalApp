@@ -32,18 +32,16 @@ public class Member implements Serializable {
     private LocalDate birthDay;
     private String nationalID;
     @Column(unique = true)
-    @NotEmpty(message = "Please enter your email")
     private String email;
-    @NotEmpty(message = "Please enter your password")
     private String password;
-    @NotNull
     private String phone;
-    @Column(columnDefinition = "NVARCHAR(50)")
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String province;
-    @Column(columnDefinition = "NVARCHAR(50)")
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String district;
-    @Column(columnDefinition = "NVARCHAR(50)")
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String ward;
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String street;
     private String drivingLicense;
     private Double wallet;

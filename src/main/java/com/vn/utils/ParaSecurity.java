@@ -3,22 +3,19 @@ package com.vn.utils;
 
 public class ParaSecurity {
     public static String[] ignoreSecurityPages = {
-            "/forgot_password",
-            "/reset_password",
+            "/api/forgot_password",
+            "/api/reset_password",
             "/api/signup",
             "/api/login",
-            "/api/logout",
-//            "/api/owner/files",
-//            "/api/owner/files/{id}",
+            "/api/logout"
     };
 
     public static String[] customerPages ={
-            "/api/personalInfo",
-            "/api/updatePassword",
+            "/api/**",
+            "/api/customer/**",
     };
     public static String[] carOwnerPages ={
-            "/api/personalInfo",
-            "/api/updatePassword",
+            "/api/**",
             "/api/owner/**",
     };
 }

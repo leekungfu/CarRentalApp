@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface FileDBRepository extends JpaRepository<Files, Integer> {
     List<Files> findFilesByCarId(Integer carId);
-    Files findByName(String name);
+    Files findByNameAndCarId(String name, Integer carId);
 }

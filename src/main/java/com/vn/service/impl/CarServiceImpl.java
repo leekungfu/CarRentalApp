@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -85,5 +86,10 @@ public class CarServiceImpl implements CarService {
     public Page<Car> findByCityAndDate(String province, LocalDate date, Pageable pageable) {
         System.out.println("************************************" + date);
         return carRepository.findByProvinceAndDate(province, date, pageable);
+    }
+
+    @Override
+    public List<Car> searchCar(String province, LocalDateTime fromTime) {
+        return carRepository.findByProvince(province, fromTime);
     }
 }
