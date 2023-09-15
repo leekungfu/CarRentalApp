@@ -1,6 +1,7 @@
 package com.vn.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -19,8 +20,8 @@ public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	private Integer paymentMethod;
 	@Enumerated(EnumType.STRING)
 	private BookingStatus bookingStatus;

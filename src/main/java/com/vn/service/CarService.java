@@ -12,28 +12,12 @@ import java.util.List;
 @Service
 public interface CarService {
     Car findCarByLicensePlate(String licensePlate);
-
     Car saveCar(Car car);
-
-    List<Car> findAll();
-
-    Page<Car> findByCity(String city, Pageable pageable);
-
     Car findById(Integer id);
     List<Car> findCarsBelongToUser(Integer id);
-
     Page<Car> listCarByMemberId(Integer id,Pageable pageable);
-
-
-    Car findByIdCar(Integer id);
-
-    Car update(Car car);
-
+    void update(Car car);
     boolean delete(Integer id);
-
     Car findCarById(Integer id);
-
-    public Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable);
-
     List<Car> searchCar(String province, LocalDateTime fromTime);
 }

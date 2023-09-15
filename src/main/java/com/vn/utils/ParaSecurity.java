@@ -11,11 +11,9 @@ public class ParaSecurity {
     };
 
     public static String[] customerPages ={
-            "/api/**",
             "/api/customer/**",
     };
     public static String[] carOwnerPages ={
-            "/api/**",
             "/api/owner/**",
     };
 }

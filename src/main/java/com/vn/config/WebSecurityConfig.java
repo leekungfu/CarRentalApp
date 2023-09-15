@@ -36,6 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(ParaSecurity.ignoreSecurityPages).permitAll()
+                .antMatchers("/api/currentUser",
+                        "/api/personalInfo",
+                        "/api/updatePassword").hasAnyRole("CUSTOMER", "OWNER")
                 .antMatchers(ParaSecurity.customerPages).hasRole("CUSTOMER")
                 .antMatchers(ParaSecurity.carOwnerPages).hasRole("OWNER")
                 .anyRequest().authenticated()

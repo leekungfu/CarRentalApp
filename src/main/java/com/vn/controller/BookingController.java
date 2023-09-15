@@ -1,6 +1,7 @@
 package com.vn.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,8 +71,8 @@ public class BookingController {
 		
 		booking.setCar(car);
 		booking.setPaymentMethod(paymentMethod);
-		booking.setStartDate(LocalDate.parse(startDate));
-		booking.setEndDate(LocalDate.parse(endDate));
+		booking.setStartDate(LocalDateTime.parse(startDate));
+		booking.setEndDate(LocalDateTime.parse(endDate));
 		
 		switch(paymentMethod) {
 		case 1:

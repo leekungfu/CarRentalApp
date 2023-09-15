@@ -2,26 +2,20 @@ package com.vn.controller;
 
 import com.vn.dto.*;
 import com.vn.entities.Car;
-import com.vn.entities.Files;
 import com.vn.entities.Member;
 import com.vn.enums.CarStatus;
 import com.vn.service.CarService;
 import com.vn.service.FilesStorageService;
 import com.vn.service.impl.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.*;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/owner")
