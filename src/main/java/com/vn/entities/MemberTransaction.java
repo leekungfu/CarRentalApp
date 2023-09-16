@@ -22,7 +22,7 @@ public class MemberTransaction implements Serializable {
     private Integer id;
     private Double amount;
     private Type type;
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
     private String note;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

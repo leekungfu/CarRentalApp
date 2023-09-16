@@ -1,6 +1,5 @@
 package com.vn.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.vn.entities.Booking;
 import com.vn.entities.Car;
@@ -26,7 +22,8 @@ import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 
-@Controller
+@RestController
+@RequestMapping()
 public class BookingController {
 	
     @Autowired
@@ -37,25 +34,7 @@ public class BookingController {
 
 	@Autowired
 	BookingService bookingService;
-	
-	
-	//rent-a-car
-	@GetMapping("/rent_car")
-	public String bookingProcess(Model model,
-								@RequestParam(name = "carID") Integer carID,
-								HttpSession httpSession) {
-		Car car = carService.findById(carID);
-		model.addAttribute("car", car);
-		httpSession.setAttribute("carModel", car);
-		
-		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("user", detail.member());
-		
-		model.addAttribute("fullName", detail.member().getFullName());
-		return "booking/booking_process";
-		
-	}
-	
+
 	@PostMapping("/booking_result")
 	public String bookingSuccessful(@ModelAttribute("payment")Integer paymentMethod,
 									@ModelAttribute("startDate") String startDate,
@@ -70,17 +49,17 @@ public class BookingController {
 		carService.update(car);
 		
 		booking.setCar(car);
-		booking.setPaymentMethod(paymentMethod);
+//		booking.setPaymentMethod(paymentMethod);
 		booking.setStartDate(LocalDateTime.parse(startDate));
 		booking.setEndDate(LocalDateTime.parse(endDate));
 		
 		switch(paymentMethod) {
 		case 1:
-			booking.setBookingStatus(BookingStatus.CONFIRMED);
+			booking.setBookingStatus(BookingStatus.Confirmed);
 			break;
 		case 2:
 		case 3:
-			booking.setBookingStatus(BookingStatus.PENDING_DEPOSIT);
+			booking.setBookingStatus(BookingStatus.Pending_deposit);
 			break;
 		default: 
 			break;
@@ -94,7 +73,7 @@ public class BookingController {
 			booking.setMember(optional.get());
 		}
 		
-		bookingService.addBooking(booking);
+		bookingService.save(booking);
 		
 		model.addAttribute("fullName", detail.member().getFullName());
 		model.addAttribute("booking", booking);

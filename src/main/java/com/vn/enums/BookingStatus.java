@@ -1,13 +1,13 @@
 package com.vn.enums;
 
 public enum BookingStatus {
-    AVAILABLE,
-    STOPPED,
-    BOOKED,
-    CONFIRMED,
-    COMPLETED,
-    PENDING_DEPOSIT,
-    PENDING_PAYMENT,
-    CANCEL,
+    Available,
+    Stopped,
+    Booked,
+    Confirmed,
+    Completed,
+    Pending_deposit,
+    Pending_payment,
+    Cancel,
 
 }

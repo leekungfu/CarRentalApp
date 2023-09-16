@@ -85,7 +85,7 @@ public class UserControllerSangLV {
 
         MemberTransaction memberTransaction = new MemberTransaction();
         memberTransaction.setAmount(amount + 0.0);
-        memberTransaction.setDate(LocalDateTime.now());
+        memberTransaction.setDateTime(LocalDateTime.now());
         if (amount >0)
             memberTransaction.setType(Type.TOP_UP);
         else

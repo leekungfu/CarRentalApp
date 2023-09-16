@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import com.vn.enums.BookingStatus;
+import com.vn.enums.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class Booking {
 	private Integer id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-	private Integer paymentMethod;
+	@Enumerated(EnumType.STRING)
+	private PaymentMethod paymentMethod;
 	@Enumerated(EnumType.STRING)
 	private BookingStatus bookingStatus;
 	@ManyToOne
