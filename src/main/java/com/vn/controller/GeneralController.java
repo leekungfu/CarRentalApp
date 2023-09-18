@@ -1,110 +1,164 @@
 package com.vn.controller;
 
-import com.vn.dto.StringMessageDTO;
+import com.vn.config.JwtTokenService;
+import com.vn.dto.LoginDto;
+import com.vn.dto.MemberDto;
+import com.vn.responses.ResponseMemberResult;
+import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
+import com.vn.enums.Role;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
+import com.vn.utils.ImageUtil;
 import com.vn.utils.Utility;
+import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import javax.mail.MessagingException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 
-@Controller
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class GeneralController {
+    private final MemberService memberService;
+    private final Utility utility;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtTokenService jwtTokenService;
 
-    @Autowired
-    private MemberService memberService;
-
-    @Autowired
-    private Utility utility;
-
-
-    @GetMapping("/about")
-    public String aboutPage() {
-        return "home/about";
-    }
-
-    @GetMapping("/signupAjax")
-    public String signUp() {
-        return "home/home_guest";
-
-    }
-
-    @PostMapping("/signupAjax")
+    @GetMapping("/currentUser")
     @ResponseBody
-    public ResponseEntity<?> signUpPageAjax(@RequestBody Member member) {
-        Member checkMem = memberService.findByEmail(member.getEmail());
+    public ResponseEntity<?> getCurrentUser() {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member member = memberService.findByEmail(customUserDetails.getUsername());
+        return ResponseEntity.ok(member);
+    }
+    @PostMapping("/signup")
+    @ResponseBody
+    public ResponseEntity<?> signup(@ModelAttribute @NotNull SignupDto dto) {
+        Member checkMem = memberService.findByEmail(dto.getEmail());
         if (checkMem == null) {
+            Member member = new Member();
+            member.setEmail(dto.getEmail());
+            member.setPassword(dto.getPassword());
+            member.setPhone(dto.getPhone());
+            member.setFullName(dto.getFullName());
+            member.setRole(Role.valueOf(dto.getRole()));
+
+            String token = jwtTokenService.generateToken(dto.getEmail());
+
+            // save method including encode password
             memberService.save(member);
-
-            // Auto login after user signed up successfully
-            CustomUserDetails customUserDetails = new CustomUserDetails(member);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(new StringMessageDTO("YES"));
+            setAuth(member);
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Sign up successful!", member, token));
         }
-        return ResponseEntity.ok(new StringMessageDTO("NO"));
+        return ResponseEntity.ok(new ResponseMemberResult(false, "Sign up failed! Email is taken.", null, null));
     }
 
-    @PostMapping("/loginAjax")
+    private void setAuth(Member member) {
+        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        authentication.getPrincipal();
+    }
+
+    @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<?> loginPageAjax(@RequestBody Member member, HttpServletRequest request) {
-        try {
-            request.login(member.getEmail(), member.getPassword());
-            return ResponseEntity.ok(new StringMessageDTO("OK"));
-        } catch (Exception exception) {
-            return ResponseEntity.ok(new StringMessageDTO("FAILED"));
+    public ResponseEntity<?> login(@ModelAttribute @NotNull LoginDto dto, HttpServletRequest request) throws ServletException {
+        Member result = memberService.findByEmail(dto.getEmail());
+        if (result != null) {
+            String storedPassword = result.getPassword();
+            String dtoPassword = dto.getPassword();
+            if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
+                request.login(dto.getEmail(), dto.getPassword());
+                String token = jwtTokenService.generateToken(dto.getEmail());
+                return ResponseEntity.ok(new ResponseMemberResult(true, "Login successful!", result, token));
+            }
+            return ResponseEntity.ok(new ResponseMemberResult(false, "Wrong password! Please try again", null));
         }
+        return ResponseEntity.ok(new ResponseMemberResult(false, "Email is not exist! Please try again.", null));
     }
 
-
-    @GetMapping("/login")
-    public String loginPage(){
-        return "home/home_guest";
+    @PostMapping("/logout")
+    @ResponseBody
+    public ResponseEntity<?> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.logout(request, response, authentication);
+        return ResponseEntity.ok(new ResponseMemberResult(true, "None", null));
     }
 
-    @GetMapping("/forgot_password")
-    public String forgotPassForm() {
+    @PostMapping("/personalInfo")
+    @ResponseBody
+    public ResponseEntity<?> updateInfo(@ModelAttribute @NotNull MemberDto dto,
+                                        @RequestParam("drivingLicense")
+                                        @NotNull MultipartFile drivingLicense) {
+        Member result = memberService.findByEmail(dto.getEmail());
+        if (result != null) {
+            result.setFullName(dto.getFullName());
+            result.setBirthDay(LocalDate.parse(dto.getBirthDay()));
+            result.setPhone(dto.getPhone());
+            result.setNationalID(dto.getNationalID());
+            result.setProvince(dto.getProvince());
+            result.setDistrict(dto.getDistrict());
+            result.setWard(dto.getWard());
+            result.setStreet(dto.getStreet());
+            result.setDrivingLicense(ImageUtil.saveImage(drivingLicense));
+            memberService.updateMember(result);
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Update successful!", result));
+        }
+        return ResponseEntity.ok(new ResponseMemberResult(false, "Update failed! Check your information again please.", null));
 
-        return "account/forgot_password";
+    }
+
+    @PostMapping("/updatePassword")
+    @ResponseBody
+    public ResponseEntity<?> changePassword(@RequestParam String email, @RequestParam String password) {
+        Member result = memberService.findByEmail(email);
+        if (result != null) {
+            result.setPassword(bCryptPasswordEncoder.encode(password));
+            memberService.updateMember(result);
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Change password successful!", result));
+        } else {
+            return ResponseEntity.ok(new ResponseMemberResult(false, "Change password failed! Try again please", null));
+        }
     }
 
     @PostMapping("/forgot_password")
-    public String forgotPassProcessing(@ModelAttribute("member") Member member,
-                                       Model model,
-                                       HttpServletRequest request) {
-        // Find existed email in database to confirm sending the reset password request
-        String email = request.getParameter("email");
+    @ResponseBody
+    public ResponseEntity<?> forgotPassProcessing(@RequestParam String email, HttpServletRequest request) {
         // Random token chain, which will be used to determine ex
+        Member result = memberService.findByEmail(email);
+        if (result == null) {
+            return ResponseEntity.ok(new ResponseMemberResult(false, "Email is not exist!", null));
+        }
         String token = RandomString.make(30);
-
         try {
             // Set value for user found by the given email and persist change to the DB
             memberService.updateResetPasswordToken(token, email);
-
             // Send the reset link with unique token which will expired immediately user reset password success
             String resetPassLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
             utility.sendEmail(email, resetPassLink);
 
-        } catch (UsernameNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-        } catch (UnsupportedEncodingException | MessagingException e) {
-            model.addAttribute("error", "Something wrong while sending email!");
+        } catch (UsernameNotFoundException | UnsupportedEncodingException | MessagingException e) {
+            return ResponseEntity.ok(new ResponseMemberResult(false, e.getMessage(), null));
         }
-
-        return "account/forgot_password";
+        return ResponseEntity.ok(new ResponseMemberResult(true, "Sent!", result));
     }
 
     @GetMapping("/reset_password")
@@ -139,5 +193,11 @@ public class GeneralController {
         }
 
         return "account/reset_password_success";
+    }
+
+    @GetMapping("/")
+    public String home() {
+
+        return "index";
     }
 }

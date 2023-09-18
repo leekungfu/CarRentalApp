@@ -26,7 +26,6 @@ public class Feedback {
 	private Integer rating;
 	private String content;
 	private LocalDate dateTime;
-	
 	@OneToOne
 	@JoinColumn(name = "booking_id")
 	private Booking booking;

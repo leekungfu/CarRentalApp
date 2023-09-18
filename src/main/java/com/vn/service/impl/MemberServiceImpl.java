@@ -50,12 +50,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findUserByEmailAndFullName(String email, String fullName) {
-        log.info("Find user using email {} and fullName {}", email, fullName);
-        return memberRepository.findByEmailAndFullName(email, fullName);
-    }
-
-    @Override
     public void updateResetPasswordToken(String token, String email) {
         log.info("Update new token {} for user to reset password via email {}", token, email);
         Member member = memberRepository.findByEmail(email);

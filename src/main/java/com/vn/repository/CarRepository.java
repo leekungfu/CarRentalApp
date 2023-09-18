@@ -9,24 +9,22 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
-    Car findCarByLicensePlate(String licensePlate);
-
-    Page<Car> findByCity(String city, Pageable pageable);
-
+    Car findCarByPlateNumber(String plateNumber);
+    @Query(value = "SELECT c FROM Car c " +
+            "LEFT JOIN c.bookings b " +
+            "WHERE c.province = :province " +
+            "AND (b.endDate < :fromTime OR b.endDate IS NULL)")
+    List<Car> findByProvince(String province, LocalDateTime fromTime);
+    Page<Car> findByProvince(String city, Pageable pageable);
     void deleteById(Integer id);
-
-//    List<Car> findByMemberId(Integer idMember);
-
+    List<Car> findCarsByMemberId(Integer id);
     Page<Car> findByMemberId(Integer id, Pageable pageable);
-
-
     Car findCarById(Integer id);
-
-    @Query(value = "SELECT c FROM Car c LEFT JOIN c.bookings b WHERE c.city = :city AND (b.endDate < :date OR b.endDate IS NULL)")
-    Page<Car> findByCityAndDate(String city, LocalDate date, Pageable pageable);
-
+    @Query(value = "SELECT c FROM Car c LEFT JOIN c.bookings b WHERE c.province = :city AND (b.endDate < :date OR b.endDate IS NULL)")
+    Page<Car> findByProvinceAndDate(String city, LocalDate date, Pageable pageable);
 }

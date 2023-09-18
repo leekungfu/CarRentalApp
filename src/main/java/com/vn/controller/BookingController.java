@@ -1,20 +1,18 @@
 package com.vn.controller;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import com.vn.enums.BookingStatus;
+import com.vn.enums.CarStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import com.vn.entities.Booking;
 import com.vn.entities.Car;
@@ -23,10 +21,9 @@ import com.vn.service.BookingService;
 import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
-import com.vn.utils.BookingStatusEnum;
-import com.vn.utils.CarStatusEnum;
 
-@Controller
+@RestController
+@RequestMapping()
 public class BookingController {
 	
     @Autowired
@@ -37,25 +34,7 @@ public class BookingController {
 
 	@Autowired
 	BookingService bookingService;
-	
-	
-	//rent-a-car
-	@GetMapping("/rent_car")
-	public String bookingProcess(Model model,
-								@RequestParam(name = "carID") Integer carID,
-								HttpSession httpSession) {
-		Car car = carService.findById(carID);
-		model.addAttribute("car", car);
-		httpSession.setAttribute("carModel", car);
-		
-		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("user", detail.getMember());
-		
-		model.addAttribute("fullName", detail.getMember().getFullName());
-		return "booking/booking_process";
-		
-	}
-	
+
 	@PostMapping("/booking_result")
 	public String bookingSuccessful(@ModelAttribute("payment")Integer paymentMethod,
 									@ModelAttribute("startDate") String startDate,
@@ -66,37 +45,37 @@ public class BookingController {
 		Booking booking = new Booking();
 		
 		Car car = (Car) httpSession.getAttribute("carModel");
-		car.setStatus(CarStatusEnum.Booked);
+		car.setStatus(CarStatus.Booked);
 		carService.update(car);
 		
 		booking.setCar(car);
-		booking.setPaymentMethod(paymentMethod);
-		booking.setStartDate(LocalDate.parse(startDate));
-		booking.setEndDate(LocalDate.parse(endDate));
+//		booking.setPaymentMethod(paymentMethod);
+		booking.setStartDate(LocalDateTime.parse(startDate));
+		booking.setEndDate(LocalDateTime.parse(endDate));
 		
 		switch(paymentMethod) {
 		case 1:
-			booking.setBookingStatus(BookingStatusEnum.Confirmed);
+			booking.setBookingStatus(BookingStatus.Confirmed);
 			break;
 		case 2:
 		case 3:
-			booking.setBookingStatus(BookingStatusEnum.Pending_deposit);
+			booking.setBookingStatus(BookingStatus.Pending_deposit);
 			break;
 		default: 
 			break;
 		}
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Optional<Member> optional = memberService.findUserById(detail.getMember().getId());
+		Optional<Member> optional = memberService.findUserById(detail.member().getId());
 		if(optional.isEmpty()) {
 			return "redirect:/login";
 		} else {
 			booking.setMember(optional.get());
 		}
 		
-		bookingService.addBooking(booking);
+		bookingService.save(booking);
 		
-		model.addAttribute("fullName", detail.getMember().getFullName());
+		model.addAttribute("fullName", detail.member().getFullName());
 		model.addAttribute("booking", booking);
 		return "booking/booking_successful";
 	}
@@ -108,7 +87,7 @@ public class BookingController {
 		model.addAttribute("booking", booking);
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		model.addAttribute("fullName", detail.getMember().getFullName());
+		model.addAttribute("fullName", detail.member().getFullName());
 		return "booking/booking_detail";
 	}
 	
@@ -117,61 +96,11 @@ public class BookingController {
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		List<Booking> bookings = bookingService.findAllByMemberId(detail.getMember().getId());
+		List<Booking> bookings = bookingService.findAllByMemberId(detail.member().getId());
 		model.addAttribute("bookings", bookings);
 		
-		model.addAttribute("fullName", detail.getMember().getFullName());
+		model.addAttribute("fullName", detail.member().getFullName());
 		
 		return "booking/booking_list";
 	}
-
-//    @GetMapping("/booking/status")
-//    public String addStatus2(Model model) {
-//        model.addAttribute("carStatus", CarStatusEnum.values());
-//        model.addAttribute("car", new Car());
-//
-//        return "car/booking_status";
-//    }
-//
-//    // Confirm deposit
-//    @PostMapping("/booking/status")
-//    public String checkAddStatus(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
-//
-//        car.setStatus(CarStatusEnum.Booked);
-//        carService.saveCar(car);
-//        redirectAttributes.addFlashAttribute("messDeposit", "Confirm Deposit successful");
-//        model.addAttribute("carStatus", CarStatusEnum.Booked);
-//
-//        return "redirect:/car/payment";
-//    }
-//
-//    // Confirm payment
-//
-//    @GetMapping("/car/payment")
-//    public String confirmPayment(Model model) {
-//        model.addAttribute("carStatus", CarStatusEnum.Booked);
-//        model.addAttribute("car", new Car());
-//
-//        return "car/confirm_payment";
-//    }
-//
-//    @PostMapping("/car/payment")
-//    public String checkConfirmPayment(@ModelAttribute("car") Car car, Model model, RedirectAttributes redirectAttributes) {
-//
-//        car.setStatus(CarStatusEnum.Available);
-////        car.getBookings().sort(new Comparator<Booking>() {
-////            @Override
-////            public int compare(Booking o1, Booking o2) {
-////                return o2.getId() - o1.getId();
-////            }
-////        });
-////        Booking booking = car.getBookings().get(0);
-////        booking.setBookingStatus(BookingStatusEnum.Completed);
-//
-//        carService.saveCar(car);
-//        redirectAttributes.addFlashAttribute("messPayment", "Confirm Payment successful");
-//        model.addAttribute("carStatus", CarStatusEnum.values());
-//
-//        return "redirect:/booking/status";
-//    }
 }

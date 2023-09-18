@@ -12,7 +12,7 @@ public interface BookingService {
 	
 	Booking findBookingById(Integer bookingId);
 	
-	Booking addBooking(Booking booking);
+	void save(Booking booking);
 	
 	Boolean deleteBooking(Integer bookingId);
 	
