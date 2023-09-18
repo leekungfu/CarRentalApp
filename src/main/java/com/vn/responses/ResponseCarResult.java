@@ -1,4 +1,4 @@
-package com.vn.dto;
+package com.vn.responses;
 
 import com.vn.entities.Car;
 import com.vn.entities.Files;

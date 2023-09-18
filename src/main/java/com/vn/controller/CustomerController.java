@@ -1,13 +1,13 @@
 package com.vn.controller;
 
 import com.vn.dto.BookingDto;
-import com.vn.dto.ResponseCarResult;
-import com.vn.dto.ResponseMessage;
-import com.vn.dto.ResponseSearchCar;
+import com.vn.responses.ResponseBookingResult;
+import com.vn.responses.ResponseCarResult;
+import com.vn.responses.ResponseMessage;
+import com.vn.responses.ResponseSearchCar;
 import com.vn.entities.Booking;
 import com.vn.entities.Car;
 import com.vn.entities.Member;
-import com.vn.entities.MemberTransaction;
 import com.vn.enums.CarStatus;
 import com.vn.enums.PaymentMethod;
 import com.vn.service.BookingService;
@@ -31,6 +31,7 @@ public class CustomerController {
     private final CarService carService;
     private final BookingService bookingService;
     private final MemberService memberService;
+
     @GetMapping("/searchCar")
     @ResponseBody
     public ResponseEntity<ResponseSearchCar> searchCarByProvince(@RequestParam("selectedProvince") String province, @RequestParam("startTime") String startTime) {
@@ -55,8 +56,12 @@ public class CustomerController {
     public ResponseEntity<?> addBooking(@ModelAttribute BookingDto dto) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
-        if (dto.getPaymentMethod().equals("wallet")) {
-            member.setWallet(Double.valueOf(dto.getDeposit()));
+        Double balance = member.getWallet();
+        if (dto.getPaymentMethod().equals("Wallet")) {
+            if (balance == null || balance < Double.parseDouble(dto.getDeposit())) {
+                return ResponseEntity.ok(new ResponseMessage(false, "Your wallet is not enough money to do this payment!"));
+            }
+            member.setWallet(balance - Double.parseDouble(dto.getDeposit()));
             memberService.updateMember(member);
         }
         Car result = carService.findCarById(Integer.valueOf(dto.getCarId()));
@@ -72,6 +77,6 @@ public class CustomerController {
         booking.setMember(member);
         bookingService.save(booking);
 
-        return ResponseEntity.ok(new ResponseMessage(true, "OK"));
+        return ResponseEntity.ok(new ResponseBookingResult(true, "Payment successfully!", booking));
     }
 }

@@ -3,7 +3,7 @@ package com.vn.controller;
 import com.vn.config.JwtTokenService;
 import com.vn.dto.LoginDto;
 import com.vn.dto.MemberDto;
-import com.vn.dto.ResponseMemberResult;
+import com.vn.responses.ResponseMemberResult;
 import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
 import com.vn.enums.Role;

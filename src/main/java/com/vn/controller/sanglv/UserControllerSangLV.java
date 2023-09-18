@@ -1,6 +1,6 @@
 package com.vn.controller.sanglv;
 
-import com.vn.dto.WalletResponseDTO;
+import com.vn.responses.WalletResponseDTO;
 import com.vn.entities.Member;
 import com.vn.entities.MemberTransaction;
 import com.vn.enums.Type;
