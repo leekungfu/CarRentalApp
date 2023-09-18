@@ -1,6 +1,5 @@
 package com.vn.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
@@ -23,6 +22,8 @@ public class Booking {
 	private Integer id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
+	@OneToOne(mappedBy = "booking")
+	private DriverInformation info;
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
 	@Enumerated(EnumType.STRING)
