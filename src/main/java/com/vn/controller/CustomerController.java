@@ -1,10 +1,8 @@
 package com.vn.controller;
 
 import com.vn.dto.BookingDto;
-import com.vn.responses.ResponseBookingResult;
-import com.vn.responses.ResponseCarResult;
-import com.vn.responses.ResponseMessage;
-import com.vn.responses.ResponseSearchCar;
+import com.vn.enums.BookingStatus;
+import com.vn.responses.*;
 import com.vn.entities.Booking;
 import com.vn.entities.Car;
 import com.vn.entities.Member;
@@ -15,10 +13,10 @@ import com.vn.service.CarService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -53,23 +51,28 @@ public class CustomerController {
 
     @PostMapping("/addBooking")
     @ResponseBody
-    public ResponseEntity<?> addBooking(@ModelAttribute BookingDto dto) {
+    public ResponseEntity<?> addBooking(@ModelAttribute @NotNull BookingDto dto) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
         Double balance = member.getWallet();
+        Car result = carService.findCarById(Integer.valueOf(dto.getCarId()));
+        if (result == null) {
+            return ResponseEntity.ok(new ResponseMessage(false, "Car is not exist"));
+        }
+        Booking booking = new Booking();
         if (dto.getPaymentMethod().equals("Wallet")) {
             if (balance == null || balance < Double.parseDouble(dto.getDeposit())) {
                 return ResponseEntity.ok(new ResponseMessage(false, "Your wallet is not enough money to do this payment!"));
             }
             member.setWallet(balance - Double.parseDouble(dto.getDeposit()));
             memberService.updateMember(member);
+
+            booking.setBookingStatus(BookingStatus.Confirmed);
         }
-        Car result = carService.findCarById(Integer.valueOf(dto.getCarId()));
-        if (result == null) {
-            return ResponseEntity.ok(new ResponseMessage(false, "Car is not exist"));
+        else {
+            booking.setBookingStatus(BookingStatus.Pending_deposit);
         }
         result.setStatus(CarStatus.Booked);
-        Booking booking = new Booking();
         booking.setCar(result);
         booking.setPaymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod()));
         booking.setStartDate(LocalDateTime.parse(dto.getStartDate()));
@@ -78,5 +81,20 @@ public class CustomerController {
         bookingService.save(booking);
 
         return ResponseEntity.ok(new ResponseBookingResult(true, "Payment successfully!", booking));
+    }
+
+    @GetMapping("/bookings")
+    @ResponseBody
+    public ResponseEntity<?> BookingList() {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Booking> bookings = bookingService.findAllByMemberId(customUserDetails.member().getId());
+        return ResponseEntity.ok(new ResponseBookings(true, "Get bookings successful", bookings));
+    }
+
+    @GetMapping("/booking/{id}")
+    @ResponseBody
+    public ResponseEntity<?> SingleBooking(@PathVariable Integer id) {
+        Booking booking = bookingService.findBookingById(id);
+        return ResponseEntity.ok(new ResponseBookingResult(true, "Get booking successful", booking));
     }
 }

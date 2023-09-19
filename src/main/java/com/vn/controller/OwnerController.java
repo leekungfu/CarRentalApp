@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/api/owner")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
-public class CarOwnerController {
+public class OwnerController {
     private final CarService carService;
     private final FilesStorageService filesStorageService;
     @GetMapping("/cars")

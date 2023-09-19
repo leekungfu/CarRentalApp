@@ -64,6 +64,7 @@ public class Car {
     @Enumerated(EnumType.STRING)
     private CarStatus status;
     @OneToMany(mappedBy = "car")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     private List<Booking> bookings;
     @ManyToOne
