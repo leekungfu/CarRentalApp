@@ -1,20 +1,18 @@
 package com.vn.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.vn.dto.BookingDto;
+import com.vn.dto.CarDto;
 import com.vn.enums.CarStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -65,7 +63,7 @@ public class Car {
     private CarStatus status;
     @OneToMany(mappedBy = "car")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonIgnore
+    @JsonManagedReference
     private List<Booking> bookings;
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -74,4 +72,34 @@ public class Car {
     @OneToMany(mappedBy = "car")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Files> files;
+
+    public CarDto toDto() {
+        CarDto carDto = new CarDto();
+        carDto.setPlateNumber(this.getPlateNumber());
+        carDto.setColor(this.getColor());
+        carDto.setBrand(this.getBrand());
+        carDto.setModel(this.getModel());
+        carDto.setProductionYear(String.valueOf(this.getProductionYear()));
+        carDto.setNumberOfSeat(String.valueOf(this.getNumberOfSeat()));
+        carDto.setTransmissionType(this.getTransmissionType());
+        carDto.setFuelType(this.getFuelType());
+        carDto.setMileage(this.getMileage());
+        carDto.setFuelConsumption(this.getFuelConsumption());
+        carDto.setProvince(this.getProvince());
+        carDto.setDistrict(this.getPlateNumber());
+        carDto.setWard(this.getPlateNumber());
+        carDto.setStreet(this.getPlateNumber());
+        carDto.setDescription(this.getPlateNumber());
+        carDto.setAdditionalFunctions(this.getAdditionalFunctions());
+        carDto.setFiles(this.getFiles());
+        carDto.setBasePrice(this.getPrice());
+        carDto.setDeposit(this.getDeposit());
+        carDto.setTerms(this.getTerms());
+        carDto.setRating(this.getRating());
+        if (bookings != null) {
+            BookingDto bookingDto = new BookingDto();
+            bookingDto.setCar(carDto);
+        }
+        return carDto;
+    }
 }

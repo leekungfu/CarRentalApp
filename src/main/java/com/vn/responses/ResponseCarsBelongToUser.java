@@ -1,5 +1,6 @@
 package com.vn.responses;
 
+import com.vn.dto.CarDto;
 import com.vn.entities.Car;
 import com.vn.entities.Files;
 import com.vn.entities.Member;
@@ -15,5 +16,5 @@ public class ResponseCarsBelongToUser {
     private Boolean isSuccess;
     private String message;
     private Member member;
-    private List<Car> cars;
+//    private List<CarDto> cars;
 }

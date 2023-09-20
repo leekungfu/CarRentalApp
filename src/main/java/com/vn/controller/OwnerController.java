@@ -1,11 +1,16 @@
 package com.vn.controller;
 
 import com.vn.dto.*;
+import com.vn.entities.Booking;
 import com.vn.entities.Car;
 import com.vn.entities.Member;
+import com.vn.enums.BookingStatus;
 import com.vn.enums.CarStatus;
+import com.vn.responses.ResponseBookingResult;
 import com.vn.responses.ResponseCarResult;
 import com.vn.responses.ResponseCarsBelongToUser;
+import com.vn.responses.ResponseMessage;
+import com.vn.service.BookingService;
 import com.vn.service.CarService;
 import com.vn.service.FilesStorageService;
 import com.vn.service.impl.CustomUserDetails;
@@ -26,13 +31,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class OwnerController {
     private final CarService carService;
     private final FilesStorageService filesStorageService;
+    private final BookingService bookingService;
     @GetMapping("/cars")
     @ResponseBody
     public ResponseEntity<ResponseCarsBelongToUser> getCarsBelongToUser() {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
-        List<Car> cars = carService.findCarsBelongToUser(member.getId());
-        return ResponseEntity.ok(new ResponseCarsBelongToUser(true, "Get cars successful!", member, cars));
+        return ResponseEntity.ok(new ResponseCarsBelongToUser(true, "Get cars successful!", member));
     }
     @PostMapping("/addCar")
     @ResponseBody
@@ -108,5 +113,17 @@ public class OwnerController {
         result.setTerms(dto.getTerms());
         carService.update(result);
         return ResponseEntity.ok(new ResponseCarResult(true, "Update successfully!", result, filesStorageService.findFilesByCarId(result.getId())));
+    }
+
+    @PostMapping("/updateBookingStatus/{id}")
+    @ResponseBody
+    public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id) {
+        Booking result = bookingService.findBookingById(id);
+        if (result == null) {
+            return ResponseEntity.ok(new ResponseMessage(false, "Booking is not exist"));
+        }
+        result.setBookingStatus(BookingStatus.Confirmed);
+        bookingService.updateBooking(result);
+        return ResponseEntity.ok(new ResponseBookingResult(true, "The deposit is confirmed!", result));
     }
 }

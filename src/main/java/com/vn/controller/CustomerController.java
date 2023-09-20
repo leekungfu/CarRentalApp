@@ -1,6 +1,7 @@
 package com.vn.controller;
 
 import com.vn.dto.BookingDto;
+import com.vn.dto.CarDto;
 import com.vn.enums.BookingStatus;
 import com.vn.responses.*;
 import com.vn.entities.Booking;

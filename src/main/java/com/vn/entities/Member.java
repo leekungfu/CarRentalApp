@@ -13,6 +13,8 @@ import com.vn.enums.Role;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -49,16 +51,17 @@ public class Member implements Serializable {
     private Role role;
     @Column(length = 30)
     private String resetPasswordToken;
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
 //	@Fetch(FetchMode.JOIN)
     @JsonIgnore
     private List<Booking> bookings;
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<MemberTransaction> memberTransactions;
-    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member")
+    @LazyCollection(LazyCollectionOption.FALSE)
 //	@Fetch(FetchMode.JOIN)
-    @JsonIgnore
+//    @JsonIgnore
     @JsonManagedReference
     private List<Car> cars;
 }
