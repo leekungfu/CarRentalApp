@@ -1,5 +1,6 @@
 package com.vn.responses;
 
+import com.vn.dto.BookingDto;
 import com.vn.entities.Booking;
 import lombok.Data;
 
@@ -9,9 +10,9 @@ import java.util.List;
 public class ResponseBookings {
     private Boolean isSuccess;
     private String message;
-    private List<Booking> bookings;
+    private List<BookingDto> bookings;
 
-    public ResponseBookings(Boolean isSuccess, String message, List<Booking> bookings) {
+    public ResponseBookings(Boolean isSuccess, String message, List<BookingDto> bookings) {
         this.isSuccess = isSuccess;
         this.message = message;
         this.bookings = bookings;

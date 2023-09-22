@@ -45,6 +45,7 @@ public class Booking {
 
 	public BookingDto toDto() {
 		BookingDto dto = new BookingDto();
+		dto.setBookingId(String.valueOf(this.getId()));
 		dto.setStartDate(String.valueOf(this.getStartDate()));
 		dto.setEndDate(String.valueOf(this.getEndDate()));
 		dto.setInfo(this.getInfo());
@@ -57,10 +58,10 @@ public class Booking {
 			CarDto carDto = this.getCar().toDto();
 			dto.setCar(carDto);
 		}
-//		if (this.getMember() != null) {
-//			MemberDto memberDto = this.getMember().toDto();
-//			dto.setMember(memberDto);
-//		}
+		if (this.getMember() != null) {
+			MemberDto memberDto = this.getMember().toDto();
+			dto.setMember(memberDto);
+		}
 		return dto;
 	}
 }

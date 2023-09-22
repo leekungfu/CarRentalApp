@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingDto {
+    private String bookingId;
     private String carId;
     private String paymentMethod;
     private String startDate;

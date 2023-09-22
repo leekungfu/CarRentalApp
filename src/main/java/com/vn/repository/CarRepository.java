@@ -18,7 +18,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
     @Query(value = "SELECT c FROM Car c " +
             "LEFT JOIN c.bookings b " +
             "WHERE c.province = :province " +
-            "AND (b.endDate < :fromTime OR b.endDate IS NULL)")
+            "AND (b.endDate < :fromTime OR b.endDate IS NULL)" +
+            "AND c.status = 'Available'")
     List<Car> findByProvince(String province, LocalDateTime fromTime);
     Page<Car> findByProvince(String city, Pageable pageable);
     void deleteById(Integer id);

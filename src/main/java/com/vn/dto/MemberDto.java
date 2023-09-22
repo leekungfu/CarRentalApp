@@ -17,5 +17,6 @@ public class MemberDto {
     private String ward;
     private String street;
     private String role;
+    private String wallet;
     private MultipartFile drivingLicense;
 }

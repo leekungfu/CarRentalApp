@@ -33,8 +33,8 @@ public class CustomerController {
 
     @GetMapping("/searchCar")
     @ResponseBody
-    public ResponseEntity<ResponseSearchCar> searchCarByProvince(@RequestParam("selectedProvince") String province, @RequestParam("startTime") String startTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    public ResponseEntity<ResponseSearchCar> searchCarByProvince(@RequestParam("selectedProvince") String province, @RequestParam("startTimeFormatted") String startTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime time = LocalDateTime.parse(startTime, formatter);
         List<Car> cars = carService.searchCar(province, time);
         return ResponseEntity.ok(new ResponseSearchCar(true, "Search car successful", cars));
@@ -88,7 +88,7 @@ public class CustomerController {
     @ResponseBody
     public ResponseEntity<?> BookingList() {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Booking> bookings = bookingService.findAllByMemberId(customUserDetails.member().getId());
+        List<BookingDto> bookings = bookingService.findAllByMemberId(customUserDetails.member().getId());
         return ResponseEntity.ok(new ResponseBookings(true, "Get bookings successful", bookings));
     }
 

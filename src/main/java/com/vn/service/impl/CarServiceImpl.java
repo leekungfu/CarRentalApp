@@ -7,18 +7,12 @@ import com.vn.entities.Car;
 import com.vn.repository.CarRepository;
 import com.vn.service.CarService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
-    private final ModelMapper modelMapper;
     public Car findCarByLicensePlate(String plateNumber) {
         return carRepository.findCarByPlateNumber(plateNumber);
     }
@@ -78,13 +71,5 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> searchCar(String province, LocalDateTime fromTime) {
         return carRepository.findByProvince(province, fromTime);
-    }
-    @Override
-    public CarDto getById(Integer id) {
-        Car car = carRepository.findCarById(id);
-        if (car == null) {
-            return null;
-        }
-        return modelMapper.map(car, CarDto.class);
     }
 }

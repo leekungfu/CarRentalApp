@@ -1,6 +1,9 @@
 package com.vn.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.vn.dto.BookingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +18,10 @@ public class BookingServiceImpl implements BookingService{
 	BookingRepository bookingRepository;
 	
 	@Override
-	public List<Booking> findAllByMemberId(Integer memberId) {
-		return bookingRepository.findAllByMemberId(memberId);
+	public List<BookingDto> findAllByMemberId(Integer memberId) {
+		List<Booking> bookings = bookingRepository.findAllByMemberId(memberId);
+		List<BookingDto> dtoList = bookings.stream().map(Booking::toDto).toList();
+		return dtoList;
 	}
 
 	@Override

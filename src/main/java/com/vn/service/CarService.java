@@ -21,5 +21,4 @@ public interface CarService {
     boolean delete(Integer id);
     Car findCarById(Integer id);
     List<Car> searchCar(String province, LocalDateTime fromTime);
-    CarDto getById(Integer id);
 }

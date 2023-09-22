@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.vn.dto.MemberDto;
 import com.vn.enums.Role;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -64,4 +65,11 @@ public class Member implements Serializable {
 //    @JsonIgnore
     @JsonManagedReference
     private List<Car> cars;
+
+    public MemberDto toDto() {
+        MemberDto dto = new MemberDto();
+        dto.setWallet(String.valueOf(this.getWallet()));
+
+        return dto;
+    }
 }

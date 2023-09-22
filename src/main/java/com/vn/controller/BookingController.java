@@ -91,16 +91,16 @@ public class BookingController {
 		return "booking/booking_detail";
 	}
 	
-	@GetMapping("/my_booking")
-	public String bookingsListByMember(Model model) {
-		
-		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
-		List<Booking> bookings = bookingService.findAllByMemberId(detail.member().getId());
-		model.addAttribute("bookings", bookings);
-		
-		model.addAttribute("fullName", detail.member().getFullName());
-		
-		return "booking/booking_list";
-	}
+//	@GetMapping("/my_booking")
+//	public String bookingsListByMember(Model model) {
+//
+//		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//		List<Booking> bookings = bookingService.findAllByMemberId(detail.member().getId());
+//		model.addAttribute("bookings", bookings);
+//
+//		model.addAttribute("fullName", detail.member().getFullName());
+//
+//		return "booking/booking_list";
+//	}
 }
