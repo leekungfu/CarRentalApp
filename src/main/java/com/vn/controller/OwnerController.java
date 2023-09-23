@@ -80,6 +80,18 @@ public class OwnerController {
         }
         return ResponseEntity.ok(new ResponseCarResult(true, "Save car successful!", car, filesStorageService.findFilesByCarId(car.getId())));
     }
+
+    @PostMapping("/updateCarStatus/{id}")
+    @ResponseBody
+    public ResponseEntity<?> updateCarStatus(@RequestParam String status,  @PathVariable Integer id) {
+        Car car = carService.findById(id);
+        if (car == null) {
+            return ResponseEntity.ok(new ResponseMessage(false, "Change car status failed!"));
+        }
+        car.setStatus(CarStatus.valueOf(status));
+        carService.update(car);
+        return ResponseEntity.ok(new ResponseCarResult(true, "Change car status successful!", car, null));
+    }
     @PostMapping("/updateDetails/{id}")
     @ResponseBody
     public ResponseEntity<ResponseCarResult> updateCarInfo(@ModelAttribute CarDto dto, @RequestParam("images") MultipartFile[] files, @PathVariable Integer id) throws IOException {
