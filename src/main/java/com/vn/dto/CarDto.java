@@ -29,7 +29,7 @@ public class CarDto {
     private String description;
     private List<String> additionalFunctions;
     private List<Files> files;
-    private Double basePrice;
+    private Double price;
     private Double deposit;
     private List<String> terms;
     private Double rating;

@@ -51,8 +51,6 @@ public class Booking {
 		dto.setInfo(this.getInfo());
 		dto.setPaymentMethod(String.valueOf(this.getPaymentMethod()));
 		dto.setBookingStatus(String.valueOf(this.getBookingStatus()));
-//		dto.setMember(this.getMember());
-//		dto.setCar(this.getCar());
 		dto.setFeedback(this.getFeedback());
 		if (this.getCar() != null) {
 			CarDto carDto = this.getCar().toDto();

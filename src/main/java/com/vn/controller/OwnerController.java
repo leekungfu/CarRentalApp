@@ -65,7 +65,7 @@ public class OwnerController {
         car.setStreet(dto.getStreet());
         car.setDescription(dto.getDescription());
         car.setAdditionalFunctions(dto.getAdditionalFunctions());
-        car.setPrice(dto.getBasePrice());
+        car.setPrice(dto.getPrice());
         car.setDeposit(dto.getDeposit());
         car.setTerms(dto.getTerms());
         car.setRating(dto.getRating());
@@ -120,7 +120,7 @@ public class OwnerController {
         if (result == null) {
             return ResponseEntity.ok(new ResponseCarResult(false, "Car is not exist.", null, null));
         }
-        result.setPrice(dto.getBasePrice());
+        result.setPrice(dto.getPrice());
         result.setDeposit(dto.getDeposit());
         result.setTerms(dto.getTerms());
         carService.update(result);

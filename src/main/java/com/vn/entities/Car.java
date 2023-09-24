@@ -92,7 +92,7 @@ public class Car {
         carDto.setDescription(this.getPlateNumber());
         carDto.setAdditionalFunctions(this.getAdditionalFunctions());
         carDto.setFiles(this.getFiles());
-        carDto.setBasePrice(this.getPrice());
+        carDto.setPrice(this.getPrice());
         carDto.setDeposit(this.getDeposit());
         carDto.setTerms(this.getTerms());
         carDto.setRating(this.getRating());
