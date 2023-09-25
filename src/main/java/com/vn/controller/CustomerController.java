@@ -2,6 +2,8 @@ package com.vn.controller;
 
 import com.vn.dto.BookingDto;
 import com.vn.dto.CarDto;
+import com.vn.dto.FeedbackDto;
+import com.vn.entities.Feedback;
 import com.vn.enums.BookingStatus;
 import com.vn.responses.*;
 import com.vn.entities.Booking;
@@ -11,6 +13,7 @@ import com.vn.enums.CarStatus;
 import com.vn.enums.PaymentMethod;
 import com.vn.service.BookingService;
 import com.vn.service.CarService;
+import com.vn.service.FeedbackService;
 import com.vn.service.MemberService;
 import com.vn.service.impl.CustomUserDetails;
 import lombok.AllArgsConstructor;
@@ -30,6 +33,7 @@ public class CustomerController {
     private final CarService carService;
     private final BookingService bookingService;
     private final MemberService memberService;
+    private final FeedbackService feedbackService;
 
     @GetMapping("/searchCar")
     @ResponseBody
@@ -97,5 +101,36 @@ public class CustomerController {
     public ResponseEntity<?> SingleBooking(@PathVariable Integer id) {
         Booking booking = bookingService.findBookingById(id);
         return ResponseEntity.ok(new ResponseBookingResult(true, "Get booking successful", booking));
+    }
+
+    @PostMapping("/updateBookingStatus/{id}")
+    @ResponseBody
+    public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id, @RequestParam String status) {
+        Booking booking = bookingService.findBookingById(id);
+        if (booking == null) {
+            return ResponseEntity.ok(new ResponseMessage(false, "Booking is not exist!"));
+        }
+        booking.setBookingStatus(BookingStatus.valueOf(status));
+        bookingService.updateBooking(booking);
+        return ResponseEntity.ok(new ResponseBookingResult(true, "Update booking status successful", booking));
+    }
+
+    @PostMapping("/addFeedback")
+    @ResponseBody
+    public ResponseEntity<?> setRating(@ModelAttribute FeedbackDto dto) {
+        Feedback feedback = new Feedback();
+        Booking booking = bookingService.findBookingById(Integer.valueOf(dto.getBookingId()));
+        if (booking == null) {
+            return ResponseEntity.ok(new ResponseMessage(false, "The booking is not exist!"));
+        }
+        feedback.setRating(dto.getRating());
+        feedback.setContent(dto.getContent());
+        feedback.setDateTime(LocalDateTime.now());
+        feedback.setBooking(booking);
+        booking.setFeedback(feedback);
+
+        feedbackService.save(feedback);
+        bookingService.updateBooking(booking);
+        return ResponseEntity.ok(new ResponseFeedbackResult(true, "Send feedback successful!", feedback));
     }
 }

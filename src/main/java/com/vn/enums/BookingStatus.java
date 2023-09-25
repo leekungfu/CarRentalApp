@@ -5,9 +5,10 @@ public enum BookingStatus {
     Stopped,
     Booked,
     Confirmed,
+    In_Progress,
     Completed,
     Pending_deposit,
     Pending_payment,
-    Cancel,
+    Cancelled,
 
 }

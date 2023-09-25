@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vn.dto.BookingDto;
 import com.vn.dto.CarDto;
+import com.vn.dto.FeedbackDto;
 import com.vn.dto.MemberDto;
 import com.vn.enums.BookingStatus;
 import com.vn.enums.PaymentMethod;
@@ -51,7 +53,6 @@ public class Booking {
 		dto.setInfo(this.getInfo());
 		dto.setPaymentMethod(String.valueOf(this.getPaymentMethod()));
 		dto.setBookingStatus(String.valueOf(this.getBookingStatus()));
-		dto.setFeedback(this.getFeedback());
 		if (this.getCar() != null) {
 			CarDto carDto = this.getCar().toDto();
 			dto.setCar(carDto);
@@ -59,6 +60,10 @@ public class Booking {
 		if (this.getMember() != null) {
 			MemberDto memberDto = this.getMember().toDto();
 			dto.setMember(memberDto);
+		}
+		if (this.getFeedback() != null) {
+			FeedbackDto feedbackDto = this.getFeedback().toDto();
+			dto.setFeedback(feedbackDto);
 		}
 		return dto;
 	}
