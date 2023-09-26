@@ -37,7 +37,8 @@ public class CustomerController {
 
     @GetMapping("/searchCar")
     @ResponseBody
-    public ResponseEntity<ResponseSearchCar> searchCarByProvince(@RequestParam("selectedProvince") String province, @RequestParam("startTimeFormatted") String startTime) {
+    public ResponseEntity<ResponseSearchCar> searchCarByProvince(@RequestParam("selectedProvince") String province,
+                                                                 @RequestParam("startTimeFormatted") String startTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime time = LocalDateTime.parse(startTime, formatter);
         List<Car> cars = carService.searchCar(province, time);
@@ -91,7 +92,10 @@ public class CustomerController {
     @GetMapping("/bookings")
     @ResponseBody
     public ResponseEntity<?> BookingList() {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails)
+                SecurityContextHolder.getContext()
+                        .getAuthentication()
+                        .getPrincipal();
         List<BookingDto> bookings = bookingService.findAllByMemberId(customUserDetails.member().getId());
         return ResponseEntity.ok(new ResponseBookings(true, "Get bookings successful", bookings));
     }
@@ -99,19 +103,37 @@ public class CustomerController {
     @GetMapping("/booking/{id}")
     @ResponseBody
     public ResponseEntity<?> SingleBooking(@PathVariable Integer id) {
-        Booking booking = bookingService.findBookingById(id);
+        Booking booking = bookingService.findById(id);
         return ResponseEntity.ok(new ResponseBookingResult(true, "Get booking successful", booking));
     }
 
     @PostMapping("/updateBookingStatus/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id, @RequestParam String status) {
-        Booking booking = bookingService.findBookingById(id);
+    public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id,
+                                                 @RequestParam String status,
+                                                 @RequestParam String plateNumber) {
+        Booking booking = bookingService.findById(id);
+        Car car = carService.findCarByLicensePlate(plateNumber);
         if (booking == null) {
             return ResponseEntity.ok(new ResponseMessage(false, "Booking is not exist!"));
         }
+        switch (booking.getBookingStatus()) {
+            case Cancelled -> {
+                return ResponseEntity.ok(new ResponseMessage(false, "This booking had been cancelled!"));
+            }
+            case In_Progress -> {
+                return ResponseEntity.ok(new ResponseMessage(false, "This car had been confirmed pick up and could not be cancelled!"));
+            }
+            case Completed -> {
+                return ResponseEntity.ok(new ResponseMessage(false, "This car had already returned!"));
+            }
+        }
         booking.setBookingStatus(BookingStatus.valueOf(status));
-        bookingService.updateBooking(booking);
+        if (status.equals("Completed")) {
+        car.setStatus(CarStatus.Available);
+        carService.update(car);
+        }
+        bookingService.update(booking);
         return ResponseEntity.ok(new ResponseBookingResult(true, "Update booking status successful", booking));
     }
 
@@ -119,9 +141,12 @@ public class CustomerController {
     @ResponseBody
     public ResponseEntity<?> setRating(@ModelAttribute FeedbackDto dto) {
         Feedback feedback = new Feedback();
-        Booking booking = bookingService.findBookingById(Integer.valueOf(dto.getBookingId()));
+        Booking booking = bookingService.findById(Integer.valueOf(dto.getBookingId()));
         if (booking == null) {
             return ResponseEntity.ok(new ResponseMessage(false, "The booking is not exist!"));
+        }
+        if (booking.getFeedback() != null) {
+            return ResponseEntity.ok(new ResponseMessage(false, "You had already made a feedback for this booking!"));
         }
         feedback.setRating(dto.getRating());
         feedback.setContent(dto.getContent());
@@ -130,7 +155,7 @@ public class CustomerController {
         booking.setFeedback(feedback);
 
         feedbackService.save(feedback);
-        bookingService.updateBooking(booking);
+        bookingService.update(booking);
         return ResponseEntity.ok(new ResponseFeedbackResult(true, "Send feedback successful!", feedback));
     }
 }

@@ -54,19 +54,19 @@ public class GeneralController {
     public ResponseEntity<?> signup(@ModelAttribute @NotNull SignupDto dto) {
         Member checkMem = memberService.findByEmail(dto.getEmail());
         if (checkMem == null) {
+            String token = jwtTokenService.generateToken(dto.getEmail());
             Member member = new Member();
             member.setEmail(dto.getEmail());
             member.setPassword(dto.getPassword());
             member.setPhone(dto.getPhone());
             member.setFullName(dto.getFullName());
             member.setRole(Role.valueOf(dto.getRole()));
-
-            String token = jwtTokenService.generateToken(dto.getEmail());
-
+            member.setToken(token);
             // save method including encode password
             memberService.save(member);
             setAuth(member);
-            return ResponseEntity.ok(new ResponseMemberResult(true, "Sign up successful!", member, token));
+            MemberDto memberDto = member.toDto();
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Sign up successful!", memberDto, token));
         }
         return ResponseEntity.ok(new ResponseMemberResult(false, "Sign up failed! Email is taken.", null, null));
     }
@@ -88,7 +88,10 @@ public class GeneralController {
             if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
                 request.login(dto.getEmail(), dto.getPassword());
                 String token = jwtTokenService.generateToken(dto.getEmail());
-                return ResponseEntity.ok(new ResponseMemberResult(true, "Login successful!", result, token));
+                result.setToken(token);
+                memberService.updateMember(result);
+                MemberDto memberDto = result.toDto();
+                return ResponseEntity.ok(new ResponseMemberResult(true, "Login successful!", memberDto, token));
             }
             return ResponseEntity.ok(new ResponseMemberResult(false, "Wrong password! Please try again", null));
         }
@@ -120,7 +123,8 @@ public class GeneralController {
             result.setStreet(dto.getStreet());
             result.setDrivingLicense(ImageUtil.saveImage(drivingLicense));
             memberService.updateMember(result);
-            return ResponseEntity.ok(new ResponseMemberResult(true, "Update successful!", result));
+            MemberDto memberDto = result.toDto();
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Update successful!", memberDto));
         }
         return ResponseEntity.ok(new ResponseMemberResult(false, "Update failed! Check your information again please.", null));
 
@@ -133,7 +137,8 @@ public class GeneralController {
         if (result != null) {
             result.setPassword(bCryptPasswordEncoder.encode(password));
             memberService.updateMember(result);
-            return ResponseEntity.ok(new ResponseMemberResult(true, "Change password successful!", result));
+            MemberDto memberDto = result.toDto();
+            return ResponseEntity.ok(new ResponseMemberResult(true, "Change password successful!", memberDto));
         } else {
             return ResponseEntity.ok(new ResponseMemberResult(false, "Change password failed! Try again please", null));
         }
@@ -158,7 +163,8 @@ public class GeneralController {
         } catch (UsernameNotFoundException | UnsupportedEncodingException | MessagingException e) {
             return ResponseEntity.ok(new ResponseMemberResult(false, e.getMessage(), null));
         }
-        return ResponseEntity.ok(new ResponseMemberResult(true, "Sent!", result));
+        MemberDto memberDto = result.toDto();
+        return ResponseEntity.ok(new ResponseMemberResult(true, "Sent!", memberDto));
     }
 
     @GetMapping("/reset_password")

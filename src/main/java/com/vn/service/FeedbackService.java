@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface FeedbackService {
-    FeedbackDto getFeedbackByBookingId(Integer bookingId);
+    Feedback getFeedbackByBookingId(Integer bookingId);
     List<FeedbackDto> getAllFeedbacks();
     void save(Feedback feedback);
 }

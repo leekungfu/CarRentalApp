@@ -1,6 +1,7 @@
 package com.vn.responses;
 
 
+import com.vn.dto.MemberDto;
 import com.vn.entities.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +14,9 @@ import lombok.Setter;
 public class ResponseMemberResult {
     public boolean isSuccess;
     public String message;
-    public Member member;
+    public MemberDto member;
     public String token;
-    public ResponseMemberResult(boolean isSuccess, String message, Member member) {
+    public ResponseMemberResult(boolean isSuccess, String message, MemberDto member) {
         this.isSuccess = isSuccess;
         this.message = message;
         this.member = member;

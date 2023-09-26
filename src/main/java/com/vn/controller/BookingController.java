@@ -83,7 +83,7 @@ public class BookingController {
 	@GetMapping("/booking")
 	public String bookingDetail(Model model,
 								@RequestParam(name = "booking_id") Integer bookingId) {
-		Booking booking = bookingService.findBookingById(bookingId);
+		Booking booking = bookingService.findById(bookingId);
 		model.addAttribute("booking", booking);
 		
 		CustomUserDetails detail = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

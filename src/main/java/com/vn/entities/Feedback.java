@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vn.dto.BookingDto;
 import com.vn.dto.FeedbackDto;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class Feedback {
     private LocalDateTime dateTime;
     @OneToOne
     @JoinColumn(name = "booking_id")
+    @JsonIgnore
     private Booking booking;
 
     public FeedbackDto toDto() {

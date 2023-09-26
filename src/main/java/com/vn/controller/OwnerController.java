@@ -130,12 +130,12 @@ public class OwnerController {
     @PostMapping("/updateBookingStatus/{id}")
     @ResponseBody
     public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id) {
-        Booking result = bookingService.findBookingById(id);
+        Booking result = bookingService.findById(id);
         if (result == null) {
             return ResponseEntity.ok(new ResponseMessage(false, "Booking is not exist"));
         }
         result.setBookingStatus(BookingStatus.Confirmed);
-        bookingService.updateBooking(result);
+        bookingService.update(result);
         return ResponseEntity.ok(new ResponseBookingResult(true, "The deposit is confirmed!", result));
     }
 }

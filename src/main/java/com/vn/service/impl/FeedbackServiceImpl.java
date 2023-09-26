@@ -14,8 +14,8 @@ import java.util.List;
 public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackRepository repository;
     @Override
-    public FeedbackDto getFeedbackByBookingId(Integer bookingId) {
-        return null;
+    public Feedback getFeedbackByBookingId(Integer bookingId) {
+        return repository.findFeedbackByBookingId(bookingId);
     }
 
     @Override

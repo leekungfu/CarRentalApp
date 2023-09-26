@@ -10,12 +10,12 @@ import com.vn.entities.Booking;
 @Service
 public interface BookingService {
 	List<BookingDto> findAllByMemberId(Integer userId);
-	
-	Booking findBookingById(Integer bookingId);
+
+	Booking findById(Integer bookingId);
 	
 	void save(Booking booking);
 	
-	Boolean deleteBooking(Integer bookingId);
+	Boolean delete(Integer bookingId);
 	
-	Booking updateBooking(Booking booking);
+	Booking update(Booking booking);
 }
