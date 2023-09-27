@@ -1,5 +1,6 @@
 package com.vn.responses;
 
+import com.vn.dto.BookingDto;
 import com.vn.entities.Booking;
 import lombok.Data;
 
@@ -7,9 +8,9 @@ import lombok.Data;
 public class ResponseBookingResult {
     private Boolean isSuccess;
     private String message;
-    private Booking booking;
+    private BookingDto booking;
 
-    public ResponseBookingResult(Boolean isSuccess, String message, Booking booking) {
+    public ResponseBookingResult(Boolean isSuccess, String message, BookingDto booking) {
         this.isSuccess = isSuccess;
         this.message = message;
         this.booking = booking;

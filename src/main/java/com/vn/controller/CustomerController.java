@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -74,8 +75,7 @@ public class CustomerController {
             memberService.updateMember(member);
 
             booking.setBookingStatus(BookingStatus.Confirmed);
-        }
-        else {
+        } else {
             booking.setBookingStatus(BookingStatus.Pending_deposit);
         }
         result.setStatus(CarStatus.Booked);
@@ -85,8 +85,8 @@ public class CustomerController {
         booking.setEndDate(LocalDateTime.parse(dto.getEndDate()));
         booking.setMember(member);
         bookingService.save(booking);
-
-        return ResponseEntity.ok(new ResponseBookingResult(true, "Payment successfully!", booking));
+        BookingDto bookingDto = booking.toDto();
+        return ResponseEntity.ok(new ResponseBookingResult(true, "Payment successfully!", bookingDto));
     }
 
     @GetMapping("/bookings")
@@ -104,37 +104,63 @@ public class CustomerController {
     @ResponseBody
     public ResponseEntity<?> SingleBooking(@PathVariable Integer id) {
         Booking booking = bookingService.findById(id);
-        return ResponseEntity.ok(new ResponseBookingResult(true, "Get booking successful", booking));
+        BookingDto dto = booking.toDto();
+        return ResponseEntity.ok(new ResponseBookingResult(true, "Get booking successful", dto));
     }
 
     @PostMapping("/updateBookingStatus/{id}")
     @ResponseBody
     public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id,
                                                  @RequestParam String status,
-                                                 @RequestParam String plateNumber) {
+                                                 @RequestParam String plateNumber,
+                                                 @RequestParam Double cost) {
         Booking booking = bookingService.findById(id);
+        BookingDto dto;
         Car car = carService.findCarByLicensePlate(plateNumber);
+        CustomUserDetails customUserDetails = (CustomUserDetails)
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getPrincipal();
+        Member member = customUserDetails.member();
         if (booking == null) {
             return ResponseEntity.ok(new ResponseMessage(false, "Booking is not exist!"));
         }
-        switch (booking.getBookingStatus()) {
-            case Cancelled -> {
-                return ResponseEntity.ok(new ResponseMessage(false, "This booking had been cancelled!"));
-            }
-            case In_Progress -> {
-                return ResponseEntity.ok(new ResponseMessage(false, "This car had been confirmed pick up and could not be cancelled!"));
-            }
-            case Completed -> {
-                return ResponseEntity.ok(new ResponseMessage(false, "This car had already returned!"));
+        if (booking.getBookingStatus().equals(BookingStatus.valueOf(status))) {
+            switch (status) {
+                case "Completed" -> {
+                    return ResponseEntity.ok(new ResponseMessage(false, "This car had already been returned!"));
+                }
+                case "Cancelled" -> {
+                    return ResponseEntity.ok(new ResponseMessage(false, "This car had already been cancelled!"));
+                }
+                case "In_Progress" -> {
+                    return ResponseEntity.ok(new ResponseMessage(false, "This car had been confirmed pick up and could not be cancelled!"));
+                }
             }
         }
         booking.setBookingStatus(BookingStatus.valueOf(status));
-        if (status.equals("Completed")) {
-        car.setStatus(CarStatus.Available);
-        carService.update(car);
-        }
         bookingService.update(booking);
-        return ResponseEntity.ok(new ResponseBookingResult(true, "Update booking status successful", booking));
+        dto = booking.toDto();
+        if (status.equals("Completed")) {
+            car.setStatus(CarStatus.Available);
+            carService.update(car);
+            double currentBalance = member.getWallet() != null ? member.getWallet() : 0;
+            if (cost > 0) {
+                member.setWallet(currentBalance + Math.abs(cost));
+                memberService.updateMember(member);
+                return ResponseEntity.ok(new ResponseBookingResult(true, "Pay successful!", dto));
+            } else {
+                if (currentBalance >= cost) {
+                    member.setWallet(currentBalance - Math.abs(cost));
+                    memberService.updateMember(member);
+                    return ResponseEntity.ok(new ResponseBookingResult(true, "Pay successful!", dto));
+                } else {
+                    return ResponseEntity.ok(new ResponseBookingResult(false, "The current balance is not enough to do this action! Please top-up and try again.", dto));
+                }
+            }
+        }
+        return ResponseEntity.ok(new ResponseBookingResult(true, "Update booking status successful", dto));
     }
 
     @PostMapping("/addFeedback")
