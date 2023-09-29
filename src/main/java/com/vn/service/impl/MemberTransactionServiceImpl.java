@@ -3,15 +3,15 @@ package com.vn.service.impl;
 import com.vn.entities.MemberTransaction;
 import com.vn.repository.MemberTransactionRepository;
 import com.vn.service.MemberTransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MemberTransactionServiceImpl implements MemberTransactionService {
-    @Autowired
-    MemberTransactionRepository memberTransactionRepository;
+    private final MemberTransactionRepository memberTransactionRepository;
     @Override
-    public void save(MemberTransaction mt) {
-        memberTransactionRepository.save(mt);
+    public void save(MemberTransaction memberTransaction) {
+        memberTransactionRepository.save(memberTransaction);
     }
 }

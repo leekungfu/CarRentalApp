@@ -3,18 +3,13 @@ package com.vn.controller;
 import com.vn.dto.BookingDto;
 import com.vn.dto.CarDto;
 import com.vn.dto.FeedbackDto;
-import com.vn.entities.Feedback;
+import com.vn.entities.*;
 import com.vn.enums.BookingStatus;
+import com.vn.enums.Type;
 import com.vn.responses.*;
-import com.vn.entities.Booking;
-import com.vn.entities.Car;
-import com.vn.entities.Member;
 import com.vn.enums.CarStatus;
 import com.vn.enums.PaymentMethod;
-import com.vn.service.BookingService;
-import com.vn.service.CarService;
-import com.vn.service.FeedbackService;
-import com.vn.service.MemberService;
+import com.vn.service.*;
 import com.vn.service.impl.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -35,6 +30,7 @@ public class CustomerController {
     private final BookingService bookingService;
     private final MemberService memberService;
     private final FeedbackService feedbackService;
+    private final MemberTransactionService memberTransactionService;
 
     @GetMapping("/searchCar")
     @ResponseBody
@@ -123,6 +119,7 @@ public class CustomerController {
                         .getAuthentication()
                         .getPrincipal();
         Member member = customUserDetails.member();
+        MemberTransaction memberTransaction = new MemberTransaction();
         if (booking == null) {
             return ResponseEntity.ok(new ResponseMessage(false, "Booking is not exist!"));
         }
@@ -149,11 +146,31 @@ public class CustomerController {
             if (cost > 0) {
                 member.setWallet(currentBalance + Math.abs(cost));
                 memberService.updateMember(member);
+                booking.setMember(member);
+                bookingService.update(booking);
+                dto = booking.toDto();
+                memberTransaction.setAmount(Math.abs(cost));
+                memberTransaction.setType(Type.Offset_final_payment);
+                memberTransaction.setDateTime(LocalDateTime.now());
+                memberTransaction.setMember(member);
+                memberTransaction.setBooking(booking);
+                memberTransaction.setCar(car);
+                memberTransactionService.save(memberTransaction);
                 return ResponseEntity.ok(new ResponseBookingResult(true, "Pay successful!", dto));
             } else {
                 if (currentBalance >= cost) {
                     member.setWallet(currentBalance - Math.abs(cost));
                     memberService.updateMember(member);
+                    booking.setMember(member);
+                    bookingService.update(booking);
+                    dto = booking.toDto();
+                    memberTransaction.setAmount(Math.abs(cost));
+                    memberTransaction.setType(Type.Deduct_final_payment);
+                    memberTransaction.setDateTime(LocalDateTime.now());
+                    memberTransaction.setMember(member);
+                    memberTransaction.setBooking(booking);
+                    memberTransaction.setCar(car);
+                    memberTransactionService.save(memberTransaction);
                     return ResponseEntity.ok(new ResponseBookingResult(true, "Pay successful!", dto));
                 } else {
                     return ResponseEntity.ok(new ResponseBookingResult(false, "The current balance is not enough to do this action! Please top-up and try again.", dto));

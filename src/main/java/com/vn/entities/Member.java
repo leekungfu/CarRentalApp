@@ -81,6 +81,7 @@ public class Member implements Serializable {
         dto.setRole(String.valueOf(this.getRole()));
         dto.setToken(this.getToken());
         dto.setWallet(this.getWallet());
+        dto.setMemberTransactions(this.getMemberTransactions());
         return dto;
     }
 }

@@ -37,9 +37,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member updateMember(Member member) {
+    public void updateMember(Member member) {
         log.info("Update user profile {} in the database", member.getEmail());
-        return memberRepository.save(member);
+        memberRepository.save(member);
     }
 
     @Override

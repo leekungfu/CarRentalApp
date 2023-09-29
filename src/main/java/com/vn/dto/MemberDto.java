@@ -1,8 +1,11 @@
 package com.vn.dto;
 
+import com.vn.entities.MemberTransaction;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +23,5 @@ public class MemberDto {
     private String token;
     private Double wallet;
     private MultipartFile drivingLicense;
+    private List<MemberTransaction> memberTransactions;
 }

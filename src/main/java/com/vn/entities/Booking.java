@@ -44,6 +44,8 @@ public class Booking {
 	private Car car;
 	@OneToOne(mappedBy = "booking")
 	private Feedback feedback;
+	@OneToOne(mappedBy = "booking")
+	private MemberTransaction transaction;
 
 	public BookingDto toDto() {
 		BookingDto dto = new BookingDto();

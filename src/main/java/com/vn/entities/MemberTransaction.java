@@ -1,6 +1,10 @@
 package com.vn.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vn.dto.BookingDto;
+import com.vn.dto.CarDto;
+import com.vn.dto.MemberDto;
+import com.vn.dto.MemberTransactionDto;
 import com.vn.enums.PaymentMethod;
 import com.vn.enums.Type;
 import com.vn.utils.MoneyUtil;
@@ -23,9 +27,33 @@ public class MemberTransaction implements Serializable {
     private Double amount;
     private Type type;
     private LocalDateTime dateTime;
-    private String note;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+    @ManyToOne
     @JoinColumn(name = "member_id")
-    @JsonIgnore
     private Member member;
+    public MemberTransactionDto toDto() {
+        MemberTransactionDto dto = new MemberTransactionDto();
+        dto.setId(this.getId());
+        dto.setAmount(this.getAmount());
+        dto.setType(String.valueOf(this.getType()));
+        dto.setDateTime(String.valueOf(this.getDateTime()));
+        if (this.getCar() != null) {
+            CarDto carDto = this.getCar().toDto();
+            dto.setCar(carDto);
+        }
+        if (this.getMember() != null) {
+            MemberDto memberDto = this.getMember().toDto();
+            dto.setMember(memberDto);
+        }
+        if (this.getBooking() != null) {
+            BookingDto bookingDto = this.getBooking().toDto();
+            dto.setBooking(bookingDto);
+        }
+        return dto;
+    }
 }
