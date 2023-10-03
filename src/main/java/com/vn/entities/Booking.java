@@ -24,7 +24,6 @@ import lombok.Setter;
 @Entity
 public class Booking {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
@@ -44,8 +43,6 @@ public class Booking {
 	private Car car;
 	@OneToOne(mappedBy = "booking")
 	private Feedback feedback;
-	@OneToOne(mappedBy = "booking")
-	private MemberTransaction transaction;
 
 	public BookingDto toDto() {
 		BookingDto dto = new BookingDto();
@@ -62,10 +59,6 @@ public class Booking {
 		if (this.getMember() != null) {
 			MemberDto memberDto = this.getMember().toDto();
 			dto.setMember(memberDto);
-		}
-		if (this.getFeedback() != null) {
-			FeedbackDto feedbackDto = this.getFeedback().toDto();
-			dto.setFeedback(feedbackDto);
 		}
 		return dto;
 	}

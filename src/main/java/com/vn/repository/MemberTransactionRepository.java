@@ -6,9 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface MemberTransactionRepository extends JpaRepository<MemberTransaction, Integer> {
-    Page<MemberTransaction> findByMemberId(Integer memberID, Pageable pageable);
-    @Query("SELECT mt FROM MemberTransaction mt WHERE mt.member.id = :id AND mt.dateTime>= :date1 AND mt.dateTime <= :date2")
-    Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable);
+    List<MemberTransaction> findAllByMemberId(Integer memberId);
+    @Query("SELECT mt FROM MemberTransaction mt WHERE mt.member.id = :id AND mt.dateTime>= :fromTime AND mt.dateTime <= :toTime")
+    List<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime fromTime, LocalDateTime toTime);
 }

@@ -43,8 +43,8 @@ public class Feedback {
         dto.setDateTime(this.getDateTime());
 
         if (booking != null) {
-            BookingDto bookingDto = new BookingDto();
-            bookingDto.setFeedback(dto);
+            BookingDto bookingDto = this.getBooking().toDto();
+            dto.setBooking(bookingDto);
         }
         return dto;
     }

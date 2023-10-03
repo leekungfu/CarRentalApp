@@ -35,5 +35,4 @@ public class CarDto {
     private Double rating;
     private String status;
     private List<BookingDto> bookings;
-    private List<MemberTransactionDto> transactions;
 }

@@ -3,6 +3,7 @@ package com.vn.controller;
 import com.vn.dto.BookingDto;
 import com.vn.dto.CarDto;
 import com.vn.dto.FeedbackDto;
+import com.vn.dto.MemberTransactionDto;
 import com.vn.entities.*;
 import com.vn.enums.BookingStatus;
 import com.vn.enums.Type;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -34,8 +36,7 @@ public class CustomerController {
 
     @GetMapping("/searchCar")
     @ResponseBody
-    public ResponseEntity<ResponseSearchCar> searchCarByProvince(@RequestParam("selectedProvince") String province,
-                                                                 @RequestParam("startTimeFormatted") String startTime) {
+    public ResponseEntity<ResponseSearchCar> searchCarByProvince(@RequestParam("selectedProvince") String province, @RequestParam("startTimeFormatted") String startTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime time = LocalDateTime.parse(startTime, formatter);
         List<Car> cars = carService.searchCar(province, time);
@@ -62,25 +63,35 @@ public class CustomerController {
         if (result == null) {
             return ResponseEntity.ok(new ResponseMessage(false, "Car is not exist"));
         }
+        if (result.getStatus().equals(CarStatus.Booked)) {
+            return ResponseEntity.ok(new ResponseMessage(false, "This car has already been rented! Please try other one."));
+        }
         Booking booking = new Booking();
+        MemberTransaction memberTransaction = new MemberTransaction();
         if (dto.getPaymentMethod().equals("Wallet")) {
             if (balance == null || balance < Double.parseDouble(dto.getDeposit())) {
                 return ResponseEntity.ok(new ResponseMessage(false, "Your wallet is not enough money to do this payment!"));
             }
             member.setWallet(balance - Double.parseDouble(dto.getDeposit()));
             memberService.updateMember(member);
-
+            memberTransaction.setAmount(Double.valueOf(dto.getDeposit()));
+            memberTransaction.setType(Type.Pay_deposit);
             booking.setBookingStatus(BookingStatus.Confirmed);
         } else {
             booking.setBookingStatus(BookingStatus.Pending_deposit);
         }
         result.setStatus(CarStatus.Booked);
+        booking.setId(Integer.valueOf(dto.getBookingId()));
         booking.setCar(result);
         booking.setPaymentMethod(PaymentMethod.valueOf(dto.getPaymentMethod()));
         booking.setStartDate(LocalDateTime.parse(dto.getStartDate()));
         booking.setEndDate(LocalDateTime.parse(dto.getEndDate()));
         booking.setMember(member);
         bookingService.save(booking);
+        memberTransaction.setBooking(booking);
+        memberTransaction.setMember(member);
+        memberTransaction.setDateTime(LocalDateTime.now());
+        memberTransactionService.save(memberTransaction);
         BookingDto bookingDto = booking.toDto();
         return ResponseEntity.ok(new ResponseBookingResult(true, "Payment successfully!", bookingDto));
     }
@@ -88,10 +99,7 @@ public class CustomerController {
     @GetMapping("/bookings")
     @ResponseBody
     public ResponseEntity<?> BookingList() {
-        CustomUserDetails customUserDetails = (CustomUserDetails)
-                SecurityContextHolder.getContext()
-                        .getAuthentication()
-                        .getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<BookingDto> bookings = bookingService.findAllByMemberId(customUserDetails.member().getId());
         return ResponseEntity.ok(new ResponseBookings(true, "Get bookings successful", bookings));
     }
@@ -106,18 +114,11 @@ public class CustomerController {
 
     @PostMapping("/updateBookingStatus/{id}")
     @ResponseBody
-    public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id,
-                                                 @RequestParam String status,
-                                                 @RequestParam String plateNumber,
-                                                 @RequestParam Double cost) {
+    public ResponseEntity<?> updateBookingStatus(@PathVariable Integer id, @RequestParam String status, @RequestParam String plateNumber, @RequestParam Double cost) {
         Booking booking = bookingService.findById(id);
         BookingDto dto;
         Car car = carService.findCarByLicensePlate(plateNumber);
-        CustomUserDetails customUserDetails = (CustomUserDetails)
-                SecurityContextHolder
-                        .getContext()
-                        .getAuthentication()
-                        .getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member member = customUserDetails.member();
         MemberTransaction memberTransaction = new MemberTransaction();
         if (booking == null) {
@@ -154,7 +155,6 @@ public class CustomerController {
                 memberTransaction.setDateTime(LocalDateTime.now());
                 memberTransaction.setMember(member);
                 memberTransaction.setBooking(booking);
-                memberTransaction.setCar(car);
                 memberTransactionService.save(memberTransaction);
                 return ResponseEntity.ok(new ResponseBookingResult(true, "Pay successful!", dto));
             } else {
@@ -169,7 +169,6 @@ public class CustomerController {
                     memberTransaction.setDateTime(LocalDateTime.now());
                     memberTransaction.setMember(member);
                     memberTransaction.setBooking(booking);
-                    memberTransaction.setCar(car);
                     memberTransactionService.save(memberTransaction);
                     return ResponseEntity.ok(new ResponseBookingResult(true, "Pay successful!", dto));
                 } else {
@@ -200,5 +199,14 @@ public class CustomerController {
         feedbackService.save(feedback);
         bookingService.update(booking);
         return ResponseEntity.ok(new ResponseFeedbackResult(true, "Send feedback successful!", feedback));
+    }
+
+    @GetMapping("/transactionList")
+    @ResponseBody
+    public ResponseEntity<?> getTransaction(@RequestParam String fromTime, @RequestParam String toTime) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<MemberTransactionDto> list = memberTransactionService.getByDate(customUserDetails.member().getId(), LocalDateTime.parse(fromTime, formatter), LocalDateTime.parse(toTime, formatter));
+        return ResponseEntity.ok(new ResponseTransactions(true, "OK", list));
     }
 }

@@ -52,7 +52,6 @@ public class Member implements Serializable {
     private Role role;
     @Column(length = 30)
     private String resetPasswordToken;
-    private String token;
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
 //	@Fetch(FetchMode.JOIN)
     @JsonIgnore
@@ -79,9 +78,7 @@ public class Member implements Serializable {
         dto.setWard(this.getWard());
         dto.setStreet(this.getStreet());
         dto.setRole(String.valueOf(this.getRole()));
-        dto.setToken(this.getToken());
         dto.setWallet(this.getWallet());
-        dto.setMemberTransactions(this.getMemberTransactions());
         return dto;
     }
 }

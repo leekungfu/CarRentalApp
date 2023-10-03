@@ -72,9 +72,6 @@ public class Car {
     @OneToMany(mappedBy = "car")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Files> files;
-    @OneToMany(mappedBy = "car")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<MemberTransaction> transactions;
 
     public CarDto toDto() {
         CarDto carDto = new CarDto();

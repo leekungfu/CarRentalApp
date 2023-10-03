@@ -29,9 +29,9 @@ public interface MemberService {
     Optional<Member> findUserById(Integer id);
     Member findById(Integer id);
 
-    Page<MemberTransaction> findByMember(Integer memberId, Pageable pageable);
-
-    Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable);
+//    Page<MemberTransaction> findByMember(Integer memberId, Pageable pageable);
+//
+//    Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable);
 
     void updateWallet(Member member);
 

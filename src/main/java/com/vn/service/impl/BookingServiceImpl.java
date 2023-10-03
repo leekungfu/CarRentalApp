@@ -1,5 +1,6 @@
 package com.vn.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,34 +15,34 @@ import com.vn.service.BookingService;
 
 @Service
 @RequiredArgsConstructor
-public class BookingServiceImpl implements BookingService{
-	private final BookingRepository bookingRepository;
-	@Override
-	public List<BookingDto> findAllByMemberId(Integer memberId) {
-		List<Booking> bookings = bookingRepository.findAllByMemberId(memberId);
-		List<BookingDto> dtoList = bookings.stream().map(Booking::toDto).toList();
-		return dtoList;
-	}
+public class BookingServiceImpl implements BookingService {
+    private final BookingRepository bookingRepository;
 
-	@Override
-	public Booking findById(Integer bookingId) {
-		return bookingRepository.findById(bookingId).orElse(null);
-	}
+    @Override
+    public List<BookingDto> findAllByMemberId(Integer memberId) {
+        List<Booking> bookings = bookingRepository.findAllByMemberId(memberId);
+        List<BookingDto> dtoList = bookings.stream().map(Booking::toDto).toList();
+        return dtoList;
+    }
 
-	@Override
-	public void save(Booking booking) {
-		bookingRepository.save(booking);
-	}
+    @Override
+    public Booking findById(Integer bookingId) {
+        return bookingRepository.findById(bookingId).orElse(null);
+    }
 
-	@Override
-	public Boolean delete(Integer bookingId) {
-		bookingRepository.deleteById(bookingId);
-		return true;
-	}
+    @Override
+    public void save(Booking booking) {
+        bookingRepository.save(booking);
+    }
 
-	@Override
-	public Booking update(Booking booking) {
-		return bookingRepository.save(booking);
-	}
+    @Override
+    public Boolean delete(Integer bookingId) {
+        bookingRepository.deleteById(bookingId);
+        return true;
+    }
 
+    @Override
+    public Booking update(Booking booking) {
+        return bookingRepository.save(booking);
+    }
 }

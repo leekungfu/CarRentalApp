@@ -20,8 +20,6 @@ public class MemberDto {
     private String ward;
     private String street;
     private String role;
-    private String token;
     private Double wallet;
     private MultipartFile drivingLicense;
-    private List<MemberTransaction> memberTransactions;
 }

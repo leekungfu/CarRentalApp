@@ -3,11 +3,17 @@ package com.vn.controller;
 import com.vn.config.JwtTokenService;
 import com.vn.dto.LoginDto;
 import com.vn.dto.MemberDto;
+import com.vn.entities.MemberTransaction;
+import com.vn.enums.Type;
 import com.vn.responses.ResponseMemberResult;
 import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
 import com.vn.enums.Role;
+import com.vn.responses.ResponseMessage;
+import com.vn.responses.ResponseTransactionResult;
+import com.vn.responses.ResponseTransactions;
 import com.vn.service.MemberService;
+import com.vn.service.MemberTransactionService;
 import com.vn.service.impl.CustomUserDetails;
 import com.vn.utils.ImageUtil;
 import com.vn.utils.Utility;
@@ -31,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api")
@@ -41,6 +48,7 @@ public class GeneralController {
     private final Utility utility;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenService jwtTokenService;
+    private final MemberTransactionService memberTransactionService;
 
     @GetMapping("/currentUser")
     @ResponseBody
@@ -61,7 +69,6 @@ public class GeneralController {
             member.setPhone(dto.getPhone());
             member.setFullName(dto.getFullName());
             member.setRole(Role.valueOf(dto.getRole()));
-            member.setToken(token);
             // save method including encode password
             memberService.save(member);
             setAuth(member);
@@ -88,8 +95,6 @@ public class GeneralController {
             if (bCryptPasswordEncoder.matches(dtoPassword, storedPassword)) {
                 request.login(dto.getEmail(), dto.getPassword());
                 String token = jwtTokenService.generateToken(dto.getEmail());
-                result.setToken(token);
-                memberService.updateMember(result);
                 MemberDto memberDto = result.toDto();
                 return ResponseEntity.ok(new ResponseMemberResult(true, "Login successful!", memberDto, token));
             }
@@ -142,6 +147,29 @@ public class GeneralController {
         } else {
             return ResponseEntity.ok(new ResponseMemberResult(false, "Change password failed! Try again please", null));
         }
+    }
+
+    @PostMapping("/newTransaction")
+    @ResponseBody
+    public ResponseEntity<?> create(@RequestParam Double amount, @RequestParam String type) {
+        CustomUserDetails  customUserDetails = (CustomUserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        Member member = memberService.findByEmail(customUserDetails.getUsername());
+        MemberTransaction memberTransaction = new MemberTransaction();
+        double balance = member.getWallet() != null ? member.getWallet() : 0.0;
+        if (type.equals("Top_up")) {
+        member.setWallet(balance + amount);
+        memberTransaction.setType(Type.Top_up);
+        } else if (type.equals("Withdraw")) {
+            member.setWallet(balance - amount);
+            memberTransaction.setType(Type.Withdraw);
+        }
+        memberTransaction.setMember(member);
+        memberTransaction.setDateTime(LocalDateTime.now());
+        memberTransaction.setAmount(amount);
+        memberService.updateMember(member);
+        memberTransactionService.save(memberTransaction);
+        return ResponseEntity.ok(new ResponseTransactionResult(true, "OK", memberTransaction.toDto()));
     }
 
     @PostMapping("/forgot_password")

@@ -22,6 +22,4 @@ public class BookingDto {
     private CarDto car;
     private MemberDto member;
     private DriverInformation info;
-    private FeedbackDto feedback;
-    private MemberTransactionDto transaction;
 }

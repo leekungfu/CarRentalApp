@@ -42,10 +42,6 @@ public class MemberTransaction implements Serializable {
         dto.setAmount(this.getAmount());
         dto.setType(String.valueOf(this.getType()));
         dto.setDateTime(String.valueOf(this.getDateTime()));
-        if (this.getCar() != null) {
-            CarDto carDto = this.getCar().toDto();
-            dto.setCar(carDto);
-        }
         if (this.getMember() != null) {
             MemberDto memberDto = this.getMember().toDto();
             dto.setMember(memberDto);

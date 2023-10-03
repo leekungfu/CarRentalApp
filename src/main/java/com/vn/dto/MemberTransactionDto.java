@@ -8,7 +8,6 @@ public class MemberTransactionDto {
     private Double amount;
     private String type;
     private String dateTime;
-    private CarDto car;
     private MemberDto member;
     private BookingDto booking;
 }

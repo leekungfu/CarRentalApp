@@ -101,17 +101,17 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public Page<MemberTransaction> findByMember(Integer memberId, Pageable pageable) {
-        log.info("Find user by id{} and process pagination", memberId);
-        return memberTransactionRepository.findByMemberId(memberId,pageable);
-    }
-
-    @Override
-    public Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable) {
-        log.info("Find user by id and date & process pagination");
-        return memberTransactionRepository.findByMemberAndDate(id, date1, date2, pageable);
-    }
+//    @Override
+//    public Page<MemberTransaction> findByMember(Integer memberId, Pageable pageable) {
+//        log.info("Find user by id{} and process pagination", memberId);
+//        return memberTransactionRepository.findByMemberId(memberId,pageable);
+//    }
+//
+//    @Override
+//    public Page<MemberTransaction> findByMemberAndDate(Integer id, LocalDateTime date1, LocalDateTime date2, Pageable pageable) {
+//        log.info("Find user by id and date & process pagination");
+//        return memberTransactionRepository.findByMemberAndDate(id, date1, date2, pageable);
+//    }
 
     @Override
     public void updateWallet(Member member) {
