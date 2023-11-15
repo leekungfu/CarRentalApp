@@ -21,8 +21,12 @@ public class Utility {
      * @return
      */
     public static String getSiteURL(HttpServletRequest request) {
-        String siteURL = request.getRequestURL().toString();
-        return siteURL.replace(request.getServletPath(), "");
+
+        String siteUrl = "http://localhost:3000/confirmreset";
+        return siteUrl;
+
+//        String siteURL = request.getRequestURL().toString();
+//        return siteURL.replace(request.getServletPath(), "");
     }
 
     /**

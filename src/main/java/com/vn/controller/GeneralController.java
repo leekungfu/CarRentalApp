@@ -31,6 +31,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +61,7 @@ public class GeneralController {
         Member member = memberService.findByEmail(customUserDetails.getUsername());
         return ResponseEntity.ok(member);
     }
+
     @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<?> signup(@ModelAttribute @NotNull SignupDto dto) {
@@ -173,14 +175,14 @@ public class GeneralController {
     @PostMapping("/newTransaction")
     @ResponseBody
     public ResponseEntity<?> create(@RequestParam Double amount, @RequestParam String type) {
-        CustomUserDetails  customUserDetails = (CustomUserDetails) SecurityContextHolder
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         Member member = memberService.findByEmail(customUserDetails.getUsername());
         MemberTransaction memberTransaction = new MemberTransaction();
         double balance = member.getWallet() != null ? member.getWallet() : 0.0;
         if (type.equals("Top_up")) {
-        member.setWallet(balance + amount);
-        memberTransaction.setType(Type.Top_up);
+            member.setWallet(balance + amount);
+            memberTransaction.setType(Type.Top_up);
         } else if (type.equals("Withdraw")) {
             member.setWallet(balance - amount);
             memberTransaction.setType(Type.Withdraw);
@@ -215,7 +217,7 @@ public class GeneralController {
             // Set value for user found by the given email and persist change to the DB
             memberService.updateResetPasswordToken(token, email);
             // Send the reset link with unique token which will expired immediately user reset password success
-            String resetPassLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
+            String resetPassLink = Utility.getSiteURL(request) + "?token=" + token;
             utility.sendEmail(email, resetPassLink);
 
         } catch (UsernameNotFoundException | UnsupportedEncodingException | MessagingException e) {
@@ -225,38 +227,16 @@ public class GeneralController {
         return ResponseEntity.ok(new ResponseMemberResult(true, "Sent!", memberDto));
     }
 
-    @GetMapping("/reset_password")
-    public String resetPassForm(@Param(value = "token") String token, Model model) {
-
-        // Check for the validity of the token in the URL, to make sure that only user who got the real email can change their password.
-        // The notification popup will be displayed as the message below if user had changed password successfully with the reset link in their mailbox.
-        Member member = memberService.findByResetPasswordToken(token);
-        model.addAttribute("token", token);
-        if (member == null) {
-            model.addAttribute("message", "The request is expired! Please send a new request to reset your password by entering your email again on previous step!");
-            return "account/reset_password";
-        }
-
-        return "account/reset_password";
-    }
-
     @PostMapping("/reset_password")
-    public String resetPassProcessing(HttpServletRequest request, Model model) {
-        String token = request.getParameter("token");
-        String password = request.getParameter("password");
-
-        // The notification popup will be displayed as "The request is expired!" if the token not be found in the DB.
+    @ResponseBody
+    public ResponseEntity<?> resetPassProcessing(@RequestParam("token") String token, @RequestParam("password") String password) {
         Member member = memberService.findByResetPasswordToken(token);
-
         if (member == null) {
-            model.addAttribute("message", "The request is expired!");
-            return "account/reset_password";
+            return ResponseEntity.ok(new ResponseMessage(false, "The request is expired!"));
         } else {
             memberService.updatePassword(member, password);
-            model.addAttribute("message", "Reset password successfully!");
+            return ResponseEntity.ok(new ResponseMessage(true, "Reset password successfully!"));
         }
-
-        return "account/reset_password_success";
     }
 
     @GetMapping("/")
