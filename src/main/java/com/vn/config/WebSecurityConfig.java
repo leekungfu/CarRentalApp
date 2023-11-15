@@ -39,7 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/currentUser",
                         "/api/personalInfo",
                         "/api/updatePassword",
-                        "/api/newTransaction").hasAnyRole("CUSTOMER", "OWNER")
+                        "/api/newTransaction",
+                        "/api/transactionList"
+                        ).hasAnyRole("CUSTOMER", "OWNER")
                 .antMatchers(ParaSecurity.customerPages).hasRole("CUSTOMER")
                 .antMatchers(ParaSecurity.carOwnerPages).hasRole("OWNER")
                 .anyRequest().authenticated()

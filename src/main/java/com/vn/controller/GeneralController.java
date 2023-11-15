@@ -1,17 +1,17 @@
 package com.vn.controller;
 
 import com.vn.config.JwtTokenService;
-import com.vn.dto.LoginDto;
-import com.vn.dto.MemberDto;
+import com.vn.dto.*;
+import com.vn.entities.DriverInformation;
 import com.vn.entities.MemberTransaction;
 import com.vn.enums.Type;
 import com.vn.responses.ResponseMemberResult;
-import com.vn.dto.SignupDto;
 import com.vn.entities.Member;
 import com.vn.enums.Role;
 import com.vn.responses.ResponseMessage;
 import com.vn.responses.ResponseTransactionResult;
 import com.vn.responses.ResponseTransactions;
+import com.vn.service.DriverInformationService;
 import com.vn.service.MemberService;
 import com.vn.service.MemberTransactionService;
 import com.vn.service.impl.CustomUserDetails;
@@ -38,6 +38,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -49,6 +51,7 @@ public class GeneralController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenService jwtTokenService;
     private final MemberTransactionService memberTransactionService;
+    private final DriverInformationService driverInformationService;
 
     @GetMapping("/currentUser")
     @ResponseBody
@@ -132,8 +135,26 @@ public class GeneralController {
             return ResponseEntity.ok(new ResponseMemberResult(true, "Update successful!", memberDto));
         }
         return ResponseEntity.ok(new ResponseMemberResult(false, "Update failed! Check your information again please.", null));
-
     }
+
+//    @PostMapping("/saveDriver")
+//    @ResponseBody
+//    public ResponseEntity<?> saveDriver(@ModelAttribute MemberDto dto, @RequestParam("drivingLicense") MultipartFile drivingLicense) {
+//        DriverInformation driver = new DriverInformation();
+//        driver.setFullName(dto.getFullName());
+//        driver.setBirthDay(LocalDate.parse(dto.getBirthDay()));
+//        driver.setPhone(dto.getPhone());
+//        driver.setNationalID(dto.getNationalID());
+//        driver.setProvince(dto.getProvince());
+//        driver.setDistrict(dto.getDistrict());
+//        driver.setWard(dto.getWard());
+//        driver.setStreet(dto.getStreet());
+//        driver.setDrivingLicense(ImageUtil.saveImage(drivingLicense));
+//            driverInformationService.save(driver);
+//            DriverInformationDto driverDto = driver.toDto();
+//            return ResponseEntity.ok(new ResponseMemberResult(true, "Update successful!", driverDto));
+//
+//    }
 
     @PostMapping("/updatePassword")
     @ResponseBody
@@ -170,6 +191,15 @@ public class GeneralController {
         memberService.updateMember(member);
         memberTransactionService.save(memberTransaction);
         return ResponseEntity.ok(new ResponseTransactionResult(true, "OK", memberTransaction.toDto()));
+    }
+
+    @GetMapping("/transactionList")
+    @ResponseBody
+    public ResponseEntity<?> getTransaction(@RequestParam String fromTime, @RequestParam String toTime) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<MemberTransactionDto> list = memberTransactionService.getByDate(customUserDetails.member().getId(), LocalDateTime.parse(fromTime, formatter), LocalDateTime.parse(toTime, formatter));
+        return ResponseEntity.ok(new ResponseTransactions(true, "OK", list));
     }
 
     @PostMapping("/forgot_password")

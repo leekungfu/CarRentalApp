@@ -12,6 +12,7 @@ import com.vn.enums.CarStatus;
 import com.vn.enums.PaymentMethod;
 import com.vn.service.*;
 import com.vn.service.impl.CustomUserDetails;
+import com.vn.utils.ImageUtil;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class CustomerController {
     private final MemberService memberService;
     private final FeedbackService feedbackService;
     private final MemberTransactionService memberTransactionService;
+    private final DriverInformationService driverInformationService;
 
     @GetMapping("/searchCar")
     @ResponseBody
@@ -92,6 +94,21 @@ public class CustomerController {
         memberTransaction.setMember(member);
         memberTransaction.setDateTime(LocalDateTime.now());
         memberTransactionService.save(memberTransaction);
+
+        DriverInformation driver = new DriverInformation();
+        driver.setEmail(dto.getEmail());
+        driver.setFullName(dto.getFullName());
+        driver.setBirthDay(dto.getBirthDay());
+        driver.setPhone(dto.getPhone());
+        driver.setNationalID(dto.getNationalID());
+        driver.setProvince(dto.getProvince());
+        driver.setDistrict(dto.getDistrict());
+        driver.setWard(dto.getWard());
+        driver.setStreet(driver.getStreet());
+        driver.setDrivingLicense(ImageUtil.saveImage(dto.getDrivingLicense()));
+        driver.setBooking(booking);
+        driverInformationService.save(driver);
+
         BookingDto bookingDto = booking.toDto();
         return ResponseEntity.ok(new ResponseBookingResult(true, "Payment successfully!", bookingDto));
     }
@@ -199,14 +216,5 @@ public class CustomerController {
         feedbackService.save(feedback);
         bookingService.update(booking);
         return ResponseEntity.ok(new ResponseFeedbackResult(true, "Send feedback successful!", feedback));
-    }
-
-    @GetMapping("/transactionList")
-    @ResponseBody
-    public ResponseEntity<?> getTransaction(@RequestParam String fromTime, @RequestParam String toTime) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        List<MemberTransactionDto> list = memberTransactionService.getByDate(customUserDetails.member().getId(), LocalDateTime.parse(fromTime, formatter), LocalDateTime.parse(toTime, formatter));
-        return ResponseEntity.ok(new ResponseTransactions(true, "OK", list));
     }
 }
