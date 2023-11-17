@@ -139,4 +139,10 @@ public class OwnerController {
         BookingDto dto = result.toDto();
         return ResponseEntity.ok(new ResponseBookingResult(true, "The deposit is confirmed!", dto));
     }
+
+    @PostMapping("/getFeedback")
+    @ResponseBody
+    public ResponseEntity<?> getFeedback() {
+
+    }
 }

@@ -192,7 +192,7 @@ public class GeneralController {
         memberTransaction.setAmount(amount);
         memberService.updateMember(member);
         memberTransactionService.save(memberTransaction);
-        return ResponseEntity.ok(new ResponseTransactionResult(true, "OK", memberTransaction.toDto()));
+        return ResponseEntity.ok(new ResponseTransactionResult(true, "Deposit money successfully!", memberTransaction.toDto()));
     }
 
     @GetMapping("/transactionList")
