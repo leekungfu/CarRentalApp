@@ -27,8 +27,8 @@ public class Booking {
 	private Integer id;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-	@OneToOne(mappedBy = "booking")
-	private DriverInformation info;
+//	@OneToOne(mappedBy = "booking")
+//	private DriverInformation info;
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
 	@Enumerated(EnumType.STRING)
@@ -49,7 +49,7 @@ public class Booking {
 		dto.setBookingId(String.valueOf(this.getId()));
 		dto.setStartDate(String.valueOf(this.getStartDate()));
 		dto.setEndDate(String.valueOf(this.getEndDate()));
-		dto.setInfo(this.getInfo());
+//		dto.setInfo(this.getInfo());
 		dto.setPaymentMethod(String.valueOf(this.getPaymentMethod()));
 		dto.setBookingStatus(String.valueOf(this.getBookingStatus()));
 		if (this.getCar() != null) {

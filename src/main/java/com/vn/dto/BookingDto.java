@@ -21,7 +21,7 @@ public class BookingDto {
     private String bookingStatus;
     private CarDto car;
     private MemberDto member;
-    private DriverInformation info;
+//    private DriverInformation info;
     private Integer id;
     private String fullName;
     private LocalDate birthDay;

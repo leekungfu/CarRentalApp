@@ -34,7 +34,7 @@ public class CustomerController {
     private final MemberService memberService;
     private final FeedbackService feedbackService;
     private final MemberTransactionService memberTransactionService;
-    private final DriverInformationService driverInformationService;
+//    private final DriverInformationService driverInformationService;
 
     @GetMapping("/searchCar")
     @ResponseBody
@@ -95,19 +95,19 @@ public class CustomerController {
         memberTransaction.setDateTime(LocalDateTime.now());
         memberTransactionService.save(memberTransaction);
 
-        DriverInformation driver = new DriverInformation();
-        driver.setEmail(dto.getEmail());
-        driver.setFullName(dto.getFullName());
-        driver.setBirthDay(dto.getBirthDay());
-        driver.setPhone(dto.getPhone());
-        driver.setNationalID(dto.getNationalID());
-        driver.setProvince(dto.getProvince());
-        driver.setDistrict(dto.getDistrict());
-        driver.setWard(dto.getWard());
-        driver.setStreet(driver.getStreet());
-        driver.setDrivingLicense(ImageUtil.saveImage(dto.getDrivingLicense()));
-        driver.setBooking(booking);
-        driverInformationService.save(driver);
+//        DriverInformation driver = new DriverInformation();
+//        driver.setEmail(dto.getEmail());
+//        driver.setFullName(dto.getFullName());
+//        driver.setBirthDay(dto.getBirthDay());
+//        driver.setPhone(dto.getPhone());
+//        driver.setNationalID(dto.getNationalID());
+//        driver.setProvince(dto.getProvince());
+//        driver.setDistrict(dto.getDistrict());
+//        driver.setWard(dto.getWard());
+//        driver.setStreet(driver.getStreet());
+//        driver.setDrivingLicense(ImageUtil.saveImage(dto.getDrivingLicense()));
+//        driver.setBooking(booking);
+//        driverInformationService.save(driver);
 
         BookingDto bookingDto = booking.toDto();
         return ResponseEntity.ok(new ResponseBookingResult(true, "Payment successfully!", bookingDto));

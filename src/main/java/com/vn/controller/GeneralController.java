@@ -2,7 +2,7 @@ package com.vn.controller;
 
 import com.vn.config.JwtTokenService;
 import com.vn.dto.*;
-import com.vn.entities.DriverInformation;
+//import com.vn.entities.DriverInformation;
 import com.vn.entities.MemberTransaction;
 import com.vn.enums.Type;
 import com.vn.responses.ResponseMemberResult;
@@ -11,7 +11,7 @@ import com.vn.enums.Role;
 import com.vn.responses.ResponseMessage;
 import com.vn.responses.ResponseTransactionResult;
 import com.vn.responses.ResponseTransactions;
-import com.vn.service.DriverInformationService;
+//import com.vn.service.DriverInformationService;
 import com.vn.service.MemberService;
 import com.vn.service.MemberTransactionService;
 import com.vn.service.impl.CustomUserDetails;
@@ -52,7 +52,7 @@ public class GeneralController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenService jwtTokenService;
     private final MemberTransactionService memberTransactionService;
-    private final DriverInformationService driverInformationService;
+//    private final DriverInformationService driverInformationService;
 
     @GetMapping("/currentUser")
     @ResponseBody
